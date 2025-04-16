@@ -2,15 +2,17 @@ package logic
 
 import model.Meal
 
-class ExploreOtherCountriesFoodCulture {
+class ExploreOtherCountriesFoodCultureUseCase(
+    private val repo: MealRepository
+) {
 
     fun getTwentyRandomMealByCountry(
-        meals: List<Meal>, countryName: String
+         countryName: String
     ): List<Meal> {
         val list = mutableListOf<Meal>()
         val searchTerm = countryName.trim().lowercase()
 
-        meals.forEach { meal ->
+        repo.getAllMeals().forEach { meal ->
             if (meal.tags?.any { tag ->
                     tag.trim().lowercase() == searchTerm
                 } == true) {
