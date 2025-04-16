@@ -1,10 +1,12 @@
 package presentation.cliController
 
+import model.Meal
+
 class CLIDispatcher {
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
-
+        9 to gymHelper()
     )
 
     fun dispatch(userInput: Int) {
@@ -21,4 +23,12 @@ class CLIDispatcher {
     }
 
     // TODO: Implement your feature here as a private function and map it in the above map
+    private val gymHelper : () -> Unit = {
+
+        println("Enter Calories:")
+        val calories = readlnOrNull() ?: 0.0f
+        println("Enter Protein")
+        val protein = readlnOrNull() ?: 0.0f
+
+    }
 }

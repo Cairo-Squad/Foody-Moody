@@ -23,7 +23,7 @@ object CLIConstants {
             6. 
             7. 
             8. 
-            9. 
+            9. Gym Helper
             10. 
             11. 
             12. 
