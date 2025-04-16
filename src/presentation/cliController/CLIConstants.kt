@@ -26,7 +26,7 @@ object CLIConstants {
             9. 
             10. 
             11. 
-            12. 
+            12. Get 10 random meals that contain potatoes in their ingredients
             13. 
             14. 
             15. 
@@ -37,6 +37,7 @@ object CLIConstants {
     // endregion
 
     // region Command Codes
+    const val RANDOM_10_POTATO_MEALS_COMMAND_CODE = 12
     const val EXIT_COMMAND_CODE = 16
 
     // endregion
