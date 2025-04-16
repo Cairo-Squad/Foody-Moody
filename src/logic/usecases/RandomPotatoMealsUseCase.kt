@@ -8,13 +8,10 @@ class RandomPotatoMealsUseCase(
 ) {
 
     fun get10RandomPotatoMeals(): List<Meal> {
-        return getPotatoMeals()
+        return mealRepository.getAllMeals()
+            .filter(::containsPotatoes)
             .shuffled()
             .take(10)
-    }
-
-    private fun getPotatoMeals(): List<Meal> {
-        return mealRepository.getAllMeals().filter(::containsPotatoes)
     }
 
     private fun containsPotatoes(meal: Meal): Boolean {
