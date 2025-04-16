@@ -1,11 +1,21 @@
 package presentation.cliController
 
-class CLIDispatcher {
+import logic.GetMealsForLargeGroupUseCase
+
+class CLIDispatcher(
+    private val getMealsForLargeGroupUseCase : GetMealsForLargeGroupUseCase
+) {
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
 
     )
+
+    fun getMealsForLargeGroup() {
+        getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
+            println("meal $index is: $meal")
+        }
+    }
 
     fun dispatch(userInput: Int) {
         val command = commands[userInput]
