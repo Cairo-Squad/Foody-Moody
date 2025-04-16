@@ -24,7 +24,7 @@ object CLIConstants {
             7. 
             8. 
             9. 
-            10. 
+            10. Find Meals by Country
             11. 
             12. 
             13. 
@@ -40,5 +40,7 @@ object CLIConstants {
     const val EXIT_COMMAND_CODE = 16
 
     // endregion
+
+    const val GET_MEALS_BY_COUNTRY = 10
 
 }
