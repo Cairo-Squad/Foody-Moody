@@ -7,15 +7,16 @@ class GetSeafoodMealsSortedByProteinUseCase(
 ) {
     fun getSeafoodMealsSortedByProtein(): List<String> {
 
-       return mealRepository.getAllMeals().filter { hasSeafoodTag(it) }.sortedByDescending {
+       return mealRepository.getAllMeals()
+           .filter { hasSeafoodTag(it)
+           }.sortedByDescending{
             it.nutrition?.protein?.toDouble()?:0.0
-        }.mapIndexed { index, meal ->
+           }.mapIndexed { index, meal ->
             val protein = meal.nutrition?.protein?.toDouble()?:0.0
             val rank = index + 1
             val mealName = meal.mealName
             "Rank: $rank, Name: $mealName, Protein: $protein"
         }
-
     }
 
     private fun hasSeafoodTag(meal: Meal): Boolean {
