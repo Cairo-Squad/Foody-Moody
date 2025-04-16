@@ -15,6 +15,9 @@ object MealSearchUtil {
      * @param meals The list of `Meal` objects to search through.
      * @param query The search query string entered by the user.
      *
+     * @Complexity -> O(n) -> KMP Algorithm
+     *             -> (n^2) ->levenshtein Algorithm.
+     *
      * @return A list of `Meal` objects that match the search query. It returns meals that exactly match using KMP
      *         or those that are within a Levenshtein distance of 4 characters from the query if no exact matches are found.
      */
