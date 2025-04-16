@@ -13,6 +13,8 @@ object CLIConstants {
 
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
 
+    const val RANDOM_POTATO_MEALS_MESSAGE = "10 random meals that contain potatoes in their ingredients:"
+
     val USER_MENU = """
             Available Options:-
             1. 

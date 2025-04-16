@@ -29,7 +29,7 @@ class CLIDispatcher(
     fun get10RandomPotatoMeals() {
         val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
         val random10PotatoMeals = randomPotatoMealsUseCase.get10RandomPotatoMeals()
-        println("10 random meals that contain potatoes in their ingredients:")
+        println(CLIConstants.RANDOM_POTATO_MEALS_MESSAGE)
         println(random10PotatoMeals.map { it.mealName })
     }
 }
