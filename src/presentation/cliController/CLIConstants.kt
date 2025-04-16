@@ -27,7 +27,7 @@ object CLIConstants {
             10. 
             11. 
             12. 
-            13. 
+            13. Suggest a meal with more than 700 calories
             14. 
             15. 
             16. Exit

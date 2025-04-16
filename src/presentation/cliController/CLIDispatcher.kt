@@ -1,10 +1,15 @@
 package presentation.cliController
 
-class CLIDispatcher {
+import logic.GetMealsMoreThan700CaloriesUseCase
+import model.Meal
+
+class CLIDispatcher(
+    private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase
+) {
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
-
+        13 to ::launchMealsMoreThan700Calories
     )
 
     fun dispatch(userInput: Int) {
@@ -21,4 +26,33 @@ class CLIDispatcher {
     }
 
     // TODO: Implement your feature here as a private function and map it in the above map
+    fun launchMealsMoreThan700Calories() {
+        println("==== Meals with more than 700 Calories ====")
+        val seen = mutableSetOf<Meal>()
+        getMealsMoreThan700CaloriesUseCase.getMealMoreThan700Calories()
+            .filterNot { it in seen }
+            .forEach { meal ->
+                seen.add(meal)
+
+                println("Name: ${meal.mealName}")
+                println("Description: ${meal.mealDescription}")
+                println("Do you like it? \n 1. like \n 2. dislike ")
+
+                while (true) {
+                    print("here: ")
+                    UserInputHandler.getUserInput()?.let {
+                        when (it) {
+                            1 -> {
+                                println(meal.toString())
+                                return
+                            }
+                            2 -> return@forEach
+                            else -> println("Invalid input")
+                        }
+                    } ?: println("Invalid input")
+                }
+            }
+
+        println("No more meals with more than 700 calories")
+    }
 }
