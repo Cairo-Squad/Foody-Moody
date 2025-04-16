@@ -3,7 +3,7 @@ package presentation.cliController
 object CLIConstants {
 
     // region User Messages
-    const val WELCOME_MESSAGE = "👋🏻 Welcome to your Personal Finance Tracker!"
+    const val WELCOME_MESSAGE = "👋🏻 Welcome to Food Change Mood!"
     const val EXIT_MESSAGE = "Thanks for your time, see you again!"
 
     const val SEPARATOR = "------------------------------------------------------------"
