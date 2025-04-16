@@ -1,11 +1,13 @@
 package presentation.cliController
 
+
 import data.MealCsvParser
 import data.MealCsvReader
 import data.MealRepositoryImpl
-import logic.ExploreOtherCountriesFoodCulture
-import model.Meal
+import logic.ExploreOtherCountriesFoodCultureUseCase
+import logic.MealRepository
 import java.io.File
+
 
 class CLIDispatcher {
 
@@ -46,13 +48,10 @@ class CLIDispatcher {
 
         println("Searching for meals from $country...")
 
-        val allMeals = getAllMeals()
-        println("Total meals loaded: ${allMeals.size}")
 
-
-        val exploreOtherCountriesFoodCulture = ExploreOtherCountriesFoodCulture()
-        val matchingMeals = exploreOtherCountriesFoodCulture.getTwentyRandomMealByCountry(
-            meals = allMeals, countryName = country
+        val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(initializerObject())
+        val matchingMeals = exploreOtherCountriesFoodCultureUseCase.getTwentyRandomMealByCountry(
+            countryName = country
         )
 
         if (matchingMeals.isEmpty()) {
@@ -65,9 +64,8 @@ class CLIDispatcher {
         }
     }
 
-
-    private fun getAllMeals(): List<Meal> {
-        val mealRepository = MealRepositoryImpl(MealCsvParser(), MealCsvReader(File("food.csv")))
-        return mealRepository.getAllMeals()
+    private fun initializerObject(): MealRepository{
+        return MealRepositoryImpl(MealCsvParser(), MealCsvReader(File("food.csv")))
     }
+
 }
