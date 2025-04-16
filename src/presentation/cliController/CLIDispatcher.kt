@@ -8,14 +8,14 @@ import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 
 class CLIDispatcher (
-    private val randomMealUseCase: GetRandomMealUseCase
+    private val randomMealUseCase: GetRandomMealUseCase,
     private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase
 
 ){
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
-        CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories
+        CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
         5 to { guessPreparationTime() }
     )
 
