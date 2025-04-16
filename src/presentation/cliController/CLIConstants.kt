@@ -16,7 +16,7 @@ object CLIConstants {
     val USER_MENU = """
             Available Options:-
             1. 
-            2. 
+            2. Search Meals By Name. 
             3. 
             4. 
             5. 

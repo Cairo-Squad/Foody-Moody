@@ -6,7 +6,7 @@ import model.Meal
 class MealRepositoryImpl(
     private val mealCsvParser: MealCsvParser,
     private val mealCsvReader: MealCsvReader
-): MealRepository {
+) : MealRepository {
     override fun getAllMeals(): List<Meal> {
         val listOfMeals = mutableListOf<Meal>()
         mealCsvReader.readCsvLines().forEachIndexed { i, meal ->
