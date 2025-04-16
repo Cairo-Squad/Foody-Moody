@@ -9,14 +9,14 @@ class GymHelperUseCase(private val repositoryImpl: MealRepositoryImpl) {
         val allMeals = repositoryImpl.getAllMeals()
 
         return allMeals.filter { meal ->
-            meal.nutrition?.let {
-                val result = if (it.calories != null && it.protein != null) {
-                    (it.calories in (calories.minus(50)..(calories.plus(50))))
-                            && (it.protein in (protein.minus(5)..(protein.plus(5))))
-                } else false
-                result
-            } == true
-
+            validateMealMatching(meal, calories, protein)
         }
     }
+
+
+    private fun validateMealMatching(meal: Meal, calories: Float, protein: Float) =
+        meal.nutrition?.calories != null && meal.nutrition.protein != null &&
+                meal.nutrition.calories in (calories.minus(50)..(calories.plus(50))) &&
+                meal.nutrition.protein in (protein.minus(5)..(protein.plus(5)))
+
 }
