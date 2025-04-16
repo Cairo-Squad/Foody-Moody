@@ -34,7 +34,7 @@ object CLIConstants {
             11. 
             12. 
             13. 
-            14. 
+            14. 🐠 Get Seafood Meals Sorted By Protein 🦞
             15. 
             16. Exit
             
