@@ -1,11 +1,24 @@
 package presentation.cliController
 
-class CLIDispatcher {
+import data.MealCsvParser
+import data.MealCsvReader
+import data.MealRepositoryImpl
+import logic.GetMealsForLargeGroupUseCase
+import model.Meal
+import java.io.File
+
+class CLIDispatcher(
+    val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase
+) {
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
 
     )
+
+    fun getMealsForLargeGroup(): List<Meal> {
+        return getMealsForLargeGroupUseCase.getMealsForGroup()
+    }
 
     fun dispatch(userInput: Int) {
         val command = commands[userInput]
