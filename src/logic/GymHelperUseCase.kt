@@ -11,8 +11,8 @@ class GymHelperUseCase(private val repositoryImpl: MealRepositoryImpl) {
         return allMeals.filter { meal ->
             meal.nutrition?.let {
                 val result = if (it.calories != null && it.protein != null) {
-                    (it.calories in (calories.minus(300)..(calories.plus(300))))
-                            && (it.protein in (protein.minus(15)..(protein.plus(15))))
+                    (it.calories in (calories.minus(50)..(calories.plus(50))))
+                            && (it.protein in (protein.minus(5)..(protein.plus(5))))
                 } else false
                 result
             } == true

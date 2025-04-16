@@ -42,7 +42,7 @@ class CLIDispatcher {
             protein.toString().toFloat()
         ).chunked(5)
         matchedMeals.forEach {
-            println("Matched meals: $it")
+            println("Matched meals count = ${matchedMeals.count()}:\n $it")
             println("Press 1 to load more matched meals")
             if ((readln().toIntOrNull() ?: 0) == 1) return@forEach
         }
