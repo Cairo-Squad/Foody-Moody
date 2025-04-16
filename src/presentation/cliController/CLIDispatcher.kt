@@ -44,6 +44,7 @@ class CLIDispatcher {
         matchedMeals.forEach {
             println("Matched meals: $it")
             println("Press 1 to load more matched meals")
+            if ((readln().toIntOrNull() ?: 0) == 1) return@forEach
         }
 
     }
