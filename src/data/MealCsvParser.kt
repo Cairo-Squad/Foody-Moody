@@ -1,12 +1,13 @@
 package data
 
 import model.Meal
+import model.Nutrition
+import java.time.LocalDate
 
 
 class MealCsvParser {
 
     fun parseOneLine(line: String): Meal {
-        //val cleanedLine = line.replace("\n", " ").replace("\n\n", " ")
 
         val list = mutableListOf<String>()
 
@@ -31,29 +32,54 @@ class MealCsvParser {
         }
 
 
-//        list.forEachIndexed { index, c ->
-//            println("$index -> $c")
-//        }
-        //println(list.size)
+
 
         val meal = Meal(
             mealName = list[ColumnIndex.NAME],
-            mealId = list[ColumnIndex.ID],
+            mealId = list[ColumnIndex.ID].length,
             mealDescription = list[ColumnIndex.DESCRIPTION],
-            contributorId = list[ColumnIndex.CONTRIBUTOR_ID],
-            minutes = list[ColumnIndex.MINUTES],
-            submitted = list[ColumnIndex.SUBMITTED],
-            tags = null,
-            nutrition = null,
+            contributorId = list[ColumnIndex.CONTRIBUTOR_ID].toInt(),
+            minutes = list[ColumnIndex.MINUTES].toInt(),
+            submitted = LocalDate.parse(list[ColumnIndex.SUBMITTED]),
+            tags = structTagsList(list[ColumnIndex.TAGS]),
+            nutrition = structNutritionObject(list[ColumnIndex.NUTRITION]),
             numberOfSteps = list[ColumnIndex.N_STEPS],
-            steps = null,
-            ingredients = null,
-            numberOfIngredients = list[ColumnIndex.N_INGREDIENTS]
+            steps = structStepsList(list[ColumnIndex.STEPS]),
+            ingredients = structIngredientsList(list[ColumnIndex.INGREDIENTS]),
+            numberOfIngredients = list[ColumnIndex.N_INGREDIENTS].toInt()
         )
 
-
-        //println(meal)
         return meal
 
+    }
+
+
+    private fun structNutritionObject(line:String): Nutrition {
+        val parts = line.split(",")
+        return Nutrition(
+            calories = parts[0].toFloat(),
+            totalFat = parts[1].toFloat(),
+            sugar = parts[2].toFloat(),
+            sodium = parts[3].toFloat(),
+            protein = parts[4].toFloat(),
+            saturatedFat = parts[5].toFloat(),
+            carbohydrates = parts[6].toFloat(),
+
+            )
+    }
+
+    private fun structTagsList(line:String):List<String>{
+        val parts = line.split(",")
+        return parts
+    }
+
+    private fun structStepsList(line:String):List<String>{
+        val parts = line.split(",")
+        return parts
+    }
+
+    private fun structIngredientsList(line:String):List<String>{
+        val parts = line.split(",")
+        return parts
     }
 }
