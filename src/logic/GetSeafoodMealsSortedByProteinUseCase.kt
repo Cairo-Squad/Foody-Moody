@@ -10,22 +10,30 @@ class GetSeafoodMealsSortedByProteinUseCase(
         val seafoodInTags = allMeals.filter { hasSeafoodTag(it) }
         println(seafoodInTags.size)
 
-        val sortedMeals = seafoodInTags.sortedByDescending {
-            it.nutrition!!.protein!!.toDouble()
-        }
-
-         return sortedMeals.mapIndexed { index, meal ->
-            val protein = meal.nutrition?.protein
+      return seafoodInTags.sortedByDescending {
+            it.nutrition?.protein?.toDouble()?:0.0
+        }.mapIndexed { index, meal ->
+            val protein = meal.nutrition?.protein?.toDouble()?:0.0
             val rank = index + 1
             val mealName = meal.mealName
             "Rank: $rank, Name: $mealName, Protein: $protein"
         }
+
     }
 
     private fun hasSeafoodTag(meal: Meal): Boolean {
         val tags = meal.tags?.map { it.lowercase() } ?: emptyList()
         return tags.any { tag -> tag.contains("seafood") }
     }
+
+
+
+
+
+
+
+
+
 //        val seafoodInIngredients = allMeals.filter { containsSeafoodKeyword(it) }
 //        println(seafoodInIngredients.size)
 //
