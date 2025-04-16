@@ -1,16 +1,21 @@
 package presentation.cliController
 
+import logic.GetRandomEasyFoodMealsUseCase
 import logic.GetRandomMealUseCase
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 
-class CLIDispatcher (private val randomMealUseCase: GetRandomMealUseCase){
+class CLIDispatcher(
+    private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
+    private val randomMealUseCase: GetRandomMealUseCase
+) {
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
-        5 to { guessPreparationTime() }
+        5 to { guessPreparationTime() },
+        4 to ::launchEasyFoodSuggestionsGame
     )
 
     fun dispatch(userInput: Int) {
@@ -27,8 +32,7 @@ class CLIDispatcher (private val randomMealUseCase: GetRandomMealUseCase){
     }
 
     // TODO: Implement your feature here as a private function and map it in the above map
-   fun guessPreparationTime()
-    {
+    fun guessPreparationTime() {
         randomMealUseCase.getRandomMeal().also { meal ->
             print(GUESS_GAME_MESSAGE)
             println(meal.mealName)
@@ -52,5 +56,13 @@ class CLIDispatcher (private val randomMealUseCase: GetRandomMealUseCase){
             println("❌ Out of attempts! The correct preparation time for ${meal.mealName} is $actualTime minutes.")
         }
 
+    }
+
+    private fun launchEasyFoodSuggestionsGame() {
+        println("=== Ten random meals easy to prepare ===")
+        getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
+            .forEachIndexed { index, meal ->
+                println("${index + 1}. ${meal.mealName}, ${meal.minutes} minutes, ${meal.numberOfIngredients} ingredients, ${meal.numberOfSteps} steps")
+            }
     }
 }

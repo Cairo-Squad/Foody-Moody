@@ -3,7 +3,7 @@ package data
 import logic.MealRepository
 import model.Meal
 import java.time.LocalDate
-
+/*
 class FakeMealRepositoryImp : MealRepository {
     override fun getAllMeals(): List<Meal> {
         val listOfMeals = listOf(
@@ -16,7 +16,7 @@ class FakeMealRepositoryImp : MealRepository {
                 submitted = LocalDate.of(2023, 5, 10),
                 tags = listOf("Italian", "Pasta", "Quick"),
                 nutrition = null, // You can fill this with a `Nutrition` object
-                numberOfSteps = "5",
+                numberOfSteps = 5,
                 steps = listOf("Boil pasta", "Cook pancetta", "Mix eggs and cheese", "Combine everything", "Serve hot"),
                 ingredients = listOf("Spaghetti", "Eggs", "Pancetta", "Parmesan cheese", "Black pepper"),
                 numberOfIngredients = 5
@@ -44,7 +44,7 @@ class FakeMealRepositoryImp : MealRepository {
                 submitted = LocalDate.of(2023, 7, 5),
                 tags = listOf("Dessert", "Chocolate", "Baking"),
                 nutrition = null,
-                numberOfSteps = "6",
+                numberOfSteps = "5",
                 steps = listOf("Mix ingredients", "Preheat oven", "Pour batter", "Bake", "Cool down", "Decorate"),
                 ingredients = listOf("Flour", "Cocoa powder", "Sugar", "Eggs", "Butter"),
                 numberOfIngredients = 5
@@ -55,3 +55,4 @@ class FakeMealRepositoryImp : MealRepository {
 
 
 }
+*/
