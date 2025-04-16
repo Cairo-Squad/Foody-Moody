@@ -13,6 +13,12 @@ object CLIConstants {
 
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
 
+    const val MEALS_MORE_THAN_700_CALORIES_WELCOME_MSG = "==== Meals with more than 700 Calories ===="
+    const val NO_MORE_MEALS_AVAILABLE = "No more meals with more than 700 calories"
+    const val DO_YOU_LIKE_MEAL = "Do you like it? \n" +
+            " 1. like \n" +
+            " 2. dislike "
+
     val USER_MENU = """
             Available Options:-
             1. 
@@ -37,6 +43,7 @@ object CLIConstants {
     // endregion
 
     // region Command Codes
+    const val SUGGEST_MEAL_MORE_THAN_700_CALORIES = 13
     const val EXIT_COMMAND_CODE = 16
 
     // endregion
