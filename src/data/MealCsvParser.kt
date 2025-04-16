@@ -36,7 +36,7 @@ class MealCsvParser {
 
         val meal = Meal(
             mealName = list[ColumnIndex.NAME],
-            mealId = list[ColumnIndex.ID].length,
+            mealId = list[ColumnIndex.ID].toInt(),
             mealDescription = list[ColumnIndex.DESCRIPTION],
             contributorId = list[ColumnIndex.CONTRIBUTOR_ID].toInt(),
             minutes = list[ColumnIndex.MINUTES].toInt(),
