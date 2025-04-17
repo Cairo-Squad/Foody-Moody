@@ -1,5 +1,5 @@
 package presentation
-
+import logic.GetIraqMeals
 import data.MealCsvParser
 import data.MealCsvReader
 import data.MealRepositoryImpl
@@ -15,6 +15,7 @@ fun main() {
     val mealCsvReader = MealCsvReader(mealsFile)
     val mealCsvParser = MealCsvParser()
     val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
+    val getIraqMeals = GetIraqMeals(mealRepository)
     val getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository)
     val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
     val getMealsByDateUseCase = GetMealsByDateUseCase(mealRepository)
@@ -24,6 +25,7 @@ fun main() {
     val cliDispatcher = CLIDispatcher(
         getMealsForLargeGroupUseCase = getMealsForLargeGroupUseCase,
         randomMealUseCase = getRandomMealUseCase,
+        getIraqMeals = getIraqMeals,
         randomPotatoMealsUseCase = randomPotatoMealsUseCase,
         getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
         exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
@@ -32,6 +34,4 @@ fun main() {
     )
     val cliController = CLIController(cliDispatcher)
     cliController.start()
-    //cliDispatcher.guessPreparationTime()
-
 }

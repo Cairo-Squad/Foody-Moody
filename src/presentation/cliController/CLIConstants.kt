@@ -17,6 +17,7 @@ object CLIConstants {
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
     const val NO_RESULTS_FOUND = "No result found in that date."
     const val ENTER_VALID_DATE_HINT = "please enter a valid date in format like YYYY-MM-DD"
+    const val FEATURE_3 =3
     const val GUESS_GAME_MESSAGE = "Guess The Preparation Time For This Meal : "
     const val GUESS_ERROR_MESSAGE = "invalid input please try again!"
     const val CORRECT_GUESSING_MESSAGE = "CORRECT_GUESSING ✅"
@@ -41,7 +42,7 @@ object CLIConstants {
             Available Options:-
             1. 
             2. 
-            3. 
+            3. Get Iraq meals
             4. Suggest 10 easy food meals
             5. Guess preparation time game
             6. 
