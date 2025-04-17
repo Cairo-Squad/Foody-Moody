@@ -1,4 +1,5 @@
 package presentation
+import data.DataHolder
 import logic.GetIraqMeals
 import data.MealCsvParser
 import data.MealCsvReader
@@ -14,7 +15,8 @@ fun main() {
     val mealsFile = File("food.csv")
     val mealCsvReader = MealCsvReader(mealsFile)
     val mealCsvParser = MealCsvParser()
-    val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
+    val dataHolder = DataHolder(mealCsvParser, mealCsvReader)
+    val mealRepository = MealRepositoryImpl(dataHolder)
     val getIraqMeals = GetIraqMeals(mealRepository)
     val getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository)
     val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
