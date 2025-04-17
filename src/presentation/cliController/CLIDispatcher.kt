@@ -11,6 +11,7 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 import logic.*
+import logic.ingredientGuess.IngredientsGameUseCase
 import logic.mealSearch.SearchMealByNameUseCase
 import model.Meal
 import model.ShowMeal
@@ -25,13 +26,12 @@ class CLIDispatcher(
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase,
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
     private val suggestMealsToGym: SuggestMealsToGym,
+    private val ingredientsGameUseCase: IngredientsGameUseCase,
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
     private val getMealsByDateUseCase: GetMealsByDateUseCase,
     private val getSeafoodMealsSortedByProteinUseCase: GetSeafoodMealsSortedByProteinUseCase
 ) {
     private val commands = mapOf<Int, () -> Unit>(
-        11 to ingredientsGameGuess()
-
         CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
         CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
         CLIConstants.GET_MEALS_BY_DATE to ::launchGetMealsByDate,
@@ -39,6 +39,7 @@ class CLIDispatcher(
         CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup,
         CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
         CLIConstants.SUGGEST_MEALS_TO_GYM to ::gymHelper,
+        CLIConstants.INGREDIENTS_GUESS_GAME to ::ingredientsGameGuess,
         CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame,
         FEATURE_5 to ::guessPreparationTime,
         FEATURE_3 to ::displayIraqMeals,
@@ -246,20 +247,17 @@ class CLIDispatcher(
     }
 
     // TODO: Implement your feature here as a private function and map it in the above map
-    private fun ingredientsGameGuess(): () -> Unit = {
-        val mealCsvParser = MealCsvParser()
-        val mealCsvReader = MealCsvReader(File("food.csv"))
-        val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
-        val ingredientsGame = IngredientsGameUseCase(mealRepository)
+    private fun ingredientsGameGuess() {
         var bonus = 0
         for (i in 0..14) {
-            val ingredientsGameResult = ingredientsGame.getRandomIngredients()
+            val ingredientsGameResult = ingredientsGameUseCase.getRandomIngredients()
             println("Meal name : ${ingredientsGameResult.mealName}")
-            println("Notice, Only one ingredient is correct.")
-            println("press 1,2 or 3 to choose ingredient from below :")
-            println("Ingredients are ${ingredientsGameResult.allIngredients.shuffled()}")
-            var userChoice = readlnOrNull()?.toInt() ?: -1
-            if (ingredientsGameResult.allIngredients.elementAt(--userChoice) == ingredientsGameResult.correctIngredient) {
+            println("Note that there is Only one correct ingredient of list below.")
+            println("Press 1,2 or 3 to choose ingredient: ${ingredientsGameResult.allIngredients.shuffled()}")
+
+            val userChoice = UserInputHandler.getUserInput()?.minus(1) ?: -1
+
+            if (ingredientsGameResult.allIngredients.elementAt(index = userChoice) == ingredientsGameResult.correctIngredient) {
                 println("Great , +1000 point");bonus += 1000
             } else {
                 println("Sorry, correct ingredient is ${ingredientsGameResult.correctIngredient}")
