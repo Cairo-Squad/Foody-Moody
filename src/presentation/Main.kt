@@ -23,6 +23,7 @@ fun main() {
     val getIraqMeals = GetIraqMeals(mealRepository)
     val getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository)
     val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
+    val suggestMealsToGym = SuggestMealsToGym(mealRepository = mealRepository)
     val getMealsByDateUseCase = GetMealsByDateUseCase(mealRepository)
     val getRandomMealUseCase = GetRandomMealUseCase(mealRepository)
     val mealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository)
@@ -36,6 +37,7 @@ fun main() {
         getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
         exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
         getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository),
+        suggestMealsToGym = suggestMealsToGym,
         getMealsByDateUseCase = getMealsByDateUseCase,
         getSeafoodMealsSortedByProteinUseCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository)
     )

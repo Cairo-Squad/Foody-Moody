@@ -49,7 +49,7 @@ object CLIConstants {
             6.🍪
             7.🥑
             8.📅Get meals with their added date
-            9. 💪
+            9. 💪Gym Helper
             10.🌍Find Meals by Country
             11. 🍴
             12.🥔 Get 10 random meals that contain potatoes in their ingredients
@@ -67,6 +67,7 @@ object CLIConstants {
     const val SUGGEST_TEN_EASY_FOOD_MEALS = 4
     const val GUESS_PREPARATION_TIME_GAME_COMMAND_CODE = 5
     const val GET_MEALS_BY_DATE = 8
+    const val SUGGEST_MEALS_TO_GYM = 9
     const val RANDOM_10_POTATO_MEALS_COMMAND_CODE = 12
     const val SUGGEST_MEAL_MORE_THAN_700_CALORIES = 13
     const val ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE = 15
