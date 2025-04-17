@@ -8,13 +8,13 @@ class FakeMealRepositoryImp : MealRepository {
     override fun getAllMeals(): List<Meal> {
         val listOfMeals = listOf(
             Meal(
-                mealName = "italian Spaghetti Carbonara ",
+                mealName = "Spaghetti Carbonara",
                 mealId = 1,
                 mealDescription = "Classic Italian pasta dish with eggs, cheese, pancetta, and pepper.",
                 contributorId = 101,
                 minutes = 25,
                 submitted = LocalDate.of(2023, 5, 10),
-                tags = listOf("Italian", "Pasta", "Quick", "for-large-groups"),
+                tags = listOf("Italian", "Pasta", "Quick"),
                 nutrition = null, // You can fill this with a `Nutrition` object
                 numberOfSteps = "5",
                 steps = listOf("Boil pasta", "Cook pancetta", "Mix eggs and cheese", "Combine everything", "Serve hot"),
