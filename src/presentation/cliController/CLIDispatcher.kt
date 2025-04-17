@@ -1,7 +1,4 @@
 package presentation.cliController
-import data.MealCsvParser
-import data.MealCsvReader
-import data.MealRepositoryImpl
 import logic.GetRandomMealUseCase
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.FEATURE_5
@@ -16,7 +13,6 @@ import logic.*
 import model.Meal
 import model.ShowMeal
 import presentation.cliController.CLIConstants.TWO
-import java.io.File
 
 class CLIDispatcher (
     private val getIraqMeals: GetIraqMeals,
@@ -27,11 +23,8 @@ class CLIDispatcher (
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
     private val getMealsByDateUseCase: GetMealsByDateUseCase,
+    private val getSeafoodMealsSortedByProteinUseCase: GetSeafoodMealsSortedByProteinUseCase
 ) {
-
-
-
-    // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
         CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
         CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
@@ -42,7 +35,7 @@ class CLIDispatcher (
         CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame,
         FEATURE_5 to ::guessPreparationTime ,
         FEATURE_3 to ::displayIraqMeals,
-        14 to {getSeafoodMealsSortedByProtein()}
+       CLIConstants.GET_SEAFOOD_MEALS_CODE to ::getSeafoodMealsSortedByProtein
     )
 
     fun dispatch(userInput: Int) {
@@ -71,7 +64,6 @@ class CLIDispatcher (
         }
     }
 
-    // TODO: Implement your feature here as a private function and map it in the above map
 
 
     /**
@@ -231,14 +223,8 @@ class CLIDispatcher (
     }
     private fun getSeafoodMealsSortedByProtein(){
         try {
-            val fileName = "food.csv"
-            val csvFile = File(fileName)
-            val mealCsvReader = MealCsvReader(csvFile)
-            val mealCsvParser = MealCsvParser()
-            val mealRepository: MealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
-            val useCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository)
 
-            val sortedMeals: List<ShowMeal> = useCase.getSeafoodMealsSortedByProtein()
+            val sortedMeals: List<ShowMeal> = getSeafoodMealsSortedByProteinUseCase.getSeafoodMealsSortedByProtein()
 
             println("Seafood Meals Sorted by Protein:")
             sortedMeals.forEach {println(it.toString())}

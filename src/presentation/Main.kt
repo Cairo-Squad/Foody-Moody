@@ -30,7 +30,8 @@ fun main() {
         getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
         exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
         getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository),
-        getMealsByDateUseCase = getMealsByDateUseCase
+        getMealsByDateUseCase = getMealsByDateUseCase,
+        getSeafoodMealsSortedByProteinUseCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository)
     )
     val cliController = CLIController(cliDispatcher)
     cliController.start()

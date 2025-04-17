@@ -1,5 +1,7 @@
 package presentation.cliController
 
+import logic.GetSeafoodMealsSortedByProteinUseCase
+
 object CLIConstants {
 
     // region User Messages
@@ -69,6 +71,7 @@ object CLIConstants {
     const val SUGGEST_MEAL_MORE_THAN_700_CALORIES = 13
     const val ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE = 15
     const val EXIT_COMMAND_CODE = 16
+    const val  GET_SEAFOOD_MEALS_CODE=14
 
     // endregion
 
