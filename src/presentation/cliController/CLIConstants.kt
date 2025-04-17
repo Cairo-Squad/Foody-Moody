@@ -1,6 +1,5 @@
 package presentation.cliController
 
-import logic.GetSeafoodMealsSortedByProteinUseCase
 
 object CLIConstants {
 
@@ -43,7 +42,7 @@ object CLIConstants {
     val USER_MENU = """
             Available Options:-
             1.🍔 
-            2.🔍 
+            2.🔍Search Meals By Name
             3.🇮🇶 Get Iraq meals
             4.🍽️ Suggest 10 easy food meals
             5.⏱️Guess preparation time game
@@ -64,6 +63,7 @@ object CLIConstants {
     // endregion
 
     // region Command Codes
+    const val SEARCH_MEAL_BY_NAME = 2
     const val SUGGEST_TEN_EASY_FOOD_MEALS = 4
     const val GUESS_PREPARATION_TIME_GAME_COMMAND_CODE = 5
     const val GET_MEALS_BY_DATE = 8
@@ -71,7 +71,7 @@ object CLIConstants {
     const val SUGGEST_MEAL_MORE_THAN_700_CALORIES = 13
     const val ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE = 15
     const val EXIT_COMMAND_CODE = 16
-    const val  GET_SEAFOOD_MEALS_CODE=14
+    const val GET_SEAFOOD_MEALS_CODE=14
 
     // endregion
 
