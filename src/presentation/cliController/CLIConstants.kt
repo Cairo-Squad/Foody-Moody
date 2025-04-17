@@ -12,7 +12,7 @@ object CLIConstants {
     const val ENTER_VALID_OPTION_MESSAGE = "Please enter a valid option number >>> "
 
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
-
+    const val FEATURE_3 =3
     val USER_MENU = """
             Available Options:-
             1. 
