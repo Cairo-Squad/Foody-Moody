@@ -15,7 +15,6 @@ class CLIDispatcher {
     )
 
 
-
     fun dispatch(userInput: Int) {
         val command = commands[userInput]
         if (command != null) {
@@ -34,8 +33,22 @@ class CLIDispatcher {
         val mealCsvParser = MealCsvParser()
         val mealCsvReader = MealCsvReader(File("food.csv"))
         val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
-        val ingredientsGameGuess = IngredientsGameUseCase(mealRepository)
-
+        val ingredientsGame = IngredientsGameUseCase(mealRepository)
+        var bonus = 0
+        for (i in 0..14) {
+            val ingredientsGameResult = ingredientsGame.getRandomIngredients()
+            println("Meal name : ${ingredientsGameResult.mealName}")
+            println("Notice, Only one ingredient is correct.")
+            println("press 1,2 or 3 to choose ingredient from below :")
+            println("Ingredients are ${ingredientsGameResult.allIngredients.shuffled()}")
+            var userChoice = readlnOrNull()?.toInt() ?: -1
+            if (ingredientsGameResult.allIngredients.elementAt(--userChoice) == ingredientsGameResult.correctIngredient) {
+                println("Great , +1000 point");bonus += 1000
+            } else {
+                println("Sorry, correct ingredient is ${ingredientsGameResult.correctIngredient}")
+                break
+            }
+        }
     }
 
 }

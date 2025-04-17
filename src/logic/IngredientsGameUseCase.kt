@@ -10,7 +10,7 @@ class IngredientsGameUseCase(private val repository: MealRepository) {
         allMeals = repository.getAllMeals()
     }
 
-    fun ingredientsGame(): IngredientsGame {
+    fun getRandomIngredients(): IngredientsGameResult {
         val randomMeal: Meal = allMeals.random()
         val popularIngredients: List<String> = listOf(
             "winter squash", "mexican seasoning", "mixed spice", "honey", "butter", "olive oil", "salt",
@@ -28,18 +28,16 @@ class IngredientsGameUseCase(private val repository: MealRepository) {
             !correctMealIngredients.contains(ingredient)
         }.take(2)
 
-        return IngredientsGame(
+        return IngredientsGameResult(
             mealName = randomMeal.mealName!!,
             correctIngredient = correctIngredient,
-            wrongIngredients = wrongIngredients,
             allIngredients = wrongIngredients + correctIngredient
         )
     }
 }
 
-data class IngredientsGame(
+data class IngredientsGameResult(
     val mealName: String,
     val correctIngredient: String,
-    val wrongIngredients: List<String>,
     val allIngredients: List<String>
 )
