@@ -12,6 +12,12 @@ object CLIConstants {
     const val ENTER_VALID_OPTION_MESSAGE = "Please enter a valid option number >>> "
 
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
+    const val GUESS_GAME_MESSAGE = "Guess The Preparation Time For This Meal : "
+    const val GUESS_ERROR_MESSAGE = "invalid input please try again!"
+    const val CORRECT_GUESSING_MESSAGE = "CORRECT_GUESSING ✅"
+    const val TOO_LOW_GUSSING_MESSAGE = "Your guess is too low! ⬇️ Try again."
+    const val TOO_HIGH_GUSSING_MESSAGE = "Your guess is too high! ⬆️ Try again."
+
 
     const val RANDOM_POTATO_MEALS_MESSAGE = "10 random meals that contain potatoes in their ingredients:"
 
