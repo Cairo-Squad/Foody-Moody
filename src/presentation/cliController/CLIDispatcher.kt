@@ -9,6 +9,7 @@ import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 import logic.RandomPotatoMealsUseCase
+import model.Meal
 
 class CLIDispatcher (
     private val randomMealUseCase: GetRandomMealUseCase,
@@ -25,7 +26,7 @@ class CLIDispatcher (
         CLIConstants.RANDOM_10_POTATO_MEALS_COMMAND_CODE to ::get10RandomPotatoMeals,
         CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup,
         CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
-        4 to ::launchEasyFoodSuggestionsGame
+        CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame
     )
 
     fun dispatch(userInput: Int) {
@@ -106,10 +107,8 @@ class CLIDispatcher (
     }
 
     private fun launchEasyFoodSuggestionsGame() {
-        println("=== Ten random meals easy to prepare ===")
+        println(CLIConstants.TEN_RANDOM_EASY_FOOD_MEALS_MSG)
         getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
-            .forEachIndexed { index, meal ->
-                println("${index + 1}. ${meal.mealName}, ${meal.minutes} minutes, ${meal.numberOfIngredients} ingredients, ${meal.numberOfSteps} steps")
-            }
+            .forEach(::println)
     }
 }
