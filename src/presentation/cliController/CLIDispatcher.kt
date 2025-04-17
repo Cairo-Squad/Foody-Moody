@@ -6,6 +6,8 @@ import data.MealRepositoryImpl
 import logic.GetRandomMealUseCase
 import logic.GetSeafoodMealsSortedByProteinUseCase
 import logic.MealRepository
+import model.Meal
+import model.ShowMeal
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
@@ -71,10 +73,11 @@ class CLIDispatcher (private val randomMealUseCase: GetRandomMealUseCase){
             val mealRepository: MealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
             val useCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository)
 
-            val sortedMeals: List<String> = useCase.getSeafoodMealsSortedByProtein()
+            val sortedMeals: List<ShowMeal> = useCase.getSeafoodMealsSortedByProtein()
 
-            println("Seafood Meals Sorted by Protein: ")
-            sortedMeals.forEach { println(it) }
+            println("Seafood Meals Sorted by Protein:")
+            sortedMeals.forEach {println(it.toString())}
+
         } catch (e: Exception) {
             println("An error in seafood meals sorted by protein: ${e.message}")
         }
