@@ -13,7 +13,7 @@ class GetRandomEasyFoodMealsUseCase(
     }
 
     private fun isEasyFoodMeal(meal: Meal): Boolean {
-        return meal.isHighQualityMeal
+        return meal.mealName != null
                 && meal.minutes!! <= 30
                 && meal.numberOfIngredients!! <= 5
                 && meal.numberOfSteps!! <= 6
