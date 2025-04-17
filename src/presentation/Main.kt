@@ -1,4 +1,5 @@
 package presentation
+
 import data.DataHolder
 import logic.GetIraqMeals
 import data.MealCsvParser
@@ -8,6 +9,7 @@ import logic.*
 import presentation.cliController.CLIController
 import presentation.cliController.CLIDispatcher
 import logic.GetRandomMealUseCase
+import logic.mealSearch.SearchMealByNameUseCase
 import java.io.File
 
 
@@ -17,6 +19,7 @@ fun main() {
     val mealCsvParser = MealCsvParser()
     val dataHolder = DataHolder(mealCsvParser, mealCsvReader)
     val mealRepository = MealRepositoryImpl(dataHolder)
+    val searchMealsByName = SearchMealByNameUseCase(mealsRepository = mealRepository)
     val getIraqMeals = GetIraqMeals(mealRepository)
     val getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository)
     val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
@@ -25,6 +28,7 @@ fun main() {
     val mealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository)
     val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository)
     val cliDispatcher = CLIDispatcher(
+        searchMealByName = searchMealsByName,
         getMealsForLargeGroupUseCase = getMealsForLargeGroupUseCase,
         randomMealUseCase = getRandomMealUseCase,
         getIraqMeals = getIraqMeals,

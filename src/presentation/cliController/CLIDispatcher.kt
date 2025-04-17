@@ -1,4 +1,5 @@
 package presentation.cliController
+
 import logic.GetRandomMealUseCase
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.FEATURE_5
@@ -10,11 +11,13 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 import logic.*
+import logic.mealSearch.SearchMealByNameUseCase
 import model.Meal
 import model.ShowMeal
 import presentation.cliController.CLIConstants.TWO
 
-class CLIDispatcher (
+class CLIDispatcher(
+    private val searchMealByName: SearchMealByNameUseCase,
     private val getIraqMeals: GetIraqMeals,
     private val randomMealUseCase: GetRandomMealUseCase,
     private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase,
@@ -33,10 +36,10 @@ class CLIDispatcher (
         CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup,
         CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
         CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame,
-        FEATURE_5 to ::guessPreparationTime ,
+        FEATURE_5 to ::guessPreparationTime,
         FEATURE_3 to ::displayIraqMeals,
-        2 to searchMealByName(),
-       CLIConstants.GET_SEAFOOD_MEALS_CODE to ::getSeafoodMealsSortedByProtein
+        CLIConstants.SEARCH_MEAL_BY_NAME to ::searchMealByName,
+        CLIConstants.GET_SEAFOOD_MEALS_CODE to ::getSeafoodMealsSortedByProtein
     )
 
     fun dispatch(userInput: Int) {
@@ -61,10 +64,9 @@ class CLIDispatcher (
 
         println("🍽️ Iraqi Meals List:")
         iraqiMeals.forEach { meal ->
-            println("- ${meal.mealName }")
+            println("- ${meal.mealName}")
         }
     }
-
 
 
     /**
@@ -101,11 +103,11 @@ class CLIDispatcher (
 
     fun getMealsForLargeGroup() {
         getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
-            println("meal ${index+1} is: $meal")
+            println("meal ${index + 1} is: $meal")
         }
     }
 
-   private fun guessPreparationTime() {
+    private fun guessPreparationTime() {
         randomMealUseCase.getRandomMeal().also { meal ->
             print(GUESS_GAME_MESSAGE)
             println(meal.mealName)
@@ -126,9 +128,11 @@ class CLIDispatcher (
                             return
                         }
                     }
+
                     guessedPreparationTime < actualTime -> when (TWO) {
                         TWO -> println(TOO_LOW_GUSSING_MESSAGE)
                     }
+
                     else -> when (THREE) {
                         THREE -> println(TOO_HIGH_GUSSING_MESSAGE)
                     }
@@ -176,9 +180,9 @@ class CLIDispatcher (
 
     fun launchGetMealsByDate() {
         println(CLIConstants.ENTER_VALID_DATE)
-        while(true){
+        while (true) {
             val userInput = UserInputHandler.getStringUserInput()
-            if(userInput?.toIntOrNull() == 16){
+            if (userInput?.toIntOrNull() == 16) {
                 break
             }
             val result = getMealsByDateUseCase.getMealsByDate(date = userInput!!)
@@ -190,21 +194,21 @@ class CLIDispatcher (
                     meals.forEach {
                         println("Id: ${it.mealId}\t Name: ${it.mealName}")
                     }
-                    while(true) {
+                    while (true) {
                         println(CLIConstants.ENTER_MEAL_ID)
                         val mealIdInput = UserInputHandler.getUserInput()
                         val selectedMeal = meals.firstOrNull { it.mealId == mealIdInput }
-                        if(selectedMeal == null){
+                        if (selectedMeal == null) {
                             println(CLIConstants.ID_NOT_IN_LIST)
                             continue
-                        }else showMealDetails(selectedMeal)
+                        } else showMealDetails(selectedMeal)
                     }
                 }
             )
         }
     }
 
-    private fun showMealDetails(meal : Meal){
+    private fun showMealDetails(meal: Meal) {
         println("Meal Id: ${meal.mealId}")
         println("Meal name: ${meal.mealName}")
         println("Meal description: ${meal.mealDescription}")
@@ -222,13 +226,14 @@ class CLIDispatcher (
         getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
             .forEach(::println)
     }
-    private fun getSeafoodMealsSortedByProtein(){
+
+    private fun getSeafoodMealsSortedByProtein() {
         try {
 
             val sortedMeals: List<ShowMeal> = getSeafoodMealsSortedByProteinUseCase.getSeafoodMealsSortedByProtein()
 
             println("Seafood Meals Sorted by Protein:")
-            sortedMeals.forEach {println(it.toString())}
+            sortedMeals.forEach { println(it.toString()) }
 
         } catch (e: Exception) {
             println("An error in seafood meals sorted by protein: ${e.message}")
@@ -238,26 +243,17 @@ class CLIDispatcher (
 
     // TODO: Implement your feature here as a private function and map it in the above map
 
-    private fun searchMealByName(): () -> Unit {
-        val mealCsvParser = MealCsvParser()
-        val mealCsvReader = MealCsvReader(File("food.csv"))
-        val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
-        val searchMealByNameUseCase = SearchMealByNameUseCase(mealRepository)
-        return {
-            println("Enter Meal Name: ")
-            val mealName = readlnOrNull() ?: ""
-            val matchedMeals = searchMealByNameUseCase.searchMealByName(mealName).chunked(5)
-            for ((index, meals) in matchedMeals.withIndex()) {
-                println("\n Top Matched Meals are : \n $meals ")
-                println("\n Press 1 to get another matches or 0 to exist:")
-                if ((readlnOrNull() ?: 0) == 1) {
-                    if (matchedMeals[index.plus(1)].isEmpty()) {
-                        println("sorry no more matched meals")
-                        break
-                    } else
-                        continue
-                } else break
-            }
+    private fun searchMealByName() {
+        println("Enter Meal Name: ")
+        val mealName = UserInputHandler.getStringUserInput() ?: ""
+
+        val matchedMeals = searchMealByName.searchMealByName(mealName).chunked(5)
+
+        for (fiveMeals in matchedMeals) {
+            println("Top Matched Meals are : \n $fiveMeals ")
+            println("Press 1 to get another matches or 0 to exist:")
+
+            if ((UserInputHandler.getUserInput() ?: 0) == 1) continue; else break
         }
     }
 }
