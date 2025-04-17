@@ -43,7 +43,7 @@ class MealCsvParser {
             submitted = LocalDate.parse(list[ColumnIndex.SUBMITTED]),
             tags = structTagsList(list[ColumnIndex.TAGS]),
             nutrition = structNutritionObject(list[ColumnIndex.NUTRITION]),
-            numberOfSteps = list[ColumnIndex.N_STEPS],
+            numberOfSteps = list[ColumnIndex.N_STEPS].toInt(),
             steps = structStepsList(list[ColumnIndex.STEPS]),
             ingredients = structIngredientsList(list[ColumnIndex.INGREDIENTS]),
             numberOfIngredients = list[ColumnIndex.N_INGREDIENTS].toInt()
