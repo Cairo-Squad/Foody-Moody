@@ -7,9 +7,14 @@ class GetMealsForLargeGroupUseCase(
 ) {
     fun getAllMealsForLargeGroup(): List<Meal> {
         return mealRepository.getAllMeals()
-            .filter { meal ->
-                meal.mealName?.contains("Italian", ignoreCase = true) == true &&
-                        meal.tags?.contains("for-large-groups") == true
-            }
+            .filter { meal -> isItalianMeal(meal) && isMealForLargeGroup(meal) }
+    }
+
+    private fun isItalianMeal(meal: Meal): Boolean {
+        return meal.mealName?.contains("Italian", ignoreCase = true) == true
+    }
+
+    private fun isMealForLargeGroup(meal: Meal): Boolean {
+        return meal.tags?.contains("for-large-groups") == true
     }
 }
