@@ -11,7 +11,9 @@ import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 import logic.*
 import model.Meal
+import model.ShowMeal
 import presentation.cliController.CLIConstants.TWO
+
 class CLIDispatcher (
     private val getIraqMeals: GetIraqMeals,
     private val randomMealUseCase: GetRandomMealUseCase,
@@ -21,11 +23,8 @@ class CLIDispatcher (
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
     private val getMealsByDateUseCase: GetMealsByDateUseCase,
+    private val getSeafoodMealsSortedByProteinUseCase: GetSeafoodMealsSortedByProteinUseCase
 ) {
-
-
-
-    // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
         CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
         CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
@@ -36,7 +35,7 @@ class CLIDispatcher (
         CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame,
         FEATURE_5 to ::guessPreparationTime ,
         FEATURE_3 to ::displayIraqMeals,
-
+       CLIConstants.GET_SEAFOOD_MEALS_CODE to ::getSeafoodMealsSortedByProtein
     )
 
     fun dispatch(userInput: Int) {
@@ -65,7 +64,6 @@ class CLIDispatcher (
         }
     }
 
-    // TODO: Implement your feature here as a private function and map it in the above map
 
 
     /**
@@ -223,4 +221,18 @@ class CLIDispatcher (
         getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
             .forEach(::println)
     }
+    private fun getSeafoodMealsSortedByProtein(){
+        try {
+
+            val sortedMeals: List<ShowMeal> = getSeafoodMealsSortedByProteinUseCase.getSeafoodMealsSortedByProtein()
+
+            println("Seafood Meals Sorted by Protein:")
+            sortedMeals.forEach {println(it.toString())}
+
+        } catch (e: Exception) {
+            println("An error in seafood meals sorted by protein: ${e.message}")
+        }
+
+    }
+
 }
