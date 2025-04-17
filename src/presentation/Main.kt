@@ -7,17 +7,10 @@ import logic.*
 import presentation.cliController.CLIController
 import presentation.cliController.CLIDispatcher
 import logic.GetRandomMealUseCase
-import logic.MealRepository
 import java.io.File
 
 
 fun main() {
-   val mealsFile = File("food.csv")
-    val mealCsvReader = MealCsvReader(mealsFile)
-    val mealCsvParser = MealCsvParser()
-    val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
-    val randomMealUseCase = GetRandomMealUseCase(mealRepository)
-    val cliDispatcher = CLIDispatcher(randomMealUseCase)
     val mealsFile = File("food.csv")
     val mealCsvReader = MealCsvReader(mealsFile)
     val mealCsvParser = MealCsvParser()
