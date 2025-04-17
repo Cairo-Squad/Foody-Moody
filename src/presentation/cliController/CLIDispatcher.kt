@@ -11,7 +11,7 @@ import logic.RandomPotatoMealsUseCase
 
 class CLIDispatcher (
     private val randomMealUseCase: GetRandomMealUseCase,
-    private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase
+    private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase,
     private val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase,
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase
 ){
