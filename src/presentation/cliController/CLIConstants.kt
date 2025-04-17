@@ -20,6 +20,11 @@ object CLIConstants {
 
 
     const val RANDOM_POTATO_MEALS_MESSAGE = "10 random meals that contain potatoes in their ingredients:"
+    const val MEALS_MORE_THAN_700_CALORIES_WELCOME_MSG = "==== Meals with more than 700 Calories ===="
+    const val NO_MORE_MEALS_AVAILABLE = "No more meals with more than 700 calories"
+    const val DO_YOU_LIKE_MEAL = "Do you like it? \n" +
+            " 1. like \n" +
+            " 2. dislike "
 
     val USER_MENU = """
             Available Options:-
@@ -35,7 +40,7 @@ object CLIConstants {
             10. 
             11. 
             12. Get 10 random meals that contain potatoes in their ingredients
-            13. 
+            13. Suggest a meal with more than 700 calories
             14. 
             15. Get Italian meals for large groups
             16. Exit
@@ -47,6 +52,7 @@ object CLIConstants {
     // region Command Codes
     const val GUESS_PREPARATION_TIME_GAME_COMMAND_CODE = 5
     const val RANDOM_10_POTATO_MEALS_COMMAND_CODE = 12
+    const val SUGGEST_MEAL_MORE_THAN_700_CALORIES = 13
     const val ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE = 15
     const val EXIT_COMMAND_CODE = 16
 
