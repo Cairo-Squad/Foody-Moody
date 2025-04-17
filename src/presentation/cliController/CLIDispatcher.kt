@@ -49,7 +49,7 @@ class CLIDispatcher {
         println("Searching for meals from $country...")
 
 
-        val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(initializerObject())
+        val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(initMealsRepoObject())
         val matchingMeals = exploreOtherCountriesFoodCultureUseCase.getTwentyRandomMealByCountry(
             countryName = country
         )
@@ -64,7 +64,7 @@ class CLIDispatcher {
         }
     }
 
-    private fun initializerObject(): MealRepository{
+    private fun initMealsRepoObject(): MealRepository{
         return MealRepositoryImpl(MealCsvParser(), MealCsvReader(File("food.csv")))
     }
 
