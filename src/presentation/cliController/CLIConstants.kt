@@ -18,16 +18,16 @@ object CLIConstants {
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
     const val NO_RESULTS_FOUND = "No result found in that date."
     const val ENTER_VALID_DATE_HINT = "please enter a valid date in format like YYYY-MM-DD"
-    const val FEATURE_3 =3
+    const val FEATURE_3 = 3
     const val GUESS_GAME_MESSAGE = "Guess The Preparation Time For This Meal : "
     const val GUESS_ERROR_MESSAGE = "invalid input please try again!"
     const val CORRECT_GUESSING_MESSAGE = "CORRECT_GUESSING ✅"
     const val TOO_LOW_GUSSING_MESSAGE = "Your guess is too low! ⬇️ Try again."
     const val TOO_HIGH_GUSSING_MESSAGE = "Your guess is too high! ⬆️ Try again."
-    const val ONE=1
-    const val TWO=2
-    const val THREE=3
-    const val FEATURE_5=5
+    const val ONE = 1
+    const val TWO = 2
+    const val THREE = 3
+    const val FEATURE_5 = 5
 
 
     const val RANDOM_POTATO_MEALS_MESSAGE = "10 random meals that contain potatoes in their ingredients:"
@@ -51,7 +51,7 @@ object CLIConstants {
             8.📅Get meals with their added date
             9. 💪Gym Helper
             10.🌍Find Meals by Country
-            11. 🍴
+            11.🍴Ingredients Guess Game
             12.🥔 Get 10 random meals that contain potatoes in their ingredients
             13.🍳Suggest a meal with more than 700 calories
             14.🐠 Get Seafood Meals Sorted By Protein 
@@ -68,11 +68,12 @@ object CLIConstants {
     const val GUESS_PREPARATION_TIME_GAME_COMMAND_CODE = 5
     const val GET_MEALS_BY_DATE = 8
     const val SUGGEST_MEALS_TO_GYM = 9
+    const val INGREDIENTS_GUESS_GAME = 11
     const val RANDOM_10_POTATO_MEALS_COMMAND_CODE = 12
     const val SUGGEST_MEAL_MORE_THAN_700_CALORIES = 13
     const val ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE = 15
     const val EXIT_COMMAND_CODE = 16
-    const val GET_SEAFOOD_MEALS_CODE=14
+    const val GET_SEAFOOD_MEALS_CODE = 14
 
     // endregion
 
