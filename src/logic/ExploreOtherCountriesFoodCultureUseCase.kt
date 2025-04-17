@@ -9,7 +9,19 @@ class ExploreOtherCountriesFoodCultureUseCase(
     fun getTwentyRandomMealByCountry(
          countryName: String
     ): List<Meal> {
-        return repo.getTwentyRandomMealByCountry(countryName)
+        val randomMealsList = mutableListOf<Meal>()
+        val searchTerm = countryName.trim().lowercase()
+
+        repo.getAllMeals().forEach { meal ->
+            if (meal.tags?.any { tag ->
+                    tag.trim().lowercase() == searchTerm
+                } == true) {
+                randomMealsList.add(meal)
+            }
+        }
+
+        return randomMealsList.shuffled().take(20)
     }
+
 
 }

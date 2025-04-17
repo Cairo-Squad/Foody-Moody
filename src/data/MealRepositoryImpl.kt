@@ -27,19 +27,4 @@ class MealRepositoryImpl(
     }
 
 
-    override fun getTwentyRandomMealByCountry(countryName: String): List<Meal> {
-        val randomMealsList = mutableListOf<Meal>()
-        val searchTerm = countryName.trim().lowercase()
-
-        getAllMeals().forEach { meal ->
-            if (meal.tags?.any { tag ->
-                    tag.trim().lowercase() == searchTerm
-                } == true) {
-                randomMealsList.add(meal)
-            }
-        }
-
-        return randomMealsList.shuffled().take(20)
-    }
-
 }
