@@ -3,10 +3,7 @@ package presentation
 import data.MealCsvParser
 import data.MealCsvReader
 import data.MealRepositoryImpl
-import logic.GetMealsForLargeGroupUseCase
-import logic.GetMealsMoreThan700CaloriesUseCase
-import logic.GetRandomMealUseCase
-import logic.RandomPotatoMealsUseCase
+import logic.*
 import presentation.cliController.CLIController
 import presentation.cliController.CLIDispatcher
 import java.io.File
@@ -20,12 +17,13 @@ fun main() {
     val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
     val getRandomMealUseCase = GetRandomMealUseCase(mealRepository)
     val mealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository)
+    val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository)
     val cliDispatcher = CLIDispatcher(
         getMealsForLargeGroupUseCase = getMealsForLargeGroupUseCase,
         randomMealUseCase = getRandomMealUseCase,
         randomPotatoMealsUseCase = randomPotatoMealsUseCase,
-        getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase
-
+        getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
+        exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
     )
     val cliController = CLIController(cliDispatcher)
     cliController.start()

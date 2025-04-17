@@ -38,7 +38,7 @@ object CLIConstants {
             7. 
             8. 
             9. 
-            10. 
+            10. Find Meals by Country
             11. 
             12. Get 10 random meals that contain potatoes in their ingredients
             13. Suggest a meal with more than 700 calories
@@ -58,5 +58,7 @@ object CLIConstants {
     const val EXIT_COMMAND_CODE = 16
 
     // endregion
+
+    const val GET_MEALS_BY_COUNTRY = 10
 
 }
