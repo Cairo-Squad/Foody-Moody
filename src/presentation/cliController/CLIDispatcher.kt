@@ -49,6 +49,7 @@ class CLIDispatcher {
                 break
             }
         }
+        println("Your Bonus is = $bonus")
     }
 
 }
