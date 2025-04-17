@@ -10,6 +10,7 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 import logic.*
+import model.Meal
 import presentation.cliController.CLIConstants.TWO
 class CLIDispatcher (
     private val getIraqMeals: GetIraqMeals,
@@ -19,6 +20,7 @@ class CLIDispatcher (
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase,
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
+    private val getMealsByDateUseCase: GetMealsByDateUseCase,
 ) {
 
 
@@ -27,6 +29,7 @@ class CLIDispatcher (
     private val commands = mapOf<Int, () -> Unit>(
         CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
         CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
+        CLIConstants.GET_MEALS_BY_DATE to ::launchGetMealsByDate,
         CLIConstants.RANDOM_10_POTATO_MEALS_COMMAND_CODE to ::get10RandomPotatoMeals,
         CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup,
         CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
@@ -170,6 +173,49 @@ class CLIDispatcher (
             }
 
         println(CLIConstants.NO_MORE_MEALS_AVAILABLE)
+    }
+
+    fun launchGetMealsByDate() {
+        println(CLIConstants.ENTER_VALID_DATE)
+        while(true){
+            val userInput = UserInputHandler.getStringUserInput()
+            if(userInput?.toIntOrNull() == 16){
+                break
+            }
+            val result = getMealsByDateUseCase.getMealsByDate(date = userInput!!)
+            result.fold(
+                onFailure = {
+                    println(it.message)
+                },
+                onSuccess = { meals ->
+                    meals.forEach {
+                        println("Id: ${it.mealId}\t Name: ${it.mealName}")
+                    }
+                    while(true) {
+                        println(CLIConstants.ENTER_MEAL_ID)
+                        val mealIdInput = UserInputHandler.getUserInput()
+                        val selectedMeal = meals.firstOrNull { it.mealId == mealIdInput }
+                        if(selectedMeal == null){
+                            println(CLIConstants.ID_NOT_IN_LIST)
+                            continue
+                        }else showMealDetails(selectedMeal)
+                    }
+                }
+            )
+        }
+    }
+
+    private fun showMealDetails(meal : Meal){
+        println("Meal Id: ${meal.mealId}")
+        println("Meal name: ${meal.mealName}")
+        println("Meal description: ${meal.mealDescription}")
+        println("Meal preparation time: ${meal.minutes}")
+        println("Meal number Of Ingredients: ${meal.numberOfIngredients}")
+        println("Meal ingredients: ${meal.ingredients}")
+        println("Meal steps: ${meal.steps}")
+        println("Meal tags: ${meal.tags}")
+        println("Meal contributorId: ${meal.contributorId}")
+        println("Meal publish date: ${meal.submitted}")
     }
 
     private fun launchEasyFoodSuggestionsGame() {

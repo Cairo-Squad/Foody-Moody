@@ -10,8 +10,13 @@ object CLIConstants {
 
     const val OPTION_INPUT_MESSAGE = "Please enter the number of the option you need >>> "
     const val ENTER_VALID_OPTION_MESSAGE = "Please enter a valid option number >>> "
+    const val ENTER_VALID_DATE = "Please enter a valid option number >>> "
+    const val ENTER_MEAL_ID = "Enter meal id to show full details"
+    const val ID_NOT_IN_LIST = "PLease enter id that was in the retrieved meals"
 
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
+    const val NO_RESULTS_FOUND = "No result found in that date."
+    const val ENTER_VALID_DATE_HINT = "please enter a valid date in format like YYYY-MM-DD"
     const val FEATURE_3 =3
     const val GUESS_GAME_MESSAGE = "Guess The Preparation Time For This Meal : "
     const val GUESS_ERROR_MESSAGE = "invalid input please try again!"
@@ -42,7 +47,7 @@ object CLIConstants {
             5. Guess preparation time game
             6. 
             7. 
-            8. 
+            8. Get meals with their added date
             9. 
             10. Find Meals by Country
             11. 
@@ -59,6 +64,7 @@ object CLIConstants {
     // region Command Codes
     const val SUGGEST_TEN_EASY_FOOD_MEALS = 4
     const val GUESS_PREPARATION_TIME_GAME_COMMAND_CODE = 5
+    const val GET_MEALS_BY_DATE = 8
     const val RANDOM_10_POTATO_MEALS_COMMAND_CODE = 12
     const val SUGGEST_MEAL_MORE_THAN_700_CALORIES = 13
     const val ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE = 15

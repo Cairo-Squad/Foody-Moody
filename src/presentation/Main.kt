@@ -18,6 +18,7 @@ fun main() {
     val getIraqMeals = GetIraqMeals(mealRepository)
     val getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository)
     val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
+    val getMealsByDateUseCase = GetMealsByDateUseCase(mealRepository)
     val getRandomMealUseCase = GetRandomMealUseCase(mealRepository)
     val mealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository)
     val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository)
@@ -28,8 +29,8 @@ fun main() {
         randomPotatoMealsUseCase = randomPotatoMealsUseCase,
         getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
         exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
-        getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository)
-
+        getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository),
+        getMealsByDateUseCase = getMealsByDateUseCase
     )
     val cliController = CLIController(cliDispatcher)
     cliController.start()
