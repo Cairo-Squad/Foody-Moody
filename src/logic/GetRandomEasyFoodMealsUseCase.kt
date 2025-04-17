@@ -14,8 +14,8 @@ class GetRandomEasyFoodMealsUseCase(
 
     private fun isEasyFoodMeal(meal: Meal): Boolean {
         return meal.mealName != null
-                && meal.minutes!! <= 30
-                && meal.numberOfIngredients!! <= 5
-                && meal.numberOfSteps!! <= 6
+                && meal.minutes!! <= LogicConstants.EASY_FOOD_MINIMUM_MINUTES
+                && meal.numberOfIngredients!! <= LogicConstants.EASY_FOOD_MINIMUM_INGREDIENTS
+                && meal.numberOfSteps!! <= LogicConstants.EASY_FOOD_MINIMUM_STEPS
     }
 }
