@@ -1,5 +1,7 @@
 package logic
 
+import logic.LogicConstants.FOR_LARGE_GROUP
+import logic.LogicConstants.ITALIAN
 import model.Meal
 
 class GetMealsForLargeGroupUseCase(
@@ -7,14 +9,16 @@ class GetMealsForLargeGroupUseCase(
 ) {
     fun getAllMealsForLargeGroup(): List<Meal> {
         return mealRepository.getAllMeals()
-            .filter { meal -> isItalianMeal(meal) && isMealForLargeGroup(meal) }
+            .filter { meal ->
+                isItalianMeal(meal) && isMealForLargeGroup(meal)
+            }
     }
 
     private fun isItalianMeal(meal: Meal): Boolean {
-        return meal.mealName?.contains("Italian", ignoreCase = true) == true
+        return meal.mealName?.contains(ITALIAN, ignoreCase = true) == true
     }
 
     private fun isMealForLargeGroup(meal: Meal): Boolean {
-        return meal.tags?.contains("for-large-groups") == true
+        return meal.tags?.any { it.trim() == FOR_LARGE_GROUP } == true
     }
 }

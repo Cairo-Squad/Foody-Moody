@@ -29,7 +29,7 @@ object CLIConstants {
             12. 
             13. 
             14. 
-            15. 
+            15. I want Italian meal for large groups.
             16. Exit
             
         """.trimIndent()

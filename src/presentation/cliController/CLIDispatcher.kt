@@ -8,12 +8,12 @@ class CLIDispatcher(
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
-
+        15 to ::getMealsForLargeGroup
     )
 
     fun getMealsForLargeGroup() {
         getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
-            println("meal $index is: $meal")
+            println("meal ${index+1} is: $meal")
         }
     }
 
