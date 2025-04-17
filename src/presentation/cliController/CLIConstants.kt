@@ -3,7 +3,7 @@ package presentation.cliController
 object CLIConstants {
 
     // region User Messages
-    const val WELCOME_MESSAGE = "👋🏻 Welcome to your Personal Finance Tracker!"
+    const val WELCOME_MESSAGE = "👋🏻 Welcome to Food Change Mood!"
     const val EXIT_MESSAGE = "Thanks for your time, see you again!"
 
     const val SEPARATOR = "------------------------------------------------------------"
@@ -19,23 +19,25 @@ object CLIConstants {
     const val TOO_HIGH_GUSSING_MESSAGE = "Your guess is too high! ⬆️ Try again."
 
 
+    const val RANDOM_POTATO_MEALS_MESSAGE = "10 random meals that contain potatoes in their ingredients:"
+
     val USER_MENU = """
             Available Options:-
             1. 
             2. 
             3. 
             4. 
-            5. 
+            5. Guess preparation time game
             6. 
             7. 
             8. 
             9. 
             10. 
             11. 
-            12. 
+            12. Get 10 random meals that contain potatoes in their ingredients
             13. 
             14. 
-            15. 
+            15. Get Italian meals for large groups
             16. Exit
             
         """.trimIndent()
@@ -43,6 +45,9 @@ object CLIConstants {
     // endregion
 
     // region Command Codes
+    const val GUESS_PREPARATION_TIME_GAME_COMMAND_CODE = 5
+    const val RANDOM_10_POTATO_MEALS_COMMAND_CODE = 12
+    const val ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE = 15
     const val EXIT_COMMAND_CODE = 16
 
     // endregion

@@ -1,22 +1,28 @@
 package presentation
 
-import data.FakeMealRepositoryImp
 import data.MealCsvParser
 import data.MealCsvReader
 import data.MealRepositoryImpl
 import logic.GetMealsForLargeGroupUseCase
-import logic.MealRepository
 import logic.GetRandomMealUseCase
+import logic.RandomPotatoMealsUseCase
 import presentation.cliController.CLIController
 import presentation.cliController.CLIDispatcher
 import java.io.File
 
 fun main() {
-    val mealRepositry:MealRepository=FakeMealRepositoryImp()
-    val randomMealUseCase = GetRandomMealUseCase(mealRepositry)
-    val cliDispatcher = CLIDispatcher(randomMealUseCase)
+    val mealsFile = File("food.csv")
+    val mealCsvReader = MealCsvReader(mealsFile)
+    val mealCsvParser = MealCsvParser()
+    val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
+    val getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository)
+    val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
+    val getRandomMealUseCase = GetRandomMealUseCase(mealRepository)
+    val cliDispatcher = CLIDispatcher(
+        getMealsForLargeGroupUseCase = getMealsForLargeGroupUseCase,
+        randomMealUseCase = getRandomMealUseCase,
+        randomPotatoMealsUseCase = randomPotatoMealsUseCase
+    )
     val cliController = CLIController(cliDispatcher)
     cliController.start()
-    cliDispatcher.guessPreparationTime()
-
 }

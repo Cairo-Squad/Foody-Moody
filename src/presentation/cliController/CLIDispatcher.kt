@@ -6,23 +6,19 @@ import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
-
+import logic.RandomPotatoMealsUseCase
 
 class CLIDispatcher(
-    private val getMealsForLargeGroupUseCase : GetMealsForLargeGroupUseCase,
-  private val randomMealUseCase: GetRandomMealUseCase
+    private val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase,
+    private val randomMealUseCase: GetRandomMealUseCase,
+    private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase
 ) {
 
-    // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
-        5 to { guessPreparationTime() }
+        CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
+        CLIConstants.RANDOM_10_POTATO_MEALS_COMMAND_CODE to ::get10RandomPotatoMeals,
+        CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup,
     )
-
-    fun getMealsForLargeGroup() {
-        getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
-            println("meal $index is: $meal")
-        }
-    }
 
     fun dispatch(userInput: Int) {
         val command = commands[userInput]
@@ -37,9 +33,13 @@ class CLIDispatcher(
         return option == CLIConstants.EXIT_COMMAND_CODE || option in commands.keys
     }
 
-    // TODO: Implement your feature here as a private function and map it in the above map
-   fun guessPreparationTime()
-    {
+    fun getMealsForLargeGroup() {
+        getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
+            println("meal $index is: $meal")
+        }
+    }
+
+    private fun guessPreparationTime() {
         randomMealUseCase.getRandomMeal().also { meal ->
             print(GUESS_GAME_MESSAGE)
             println(meal.mealName)
@@ -63,5 +63,11 @@ class CLIDispatcher(
             println("❌ Out of attempts! The correct preparation time for ${meal.mealName} is $actualTime minutes.")
         }
 
+    }
+
+    fun get10RandomPotatoMeals() {
+        val random10PotatoMeals = randomPotatoMealsUseCase.get10RandomPotatoMeals()
+        println(CLIConstants.RANDOM_POTATO_MEALS_MESSAGE)
+        random10PotatoMeals.forEach(::println)
     }
 }
