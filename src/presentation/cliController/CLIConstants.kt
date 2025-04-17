@@ -42,22 +42,22 @@ object CLIConstants {
 
     val USER_MENU = """
             Available Options:-
-            1. 
-            2. 
-            3. Get Iraq meals
-            4. Suggest 10 easy food meals
-            5. Guess preparation time game
-            6. 
-            7. 
-            8. Get meals with their added date
-            9. 
-            10. Find Meals by Country
-            11. 
-            12. Get 10 random meals that contain potatoes in their ingredients
-            13. Suggest a meal with more than 700 calories
-            14. 🐠 Get Seafood Meals Sorted By Protein 
-            15. Get Italian meals for large groups
-            16. Exit
+            1.🍔 
+            2.🔍 
+            3.🇮🇶 Get Iraq meals
+            4.🍽️ Suggest 10 easy food meals
+            5.⏱️Guess preparation time game
+            6.🍪
+            7.🥑
+            8.📅Get meals with their added date
+            9. 💪
+            10.🌍Find Meals by Country
+            11. 🍴
+            12.🥔 Get 10 random meals that contain potatoes in their ingredients
+            13.🍳Suggest a meal with more than 700 calories
+            14.🐠 Get Seafood Meals Sorted By Protein 
+            15.🍝Get Italian meals for large groups
+            16.❌Exit
             
         """.trimIndent()
 
