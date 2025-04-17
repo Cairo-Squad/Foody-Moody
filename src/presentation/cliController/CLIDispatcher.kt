@@ -2,6 +2,7 @@ package presentation.cliController
 import logic.GetRandomMealUseCase
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.FEATURE_5
+import presentation.cliController.CLIConstants.FEATURE_3
 import presentation.cliController.CLIConstants.GUESS_ERROR_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
 import presentation.cliController.CLIConstants.ONE
@@ -30,8 +31,8 @@ class CLIDispatcher (
         CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup,
         CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
         CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame,
-        FEATURE_5 to ::guessPreparationTime
-         FEATURE_3  to ::displayIraqMeals,
+        FEATURE_5 to ::guessPreparationTime ,
+        FEATURE_3 to ::displayIraqMeals,
 
     )
 

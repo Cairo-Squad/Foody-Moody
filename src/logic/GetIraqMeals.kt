@@ -1,7 +1,7 @@
 package logic
 
-import logic.LogicConstant.IRAQ
-import logic.LogicConstant.IRAQI
+import logic.LogicConstants.IRAQ
+import logic.LogicConstants.IRAQI
 import model.Meal
 
 class GetIraqMeals(private val meals: MealRepository) {
