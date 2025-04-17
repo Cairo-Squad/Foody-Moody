@@ -6,7 +6,9 @@ import data.MealRepositoryImpl
 import logic.*
 import presentation.cliController.CLIController
 import presentation.cliController.CLIDispatcher
+import logic.GetRandomMealUseCase
 import java.io.File
+
 
 fun main() {
     val mealsFile = File("food.csv")

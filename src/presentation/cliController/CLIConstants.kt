@@ -17,6 +17,10 @@ object CLIConstants {
     const val CORRECT_GUESSING_MESSAGE = "CORRECT_GUESSING ✅"
     const val TOO_LOW_GUSSING_MESSAGE = "Your guess is too low! ⬇️ Try again."
     const val TOO_HIGH_GUSSING_MESSAGE = "Your guess is too high! ⬆️ Try again."
+    const val ONE=1
+    const val TWO=2
+    const val THREE=3
+    const val FEATURE_5=5
 
 
     const val RANDOM_POTATO_MEALS_MESSAGE = "10 random meals that contain potatoes in their ingredients:"
