@@ -22,6 +22,7 @@ object CLIConstants {
     const val RANDOM_POTATO_MEALS_MESSAGE = "10 random meals that contain potatoes in their ingredients:"
     const val MEALS_MORE_THAN_700_CALORIES_WELCOME_MSG = "==== Meals with more than 700 Calories ===="
     const val NO_MORE_MEALS_AVAILABLE = "No more meals with more than 700 calories"
+    const val NO_DESCRIPTION_AVAILABLE = "No description available"
     const val DO_YOU_LIKE_MEAL = "Do you like it? \n" +
             " 1. like \n" +
             " 2. dislike "
