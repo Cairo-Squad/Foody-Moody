@@ -1,6 +1,5 @@
-package logic.usecases
+package logic
 
-import logic.MealRepository
 import model.Meal
 
 class RandomPotatoMealsUseCase(
