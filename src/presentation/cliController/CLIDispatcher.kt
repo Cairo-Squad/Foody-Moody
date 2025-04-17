@@ -29,12 +29,6 @@ class CLIDispatcher (
         CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame
     )
 
-    fun getMealsForLargeGroup() {
-        getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
-            println("meal ${index+1} is: $meal")
-        }
-    }
-
     fun dispatch(userInput: Int) {
         val command = commands[userInput]
         if (command != null) {
@@ -85,7 +79,7 @@ class CLIDispatcher (
 
     fun getMealsForLargeGroup() {
         getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
-            println("meal $index is: $meal")
+            println("meal ${index+1} is: $meal")
         }
     }
 
