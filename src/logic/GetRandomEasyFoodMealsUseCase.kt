@@ -16,6 +16,6 @@ class GetRandomEasyFoodMealsUseCase(
         return meal.mealName != null
                 && meal.minutes!! <= LogicConstants.EASY_FOOD_MINIMUM_MINUTES
                 && meal.numberOfIngredients!! <= LogicConstants.EASY_FOOD_MINIMUM_INGREDIENTS
-                && meal.numberOfSteps!! <= LogicConstants.EASY_FOOD_MINIMUM_STEPS
+                && meal.numberOfSteps!!.toInt() <= LogicConstants.EASY_FOOD_MINIMUM_STEPS
     }
 }
