@@ -19,9 +19,16 @@ class SuggestMealsToGym(private val mealRepository: MealRepositoryImpl) {
         calories: Float,
         protein: Float
     ): Boolean {
-       return meal.nutrition?.calories != null && meal.nutrition.protein != null &&
-                meal.nutrition.calories in (calories.minus(50)..(calories.plus(50))) &&
-                meal.nutrition.protein in (protein.minus(5)..(protein.plus(5)))
+        return meal.nutrition?.calories != null && meal.nutrition.protein != null &&
+                meal.nutrition.calories in
+                (calories.minus(CALORIES_APPROXIMATION)..(calories.plus(CALORIES_APPROXIMATION))) &&
+                meal.nutrition.protein in
+                (protein.minus(PROTEIN_APPROXIMATION)..(protein.plus(PROTEIN_APPROXIMATION)))
     }
 
+    companion object {
+        private const val CALORIES_APPROXIMATION = 50
+        private const val PROTEIN_APPROXIMATION = 5
+
+    }
 }
