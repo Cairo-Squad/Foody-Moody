@@ -8,4 +8,6 @@ object LogicConstants {
     const val EASY_FOOD_MINIMUM_STEPS = 6
     const val MINIMUM_CALORIES = 700
     const val POTATOES_INGREDIENT = "potatoes"
+    const val IRAQ = "Iraq"
+    const val IRAQI = "Iraqi"
 }

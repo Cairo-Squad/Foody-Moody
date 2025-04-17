@@ -1,4 +1,0 @@
-package logic
-
-object LogicConstant {
-}
