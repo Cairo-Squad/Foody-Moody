@@ -1,17 +1,28 @@
 package presentation.cliController
 
+import logic.GetMealsForLargeGroupUseCase
 import logic.GetRandomMealUseCase
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 
-class CLIDispatcher (private val randomMealUseCase: GetRandomMealUseCase){
+
+class CLIDispatcher(
+    private val getMealsForLargeGroupUseCase : GetMealsForLargeGroupUseCase,
+  private val randomMealUseCase: GetRandomMealUseCase
+) {
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
         5 to { guessPreparationTime() }
     )
+
+    fun getMealsForLargeGroup() {
+        getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
+            println("meal $index is: $meal")
+        }
+    }
 
     fun dispatch(userInput: Int) {
         val command = commands[userInput]
