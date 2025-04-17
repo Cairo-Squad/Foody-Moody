@@ -24,7 +24,6 @@ fun main() {
         randomPotatoMealsUseCase = randomPotatoMealsUseCase,
         getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
         exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
-        getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
         getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository)
 
     )

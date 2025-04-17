@@ -1,18 +1,13 @@
 package presentation.cliController
 
-import logic.GetMealsForLargeGroupUseCase
-import logic.GetMealsMoreThan700CaloriesUseCase
-import logic.GetRandomMealUseCase
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
-import logic.RandomPotatoMealsUseCase
 import data.MealCsvParser
 import data.MealCsvReader
 import data.MealRepositoryImpl
-import logic.ExploreOtherCountriesFoodCultureUseCase
-import logic.MealRepository
+import logic.*
 import java.io.File
 
 class CLIDispatcher (
