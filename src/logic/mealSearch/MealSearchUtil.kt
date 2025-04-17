@@ -16,7 +16,7 @@ object MealSearchUtil {
      * @param query The search query string entered by the user.
      *
      * @Complexity -> O(n) -> KMP Algorithm
-     *             -> (n^2) ->levenshtein Algorithm.
+     *             -> O(n^2) ->levenshtein Algorithm.
      *
      * @return A list of `Meal` objects that match the search query. It returns meals that exactly match using KMP
      *         or those that are within a Levenshtein distance of 4 characters from the query if no exact matches are found.
@@ -36,11 +36,6 @@ object MealSearchUtil {
         }
     }
 
-    /***
-     * KMP - pattern matching algorithm
-     * It does not allow for missing, extra, or swapped letters.
-     * Worst case complexity O(n)
-     */
     private fun kmpSearch(text: String, pattern: String): Boolean {
         if (pattern.isEmpty()) return true
 
@@ -53,23 +48,21 @@ object MealSearchUtil {
                 textIndex++
                 patternIndex++
                 if (patternIndex == pattern.length) return true
-            } else { // if there is a mismatch
+            } else {
                 if (patternIndex != 0) {
                     patternIndex = longestPrefixSuffix[patternIndex - 1]
                 } else {
-                    textIndex++ // move forward in text if no match yet
+                    textIndex++
                 }
             }
         }
         return false
     }
 
-    //Longest Prefix which is also Suffix.
-    //the LPS array helps the algorithm know how far to "jump" ahead when there's a mismatch — instead of starting from scratch.
     private fun buildLongestPrefixSuffix(pattern: String): IntArray {
-        val longestPrefixSuffix = IntArray(pattern.length) // Longest Prefix which is also Suffix
-        var previousLPSIndex = 0               // length of the previous longest prefix suffix
-        var currentLPSIndex = 1               // start from the second character
+        val longestPrefixSuffix = IntArray(pattern.length)
+        var previousLPSIndex = 0
+        var currentLPSIndex = 1
 
         while (currentLPSIndex < pattern.length) {
             if (pattern[currentLPSIndex] == pattern[previousLPSIndex]) {
@@ -78,10 +71,8 @@ object MealSearchUtil {
                 currentLPSIndex++
             } else {
                 if (previousLPSIndex != 0) {
-                    // Try to find a smaller prefix that might work
                     previousLPSIndex = longestPrefixSuffix[previousLPSIndex - 1]
                 } else {
-                    // this means no prefix of that string matched a suffix.
                     longestPrefixSuffix[currentLPSIndex] = 0
                     currentLPSIndex++
                 }
@@ -92,11 +83,9 @@ object MealSearchUtil {
     }
 
 
-    // Levenshtein Distance
     private fun levenshtein(source: String, target: String): Int {
         val distanceMatrix = Array(source.length + 1) { IntArray(target.length + 1) }
 
-        // Initialize base cases: converting to/from empty string
         for (sourceIndex in 0..source.length) {
             distanceMatrix[sourceIndex][0] = sourceIndex
         }
@@ -105,14 +94,13 @@ object MealSearchUtil {
             distanceMatrix[0][targetIndex] = targetIndex
         }
 
-        // Fill the matrix with the edit distances
         for (sourceIndex in 1..source.length) {
             for (targetIndex in 1..target.length) {
                 val cost = if (source[sourceIndex - 1] == target[targetIndex - 1]) 0 else 1
                 distanceMatrix[sourceIndex][targetIndex] = minOf(
-                    distanceMatrix[sourceIndex - 1][targetIndex] + 1,       // deletion
-                    distanceMatrix[sourceIndex][targetIndex - 1] + 1,       // insertion
-                    distanceMatrix[sourceIndex - 1][targetIndex - 1] + cost // substitution
+                    distanceMatrix[sourceIndex - 1][targetIndex] + 1,
+                    distanceMatrix[sourceIndex][targetIndex - 1] + 1,
+                    distanceMatrix[sourceIndex - 1][targetIndex - 1] + cost
                 )
             }
         }

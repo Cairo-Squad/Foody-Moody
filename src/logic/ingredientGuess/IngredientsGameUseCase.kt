@@ -36,10 +36,11 @@ class IngredientsGameUseCase(private val mealRepository: MealRepository) {
     private fun getWrongIngredients(
         popularIngredients: List<String>,
         correctMealIngredients: List<String>
-    ) =
-        popularIngredients.filter { ingredient ->
+    ): List<String> {
+        return popularIngredients.filter { ingredient ->
             !correctMealIngredients.contains(ingredient)
         }.shuffled().take(2)
+    }
 
 }
 
