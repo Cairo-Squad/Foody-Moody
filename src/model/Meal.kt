@@ -12,7 +12,7 @@ data class Meal(
     val submitted: LocalDate? = null,
     val tags: List<String>? = null,
     val nutrition: Nutrition? = null,
-    val numberOfSteps: String? = null,
+    val numberOfSteps: Int? = null,
     val steps: List<String>? = null,
     val ingredients: List<String>? = null,
     val numberOfIngredients: Int? = null,

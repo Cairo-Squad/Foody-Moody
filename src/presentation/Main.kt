@@ -24,7 +24,11 @@ fun main() {
         randomPotatoMealsUseCase = randomPotatoMealsUseCase,
         getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
         exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
+        getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository)
+
     )
     val cliController = CLIController(cliDispatcher)
     cliController.start()
+    //cliDispatcher.guessPreparationTime()
+
 }
