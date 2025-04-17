@@ -20,8 +20,8 @@ object CLIConstants {
             3. 
             4. 
             5. 
-            6. 
-            7. 
+            6. Get Sweets With No Eggs 🍰
+            7. Get Keto Friendly Meal 💪
             8. 
             9. 
             10. 
