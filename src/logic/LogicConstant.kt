@@ -1,0 +1,4 @@
+package logic
+
+object LogicConstant {
+}
