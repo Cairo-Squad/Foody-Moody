@@ -80,7 +80,9 @@ class CLIDispatcher (
         getMealsMoreThan700CaloriesUseCase.getMealMoreThan700Calories()
             .forEach { meal ->
                 println("Name: ${meal.mealName}")
-                println("Description: ${meal.mealDescription}")
+                meal.mealDescription?.let { description ->
+                    println("Description: $description")
+                } ?: println(CLIConstants.NO_DESCRIPTION_AVAILABLE)
                 println(CLIConstants.DO_YOU_LIKE_MEAL)
 
                 while (true) {
