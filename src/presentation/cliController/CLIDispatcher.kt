@@ -15,7 +15,7 @@ class CLIDispatcher(
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
-        15 to ::getMealsForLargeGroup
+        15 to ::getMealsForLargeGroup,
         5 to { guessPreparationTime() }
     )
 
