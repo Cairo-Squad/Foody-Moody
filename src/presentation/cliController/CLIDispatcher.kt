@@ -24,18 +24,19 @@ class CLIDispatcher(
     private val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase,
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase,
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
+    private val suggestMealsToGym: SuggestMealsToGym,
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
     private val getMealsByDateUseCase: GetMealsByDateUseCase,
     private val getSeafoodMealsSortedByProteinUseCase: GetSeafoodMealsSortedByProteinUseCase
 ) {
     private val commands = mapOf<Int, () -> Unit>(
-        9 to this.gymHelper()
         CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
         CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
         CLIConstants.GET_MEALS_BY_DATE to ::launchGetMealsByDate,
         CLIConstants.RANDOM_10_POTATO_MEALS_COMMAND_CODE to ::get10RandomPotatoMeals,
         CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup,
         CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
+        CLIConstants.SUGGEST_MEALS_TO_GYM to ::gymHelper,
         CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame,
         FEATURE_5 to ::guessPreparationTime,
         FEATURE_3 to ::displayIraqMeals,
@@ -243,23 +244,21 @@ class CLIDispatcher(
     }
 
     // TODO: Implement your feature here as a private function and map it in the above map
-    private fun gymHelper(): () -> Unit = {
-        val mealCsvParser = MealCsvParser()
-        val mealCsvReader = MealCsvReader(File("food.csv"))
-        val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
-        val gymHelperUseCase = GymHelperUseCase(mealRepository)
-        println("Enter Calories:")
+    private fun gymHelper() {
+        println("Enter required Meals Calories:")
         val calories = readlnOrNull() ?: 0.0f
-        println("Enter Protein")
+        println("Enter required Meals Protein")
         val protein = readlnOrNull() ?: 0.0f
-        val matchedMeals = gymHelperUseCase.getMealsBasedOnCaloriesAndProtein(
+        val matchedMeals = suggestMealsToGym.getMealsBasedOnCaloriesAndProtein(
             calories.toString().toFloat(),
             protein.toString().toFloat()
         ).chunked(5)
-        matchedMeals.forEach {
-            println("Matched meals count = ${matchedMeals.count()}:\n $it")
-            println("Press 1 to load more matched meals")
-            if ((readln().toIntOrNull() ?: 0) == 1) return@forEach
+
+        for (fiveMeals in matchedMeals) {
+            println("Top Matched Meals are : \n $fiveMeals ")
+            println("Press 1 to get another matches or 0 to exist:")
+
+            if ((UserInputHandler.getUserInput() ?: 0) == 1) continue; else break
         }
 
     }
