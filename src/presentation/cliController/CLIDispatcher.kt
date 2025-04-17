@@ -80,7 +80,7 @@ class CLIDispatcher (
 
     fun getMealsForLargeGroup() {
         getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
-            println("meal $index is: $meal")
+            println("meal ${index+1} is: $meal")
         }
     }
 

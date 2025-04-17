@@ -31,6 +31,4 @@ fun main() {
     )
     val cliController = CLIController(cliDispatcher)
     cliController.start()
-    //cliDispatcher.guessPreparationTime()
-
 }
