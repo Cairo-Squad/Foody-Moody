@@ -3,6 +3,7 @@ package presentation
 import data.MealCsvParser
 import data.MealCsvReader
 import data.MealRepositoryImpl
+import logic.*
 import presentation.cliController.CLIController
 import presentation.cliController.CLIDispatcher
 import logic.GetRandomMealUseCase
@@ -17,8 +18,26 @@ fun main() {
     val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
     val randomMealUseCase = GetRandomMealUseCase(mealRepository)
     val cliDispatcher = CLIDispatcher(randomMealUseCase)
+    val mealsFile = File("food.csv")
+    val mealCsvReader = MealCsvReader(mealsFile)
+    val mealCsvParser = MealCsvParser()
+    val mealRepository = MealRepositoryImpl(mealCsvParser, mealCsvReader)
+    val getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository)
+    val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
+    val getRandomMealUseCase = GetRandomMealUseCase(mealRepository)
+    val mealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository)
+    val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository)
+    val cliDispatcher = CLIDispatcher(
+        getMealsForLargeGroupUseCase = getMealsForLargeGroupUseCase,
+        randomMealUseCase = getRandomMealUseCase,
+        randomPotatoMealsUseCase = randomPotatoMealsUseCase,
+        getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
+        exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
+        getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository)
+
+    )
     val cliController = CLIController(cliDispatcher)
     cliController.start()
-    cliDispatcher.guessPreparationTime()
+    //cliDispatcher.guessPreparationTime()
 
 }

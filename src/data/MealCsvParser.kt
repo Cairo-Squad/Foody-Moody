@@ -36,14 +36,14 @@ class MealCsvParser {
 
         val meal = Meal(
             mealName = list[ColumnIndex.NAME],
-            mealId = list[ColumnIndex.ID].length,
+            mealId = list[ColumnIndex.ID].toInt(),
             mealDescription = list[ColumnIndex.DESCRIPTION],
             contributorId = list[ColumnIndex.CONTRIBUTOR_ID].toInt(),
             minutes = list[ColumnIndex.MINUTES].toInt(),
             submitted = LocalDate.parse(list[ColumnIndex.SUBMITTED]),
             tags = structTagsList(list[ColumnIndex.TAGS]),
             nutrition = structNutritionObject(list[ColumnIndex.NUTRITION]),
-            numberOfSteps = list[ColumnIndex.N_STEPS],
+            numberOfSteps = list[ColumnIndex.N_STEPS].toInt(),
             steps = structStepsList(list[ColumnIndex.STEPS]),
             ingredients = structIngredientsList(list[ColumnIndex.INGREDIENTS]),
             numberOfIngredients = list[ColumnIndex.N_INGREDIENTS].toInt()
