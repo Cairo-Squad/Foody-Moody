@@ -17,10 +17,13 @@ fun main() {
     val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
     val getRandomMealUseCase = GetRandomMealUseCase(mealRepository)
     val mealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository)
+    val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository)
     val cliDispatcher = CLIDispatcher(
         getMealsForLargeGroupUseCase = getMealsForLargeGroupUseCase,
         randomMealUseCase = getRandomMealUseCase,
         randomPotatoMealsUseCase = randomPotatoMealsUseCase,
+        getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
+        exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
         getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
         getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository)
 

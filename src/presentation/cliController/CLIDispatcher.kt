@@ -1,6 +1,5 @@
 package presentation.cliController
 
-import logic.GetRandomEasyFoodMealsUseCase
 import logic.GetMealsForLargeGroupUseCase
 import logic.GetMealsMoreThan700CaloriesUseCase
 import logic.GetRandomMealUseCase
@@ -9,19 +8,25 @@ import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUSSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUSSING_MESSAGE
 import logic.RandomPotatoMealsUseCase
-import model.Meal
+import data.MealCsvParser
+import data.MealCsvReader
+import data.MealRepositoryImpl
+import logic.ExploreOtherCountriesFoodCultureUseCase
+import logic.MealRepository
+import java.io.File
 
 class CLIDispatcher (
     private val randomMealUseCase: GetRandomMealUseCase,
     private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase,
     private val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase,
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase,
+    private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
-
 ) {
 
     // TODO: Map your feature's command code to its function here
     private val commands = mapOf<Int, () -> Unit>(
+        CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
         CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
         CLIConstants.RANDOM_10_POTATO_MEALS_COMMAND_CODE to ::get10RandomPotatoMeals,
         CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup,
@@ -41,6 +46,41 @@ class CLIDispatcher (
     fun validateOption(option: Int): Boolean {
         return option == CLIConstants.EXIT_COMMAND_CODE || option in commands.keys
     }
+
+    // TODO: Implement your feature here as a private function and map it in the above map
+
+
+    /**
+     * this function is taking @param country from the user in run time
+     * if the syntax is invalid it ask again for the input
+     * and start search for 20 random meal according to the country
+     */
+    private fun getTwentyRandomMealByCountry() {
+        println("Enter target Country: ")
+        val country = readlnOrNull()
+
+        if (country == null) {
+            println("Invalid input. Please enter valid country name.")
+            return
+        }
+
+        println("Searching for meals from $country...")
+
+
+        val matchingMeals = exploreOtherCountriesFoodCultureUseCase.getTwentyRandomMealByCountry(
+            countryName = country
+        )
+
+        if (matchingMeals.isEmpty()) {
+            println("No meals found matching \"$country\"")
+        } else {
+            println("Found ${matchingMeals.size} matching meals:")
+            matchingMeals.forEachIndexed { index, meal ->
+                println("${index + 1}. ${meal.mealName}. - Id: ${meal.mealId}. - Minutes: ${meal.minutes}. - Date: ${meal.submitted}. - Calories: ${meal.nutrition?.calories}., Protein: ${meal.nutrition?.protein}g.")
+            }
+        }
+    }
+
 
     fun getMealsForLargeGroup() {
         getMealsForLargeGroupUseCase.getAllMealsForLargeGroup().forEachIndexed { index, meal ->
@@ -85,7 +125,9 @@ class CLIDispatcher (
         getMealsMoreThan700CaloriesUseCase.getMealMoreThan700Calories()
             .forEach { meal ->
                 println("Name: ${meal.mealName}")
-                println("Description: ${meal.mealDescription}")
+                meal.mealDescription?.let { description ->
+                    println("Description: $description")
+                } ?: println(CLIConstants.NO_DESCRIPTION_AVAILABLE)
                 println(CLIConstants.DO_YOU_LIKE_MEAL)
 
                 while (true) {
@@ -96,6 +138,7 @@ class CLIDispatcher (
                                 println(meal.toString())
                                 return
                             }
+
                             2 -> return@forEach
                             else -> println(CLIConstants.ENTER_VALID_OPTION_MESSAGE)
                         }
