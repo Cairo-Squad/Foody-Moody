@@ -38,9 +38,7 @@ class CLIDispatcher {
         return {
             println("Enter Meal Name: ")
             val mealName = readlnOrNull() ?: ""
-            println("Press 1 to ignore uppercase or press 2 not to ignore uppercase:")
-            val ignoreCase = (readlnOrNull()?.toInt() ?: 1) == 1
-            val matchedMeals = searchMealByNameUseCase.searchMealByName(mealName, ignoreCase).chunked(5)
+            val matchedMeals = searchMealByNameUseCase.searchMealByName(mealName).chunked(5)
             for ((index, meals) in matchedMeals.withIndex()) {
                 println("\n Top Matched Meals are : \n $meals ")
                 println("\n Press 1 to get another matches or 0 to exist:")

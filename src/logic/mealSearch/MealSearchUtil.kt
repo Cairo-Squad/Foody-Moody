@@ -21,21 +21,17 @@ object MealSearchUtil {
      * @return A list of `Meal` objects that match the search query. It returns meals that exactly match using KMP
      *         or those that are within a Levenshtein distance of 4 characters from the query if no exact matches are found.
      */
-    fun searchMeals(meals: List<Meal>, query: String, ignoreCase: Boolean): List<Meal> {
-        val normalizedQuery = if (ignoreCase) query.lowercase().trim() else query.trim()
+    fun searchMeals(meals: List<Meal>, query: String): List<Meal> {
+        val normalizedQuery = query.lowercase().trim()
 
-        // 1. Try fast KMP search
-        println("trying to get exact matches.....")
         val exactMatches = meals.filter { meal ->
-            kmpSearch(text = meal.mealName?.lowercase() ?: "", query = normalizedQuery)
+            kmpSearch(text = meal.mealName!!, pattern = normalizedQuery)
         }
 
         if (exactMatches.isNotEmpty()) return exactMatches
 
-        // 2. Fallback to typo-tolerant search   (Levenshtein)
-        println("no exact matches found, now trying to get similar matches.....")
         return meals.filter { meal ->
-            levenshtein(meal.mealName?.lowercase() ?: "", normalizedQuery) <= TOLERANCE_ALLOWED
+            levenshtein(meal.mealName!!, normalizedQuery) <= TOLERANCE_ALLOWED
 
         }
     }
@@ -45,66 +41,85 @@ object MealSearchUtil {
      * It does not allow for missing, extra, or swapped letters.
      * Worst case complexity O(n)
      */
-    // KMP Search
-    private fun kmpSearch(text: String, query: String): Boolean {
-        if (query.isEmpty()) return true
-        val lps = buildLPS(query)
-        var i = 0
-        var j = 0
-        while (i < text.length) {
-            if (query[j] == text[i]) {
-                i++
-                j++
-                if (j == query.length) return true
-            } else {
-                if (j != 0) {
-                    j = lps[j - 1]
+    private fun kmpSearch(text: String, pattern: String): Boolean {
+        if (pattern.isEmpty()) return true
+
+        val longestPrefixSuffix = buildLongestPrefixSuffix(pattern)
+        var textIndex = 0
+        var patternIndex = 0
+
+        while (textIndex < text.length) {
+            if (pattern[patternIndex] == text[textIndex]) {
+                textIndex++
+                patternIndex++
+                if (patternIndex == pattern.length) return true
+            } else { // if there is a mismatch
+                if (patternIndex != 0) {
+                    patternIndex = longestPrefixSuffix[patternIndex - 1]
                 } else {
-                    i++  // advance text pointer when j is 0 and still no match
+                    textIndex++ // move forward in text if no match yet
                 }
             }
         }
         return false
     }
 
-    private fun buildLPS(pattern: String): IntArray {
-        val lps = IntArray(pattern.length)
-        var length = 0
-        var i = 1
-        while (i < pattern.length) {
-            if (pattern[i] == pattern[length]) {
-                length++
-                lps[i] = length
-                i++
+    //Longest Prefix which is also Suffix.
+    //the LPS array helps the algorithm know how far to "jump" ahead when there's a mismatch — instead of starting from scratch.
+    private fun buildLongestPrefixSuffix(pattern: String): IntArray {
+        val longestPrefixSuffix = IntArray(pattern.length) // Longest Prefix which is also Suffix
+        var previousLPSIndex = 0               // length of the previous longest prefix suffix
+        var currentLPSIndex = 1               // start from the second character
+
+        while (currentLPSIndex < pattern.length) {
+            if (pattern[currentLPSIndex] == pattern[previousLPSIndex]) {
+                previousLPSIndex++
+                longestPrefixSuffix[currentLPSIndex] = previousLPSIndex
+                currentLPSIndex++
             } else {
-                if (length != 0) {
-                    length = lps[length - 1]
+                if (previousLPSIndex != 0) {
+                    // Try to find a smaller prefix that might work
+                    previousLPSIndex = longestPrefixSuffix[previousLPSIndex - 1]
                 } else {
-                    lps[i] = 0
-                    i++
+                    // this means no prefix of that string matched a suffix.
+                    longestPrefixSuffix[currentLPSIndex] = 0
+                    currentLPSIndex++
                 }
             }
         }
-        return lps
+
+        return longestPrefixSuffix
     }
 
-    // Levenshtein Distance
-    private fun levenshtein(text: String, query: String): Int {
-        val dp = Array(text.length + 1) { IntArray(query.length + 1) }
-        for (i in 0..text.length) dp[i][0] = i
-        for (j in 0..query.length) dp[0][j] = j
 
-        for (i in 1..text.length) {
-            for (j in 1..query.length) {
-                dp[i][j] = minOf(
-                    dp[i - 1][j] + 1,
-                    dp[i][j - 1] + 1,
-                    dp[i - 1][j - 1] + if (text[i - 1] == query[j - 1]) 0 else 1
+    // Levenshtein Distance
+    private fun levenshtein(source: String, target: String): Int {
+        val distanceMatrix = Array(source.length + 1) { IntArray(target.length + 1) }
+
+        // Initialize base cases: converting to/from empty string
+        for (sourceIndex in 0..source.length) {
+            distanceMatrix[sourceIndex][0] = sourceIndex
+        }
+
+        for (targetIndex in 0..target.length) {
+            distanceMatrix[0][targetIndex] = targetIndex
+        }
+
+        // Fill the matrix with the edit distances
+        for (sourceIndex in 1..source.length) {
+            for (targetIndex in 1..target.length) {
+                val cost = if (source[sourceIndex - 1] == target[targetIndex - 1]) 0 else 1
+                distanceMatrix[sourceIndex][targetIndex] = minOf(
+                    distanceMatrix[sourceIndex - 1][targetIndex] + 1,       // deletion
+                    distanceMatrix[sourceIndex][targetIndex - 1] + 1,       // insertion
+                    distanceMatrix[sourceIndex - 1][targetIndex - 1] + cost // substitution
                 )
             }
         }
-        return dp[text.length][query.length]
+
+        return distanceMatrix[source.length][target.length]
     }
+
 
     private const val TOLERANCE_ALLOWED = 4
 

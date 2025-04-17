@@ -7,9 +7,8 @@ class SearchMealByNameUseCase(
     private val mealsRepository: MealRepository
 ) {
 
-    fun searchMealByName(mealName: String, ignoreCase: Boolean): List<Meal> {
-        println("Searching for $mealName ......")
-        return MealSearchUtil.searchMeals(mealsRepository.getAllMeals(), mealName, ignoreCase)
+    fun searchMealByName(mealName: String): List<Meal> {
+        return MealSearchUtil.searchMeals(mealsRepository.getAllMeals(), mealName)
     }
 
 
