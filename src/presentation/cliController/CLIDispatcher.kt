@@ -145,8 +145,12 @@ class CLIDispatcher(
 
     private fun get10RandomPotatoMeals() {
         val random10PotatoMeals = randomPotatoMealsUseCase.get10RandomPotatoMeals()
-        println(CLIConstants.RANDOM_POTATO_MEALS_MESSAGE)
-        random10PotatoMeals.forEach(::println)
+        if (random10PotatoMeals.isEmpty()) {
+            println(CLIConstants.NO_POTATOES_MEALS_MESSAGE)
+        } else {
+            println(CLIConstants.RANDOM_POTATO_MEALS_MESSAGE)
+            random10PotatoMeals.forEach(::println)
+        }
     }
 
     private fun launchMealsMoreThan700Calories() {

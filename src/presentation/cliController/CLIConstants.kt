@@ -21,6 +21,7 @@ object CLIConstants {
     const val NO_RESULTS_FOUND = "No result found in that date."
     const val ENTER_VALID_DATE_HINT = "Please enter a valid date in format like YYYY-MM-DD"
     const val GUESS_ERROR_MESSAGE = "Invalid input please try again!"
+    const val NO_POTATOES_MEALS_MESSAGE = "❌ There is no meal that contains potatoes in its ingredients!"
 
     const val CORRECT_GUESSING_MESSAGE = "✅ Your guess is correct"
     const val TOO_LOW_GUESSING_MESSAGE = "⬇️ Your guess is too low! Try again."
