@@ -76,11 +76,6 @@ class CLIDispatcher(
     }
 
 
-    /**
-     * this function is taking @param country from the user in run time
-     * if the syntax is invalid it ask again for the input
-     * and start search for 20 random meal according to the country
-     */
     private fun getTwentyRandomMealByCountry() {
         println("Enter target Country: ")
         val country = readlnOrNull()
