@@ -28,6 +28,7 @@ fun main() {
     val suggestMealsToGym = SuggestMealsToGym(mealRepository = mealRepository)
     val getMealsByDateUseCase = GetMealsByDateUseCase(mealRepository)
     val getRandomMealUseCase = GetRandomMealUseCase(mealRepository)
+    val getHealthyFastFoodUseCase = GetHealthyFastFoodUseCase(mealRepository)
     val mealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository)
     val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository)
     val cliDispatcher = CLIDispatcher(
@@ -42,8 +43,9 @@ fun main() {
         ingredientsGameUseCase = ingredientsGameUseCase,
         suggestMealsToGym = suggestMealsToGym,
         getMealsByDateUseCase = getMealsByDateUseCase,
-        getSeafoodMealsSortedByProteinUseCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository)
-    )
+        getSeafoodMealsSortedByProteinUseCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository),
+        getHealthyFastFoodUseCase = getHealthyFastFoodUseCase,
+        )
     val cliController = CLIController(cliDispatcher)
     cliController.start()
 }

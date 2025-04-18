@@ -29,9 +29,11 @@ class CLIDispatcher(
     private val ingredientsGameUseCase: IngredientsGameUseCase,
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
     private val getMealsByDateUseCase: GetMealsByDateUseCase,
-    private val getSeafoodMealsSortedByProteinUseCase: GetSeafoodMealsSortedByProteinUseCase
+    private val getSeafoodMealsSortedByProteinUseCase: GetSeafoodMealsSortedByProteinUseCase,
+    private val getHealthyFastFoodUseCase: GetHealthyFastFoodUseCase
 ) {
     private val commands = mapOf<Int, () -> Unit>(
+        CLIConstants.GET_HEALTHY_FAST_FOOD to ::getHealthyFastFoods,
         CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
         CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
         CLIConstants.GET_MEALS_BY_DATE to ::launchGetMealsByDate,
@@ -225,6 +227,15 @@ class CLIDispatcher(
         println("Meal contributorId: ${meal.contributorId}")
         println("Meal publish date: ${meal.submitted}")
     }
+
+    fun getHealthyFastFoods() {
+        val meals = getHealthyFastFoodUseCase.getHealthyFastFood()
+        println(CLIConstants.LIST_CONTAINING_HEALTHY_FAST_FOOD)
+        meals.forEach {
+            println(it.toString())
+        }
+    }
+
 
     private fun launchEasyFoodSuggestionsGame() {
         println(CLIConstants.TEN_RANDOM_EASY_FOOD_MEALS_MSG)
