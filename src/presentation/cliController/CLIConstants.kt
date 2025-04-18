@@ -35,13 +35,14 @@ object CLIConstants {
     const val MEALS_MORE_THAN_700_CALORIES_WELCOME_MSG = "==== Meals with more than 700 Calories ===="
     const val NO_MORE_MEALS_AVAILABLE = "No more meals with more than 700 calories"
     const val NO_DESCRIPTION_AVAILABLE = "No description available"
+    const val LIST_CONTAINING_HEALTHY_FAST_FOOD = "this list containing healthy fast food meals"
     const val DO_YOU_LIKE_MEAL = "Do you like it? \n" +
             " 1. like \n" +
             " 2. dislike "
 
     val USER_MENU = """
             Available Options:-
-            1.🍔 
+            1.🍔 Get Healthy fast food meals
             2.🔍Search Meals By Name
             3.🇮🇶 Get Iraq meals
             4.🍽️ Suggest 10 easy food meals
@@ -63,6 +64,7 @@ object CLIConstants {
     // endregion
 
     // region Command Codes
+    const val GET_HEALTHY_FAST_FOOD = 1
     const val SEARCH_MEAL_BY_NAME = 2
     const val SUGGEST_TEN_EASY_FOOD_MEALS = 4
     const val GUESS_PREPARATION_TIME_GAME_COMMAND_CODE = 5
