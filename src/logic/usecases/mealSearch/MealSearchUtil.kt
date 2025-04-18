@@ -25,13 +25,13 @@ object MealSearchUtil {
         val normalizedQuery = query.lowercase().trim()
 
         val exactMatches = meals.filter { meal ->
-            kmpSearch(text = meal.mealName!!, pattern = normalizedQuery)
+            kmpSearch(text = meal.mealName ?: "", pattern = normalizedQuery)
         }
 
         if (exactMatches.isNotEmpty()) return exactMatches
 
         return meals.filter { meal ->
-            levenshtein(meal.mealName!!, normalizedQuery) <= TOLERANCE_ALLOWED
+            levenshtein(meal.mealName ?: "", normalizedQuery) <= TOLERANCE_ALLOWED
 
         }
     }
