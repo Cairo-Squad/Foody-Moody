@@ -1,4 +1,4 @@
-package logic.ingredientGuess
+package logic.usecases.ingredientGuess
 
 data class IngredientsGameResult(
     val mealName: String,

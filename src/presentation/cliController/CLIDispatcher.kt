@@ -1,6 +1,6 @@
 package presentation.cliController
 
-import logic.GetRandomMealUseCase
+import logic.usecases.GetRandomMealUseCase
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_ERROR_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
@@ -9,22 +9,20 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TWO
-import logic.*
-import logic.ingredientGuess.IngredientsGameUseCase
-import logic.mealSearch.SearchMealByNameUseCase
+import logic.usecases.ingredientGuess.IngredientsGameUseCase
+import logic.usecases.mealSearch.SearchMealByNameUseCase
+import logic.usecases.*
 import model.ShowMeal
-import logic.KetoMealUseCase
-import logic.SweetsNoEggsUseCase
 
 class CLIDispatcher(
     private val searchMealByName: SearchMealByNameUseCase,
-    private val getIraqMeals: GetIraqMeals,
+    private val getIraqMealsUseCase: GetIraqMealsUseCase,
     private val randomMealUseCase: GetRandomMealUseCase,
     private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase,
     private val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase,
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase,
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
-    private val suggestMealsToGym: SuggestMealsToGym,
+    private val suggestMealsToGymUseCase: SuggestMealsToGymUseCase,
     private val ingredientsGameUseCase: IngredientsGameUseCase,
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
     private val getMealsByDateUseCase: GetMealsByDateUseCase,
@@ -65,7 +63,7 @@ class CLIDispatcher(
     }
 
     private fun displayIraqMeals() {
-        val iraqiMeals = getIraqMeals.getIraqMeals()
+        val iraqiMeals = getIraqMealsUseCase.getIraqMeals()
         if (iraqiMeals.isEmpty()) {
             println("No Iraqi meals found.")
             return
@@ -261,7 +259,7 @@ class CLIDispatcher(
         val calories = readlnOrNull() ?: 0.0f
         println("Enter required Meals Protein")
         val protein = readlnOrNull() ?: 0.0f
-        val matchedMeals = suggestMealsToGym.getMealsBasedOnCaloriesAndProtein(
+        val matchedMeals = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(
             calories.toString().toFloat(),
             protein.toString().toFloat()
         ).chunked(5)

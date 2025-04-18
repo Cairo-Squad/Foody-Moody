@@ -1,7 +1,8 @@
-package logic
+package logic.usecases
 
+import logic.LogicConstants
+import logic.MealRepository
 import model.Meal
-import model.Nutrition
 
 class GetMealsMoreThan700CaloriesUseCase(
     private val mealRepository: MealRepository

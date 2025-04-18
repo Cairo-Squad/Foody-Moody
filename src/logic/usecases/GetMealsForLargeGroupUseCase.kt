@@ -1,7 +1,8 @@
-package logic
+package logic.usecases
 
 import logic.LogicConstants.FOR_LARGE_GROUP
 import logic.LogicConstants.ITALIAN
+import logic.MealRepository
 import model.Meal
 
 class GetMealsForLargeGroupUseCase(

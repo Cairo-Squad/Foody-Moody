@@ -1,5 +1,6 @@
-package logic
+package logic.usecases
 
+import logic.MealRepository
 import model.Meal
 
 class ExploreOtherCountriesFoodCultureUseCase(

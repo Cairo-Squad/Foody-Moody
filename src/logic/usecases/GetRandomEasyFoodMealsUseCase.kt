@@ -1,5 +1,7 @@
-package logic
+package logic.usecases
 
+import logic.LogicConstants
+import logic.MealRepository
 import model.Meal
 
 class GetRandomEasyFoodMealsUseCase(

@@ -1,9 +1,9 @@
-package logic
+package logic.usecases
 
 import data.MealRepositoryImpl
 import model.Meal
 
-class SuggestMealsToGym(private val mealRepository: MealRepositoryImpl) {
+class SuggestMealsToGymUseCase(private val mealRepository: MealRepositoryImpl) {
 
     fun getMealsBasedOnCaloriesAndProtein(calories: Float, protein: Float): List<Meal> {
         val allMeals = mealRepository.getAllMeals()

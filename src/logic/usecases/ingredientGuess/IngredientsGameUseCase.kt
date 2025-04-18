@@ -1,4 +1,4 @@
-package logic.ingredientGuess
+package logic.usecases.ingredientGuess
 
 import logic.MealRepository
 import model.Meal

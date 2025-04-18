@@ -1,7 +1,8 @@
-package logic
+package logic.usecases
 
 import data.errors.NoResultException
 import data.errors.ValidationException
+import logic.MealRepository
 import model.Meal
 import presentation.cliController.CLIConstants
 import java.time.LocalDate

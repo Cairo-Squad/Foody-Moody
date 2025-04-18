@@ -1,10 +1,11 @@
-package logic
+package logic.usecases
 
 import logic.LogicConstants.IRAQ
 import logic.LogicConstants.IRAQI
+import logic.MealRepository
 import model.Meal
 
-class GetIraqMeals(private val meals: MealRepository) {
+class GetIraqMealsUseCase(private val meals: MealRepository) {
     fun getIraqMeals(): List<Meal> {
         return meals.getAllMeals().filter {
             it.mealDescription?.contains(IRAQ, ignoreCase = true) == true ||

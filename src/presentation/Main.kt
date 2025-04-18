@@ -1,16 +1,16 @@
 package presentation
 
 import data.DataHolder
-import logic.GetIraqMeals
+import logic.usecases.GetIraqMealsUseCase
 import data.MealCsvParser
 import data.MealCsvReader
 import data.MealRepositoryImpl
-import logic.*
 import presentation.cliController.CLIController
 import presentation.cliController.CLIDispatcher
-import logic.GetRandomMealUseCase
-import logic.ingredientGuess.IngredientsGameUseCase
-import logic.mealSearch.SearchMealByNameUseCase
+import logic.usecases.GetRandomMealUseCase
+import logic.usecases.ingredientGuess.IngredientsGameUseCase
+import logic.usecases.mealSearch.SearchMealByNameUseCase
+import logic.usecases.*
 import java.io.File
 
 fun main() {
@@ -23,13 +23,13 @@ fun main() {
         searchMealByName = SearchMealByNameUseCase(mealRepository),
         getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository),
         randomMealUseCase = GetRandomMealUseCase(mealRepository),
-        getIraqMeals = GetIraqMeals(mealRepository),
+        getIraqMealsUseCase = GetIraqMealsUseCase(mealRepository),
         randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository),
         getMealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository),
         exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository),
         getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository),
         ingredientsGameUseCase = IngredientsGameUseCase(mealRepository),
-        suggestMealsToGym = SuggestMealsToGym(mealRepository),
+        suggestMealsToGymUseCase = SuggestMealsToGymUseCase(mealRepository),
         getMealsByDateUseCase = GetMealsByDateUseCase(mealRepository),
         getSeafoodMealsSortedByProteinUseCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository),
         getHealthyFastFoodUseCase = GetHealthyFastFoodUseCase(mealRepository),
