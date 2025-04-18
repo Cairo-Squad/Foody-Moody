@@ -1,6 +1,5 @@
 package presentation.cliController
 
-
 object CLIConstants {
 
     // region User Messages
@@ -47,8 +46,8 @@ object CLIConstants {
             3.🇮🇶 Get Iraq meals
             4.🍽️ Suggest 10 easy food meals
             5.⏱️Guess preparation time game
-            6.🍪
-            7.🥑
+            6. 🍰 Get Sweets With No Eggs
+            7. 🥑 Get Keto Friendly Meal
             8.📅Get meals with their added date
             9. 💪Gym Helper
             10.🌍Find Meals by Country

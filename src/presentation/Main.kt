@@ -45,7 +45,9 @@ fun main() {
         getMealsByDateUseCase = getMealsByDateUseCase,
         getSeafoodMealsSortedByProteinUseCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository),
         getHealthyFastFoodUseCase = getHealthyFastFoodUseCase,
-        )
+        sweetNoeggsUsecase = SweetsNoEggsUseCase(mealRepository),
+        ketoMealUseCase = KetoMealUseCase(mealRepository),
+    )
     val cliController = CLIController(cliDispatcher)
     cliController.start()
 }

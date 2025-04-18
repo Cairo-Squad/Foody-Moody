@@ -16,6 +16,13 @@ import logic.mealSearch.SearchMealByNameUseCase
 import model.Meal
 import model.ShowMeal
 import presentation.cliController.CLIConstants.TWO
+import data.MealCsvParser
+import data.MealCsvReader
+import data.MealRepositoryImpl
+import logic.KetoMealUseCase
+import logic.MealRepository
+import logic.SweetsNoEggsUseCase
+import java.io.File
 
 class CLIDispatcher(
     private val searchMealByName: SearchMealByNameUseCase,
@@ -30,9 +37,13 @@ class CLIDispatcher(
     private val getRandomEasyFoodMealsUseCase: GetRandomEasyFoodMealsUseCase,
     private val getMealsByDateUseCase: GetMealsByDateUseCase,
     private val getSeafoodMealsSortedByProteinUseCase: GetSeafoodMealsSortedByProteinUseCase,
-    private val getHealthyFastFoodUseCase: GetHealthyFastFoodUseCase
+    private val getHealthyFastFoodUseCase: GetHealthyFastFoodUseCase,
+    private val sweetNoeggsUsecase: SweetsNoEggsUseCase,
+    private val ketoMealUseCase: KetoMealUseCase
 ) {
     private val commands = mapOf<Int, () -> Unit>(
+        6 to { getSweetsWithNoEggs() },
+        7 to { getKetoMeals() },
         CLIConstants.GET_HEALTHY_FAST_FOOD to ::getHealthyFastFoods,
         CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
         CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
@@ -303,6 +314,98 @@ class CLIDispatcher(
             println("Press 1 to get another matches or 0 to exist:")
 
             if ((UserInputHandler.getUserInput() ?: 0) == 1) continue; else break
+        }
+    }
+
+    private fun getSweetsWithNoEggs() {
+        try {
+            println("\n=== Sweets Without Eggs🍰🍰 ===")
+
+            var continueSearch = true
+
+            while (continueSearch) {
+                val sweet = sweetNoeggsUsecase()
+                if (sweet != null) {
+                    println("\nSweet Found:")
+                    println("Name: ${sweet.mealName}")
+                    println("Description: ${sweet.mealDescription ?: "No description available"}")
+                    println("Ingredients: ${sweet.ingredients?.joinToString(", ")}")
+                    println("\nOptions:")
+                    println("1. Like this sweet (show full details)")
+                    println("2. Dislike (show another sweet)")
+                    println("3. Back to main menu")
+                    when (readlnOrNull()?.toIntOrNull()) {
+                        1 -> {
+                            println("\nFull Details:")
+                            println(sweet)
+                            println("Press Enter to continue...")
+                            readlnOrNull()
+                        }
+
+                        2 -> continue // Show next sweet
+                        3 -> continueSearch = false
+                        else -> println("Invalid option, showing next sweet...")
+                    }
+                } else {
+                    println("No more sweets without eggs found!")
+                    println("Press Enter to continue...")
+                    readlnOrNull()
+                    continueSearch = false
+                }
+
+            }
+
+        } catch (e: Exception) {
+            println("Error occurred: ${e.message}")
+        }
+
+
+    }
+
+    private fun getKetoMeals() {
+        try {
+            println("\n=== Keto-Friendly Meals 🥑🥩 ===")
+
+            var continueSearch = true
+
+            while (continueSearch) {
+                val meal = ketoMealUseCase()
+                if (meal != null) {
+                    println("\nKeto Meal Found:")
+                    println("Name: ${meal.mealName}")
+                    println("Description: ${meal.mealDescription ?: "No description available"}")
+                    println("Nutrition (per serving):")
+                    println("  Calories: ${meal.nutrition?.calories ?: "N/A"}")
+                    println("  Fat: ${meal.nutrition?.totalFat ?: "N/A"}g")
+                    println("  Carbs: ${meal.nutrition?.carbohydrates ?: "N/A"}g")
+                    println("  Protein: ${meal.nutrition?.protein ?: "N/A"}g")
+
+                    println("\nOptions:")
+                    println("1. View full details")
+                    println("2. Show another keto meal")
+                    println("3. Back to main menu")
+
+                    when (readlnOrNull()?.toIntOrNull()) {
+                        1 -> {
+                            println("\nFull Details:")
+                            println(meal)
+                            println("Press Enter to continue...")
+                            readlnOrNull()
+                        }
+
+                        2 -> continue
+                        3 -> continueSearch = false
+                        else -> println("Invalid option, showing next meal...")
+                    }
+                } else {
+                    println("No more keto meals found!")
+                    println("Press Enter to continue...")
+                    readlnOrNull()
+                    continueSearch = false
+                }
+            }
+        } catch (e: Exception) {
+            println("Error occurred: ${e.message}")
         }
     }
 }
