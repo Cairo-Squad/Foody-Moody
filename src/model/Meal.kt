@@ -34,7 +34,6 @@ data class Meal(
     }
 }
 
-// TODO: Where to put this function?
 fun List<String>.getPrintStepsListString(): String = buildString {
     this@getPrintStepsListString.forEachIndexed { index, step ->
         appendLine("\t${index + 1}- ${step.trim()}")

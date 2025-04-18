@@ -13,41 +13,30 @@ import logic.ingredientGuess.IngredientsGameUseCase
 import logic.mealSearch.SearchMealByNameUseCase
 import java.io.File
 
-
 fun main() {
-    val mealsFile = File("food.csv")
-    val mealCsvReader = MealCsvReader(mealsFile)
+    val mealCsvReader = MealCsvReader(File(CSVConstants.CSV_FILE_PATH))
     val mealCsvParser = MealCsvParser()
-    val dataHolder = DataHolder(mealCsvParser, mealCsvReader)
+    val dataHolder = DataHolder(mealCsvParser = mealCsvParser, mealCsvReader = mealCsvReader)
     val mealRepository = MealRepositoryImpl(dataHolder)
-    val searchMealsByName = SearchMealByNameUseCase(mealsRepository = mealRepository)
-    val getIraqMeals = GetIraqMeals(mealRepository)
-    val getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository)
-    val randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository)
-    val ingredientsGameUseCase = IngredientsGameUseCase(mealRepository = mealRepository)
-    val suggestMealsToGym = SuggestMealsToGym(mealRepository = mealRepository)
-    val getMealsByDateUseCase = GetMealsByDateUseCase(mealRepository)
-    val getRandomMealUseCase = GetRandomMealUseCase(mealRepository)
-    val getHealthyFastFoodUseCase = GetHealthyFastFoodUseCase(mealRepository)
-    val mealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository)
-    val exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository)
+
     val cliDispatcher = CLIDispatcher(
-        searchMealByName = searchMealsByName,
-        getMealsForLargeGroupUseCase = getMealsForLargeGroupUseCase,
-        randomMealUseCase = getRandomMealUseCase,
-        getIraqMeals = getIraqMeals,
-        randomPotatoMealsUseCase = randomPotatoMealsUseCase,
-        getMealsMoreThan700CaloriesUseCase = mealsMoreThan700CaloriesUseCase,
-        exploreOtherCountriesFoodCultureUseCase = exploreOtherCountriesFoodCultureUseCase,
+        searchMealByName = SearchMealByNameUseCase(mealRepository),
+        getMealsForLargeGroupUseCase = GetMealsForLargeGroupUseCase(mealRepository),
+        randomMealUseCase = GetRandomMealUseCase(mealRepository),
+        getIraqMeals = GetIraqMeals(mealRepository),
+        randomPotatoMealsUseCase = RandomPotatoMealsUseCase(mealRepository),
+        getMealsMoreThan700CaloriesUseCase = GetMealsMoreThan700CaloriesUseCase(mealRepository),
+        exploreOtherCountriesFoodCultureUseCase = ExploreOtherCountriesFoodCultureUseCase(mealRepository),
         getRandomEasyFoodMealsUseCase = GetRandomEasyFoodMealsUseCase(mealRepository),
-        ingredientsGameUseCase = ingredientsGameUseCase,
-        suggestMealsToGym = suggestMealsToGym,
-        getMealsByDateUseCase = getMealsByDateUseCase,
+        ingredientsGameUseCase = IngredientsGameUseCase(mealRepository),
+        suggestMealsToGym = SuggestMealsToGym(mealRepository),
+        getMealsByDateUseCase = GetMealsByDateUseCase(mealRepository),
         getSeafoodMealsSortedByProteinUseCase = GetSeafoodMealsSortedByProteinUseCase(mealRepository),
-        getHealthyFastFoodUseCase = getHealthyFastFoodUseCase,
-        sweetNoeggsUsecase = SweetsNoEggsUseCase(mealRepository),
+        getHealthyFastFoodUseCase = GetHealthyFastFoodUseCase(mealRepository),
+        sweetsNoEggsUseCase = SweetsNoEggsUseCase(mealRepository),
         ketoMealUseCase = KetoMealUseCase(mealRepository),
     )
+
     val cliController = CLIController(cliDispatcher)
     cliController.start()
 }
