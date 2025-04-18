@@ -156,21 +156,19 @@ class CLIDispatcher(
         getMealsMoreThan700CaloriesUseCase.getMealMoreThan700Calories()
             .forEach { meal ->
                 println("Name: ${meal.mealName}")
-                meal.mealDescription?.let { description ->
-                    println("Description: $description")
-                } ?: println(CLIConstants.NO_DESCRIPTION_AVAILABLE)
+                println(meal.mealDescription ?: CLIConstants.NO_DESCRIPTION_AVAILABLE)
                 println(CLIConstants.DO_YOU_LIKE_MEAL)
 
                 while (true) {
                     print("here: ")
                     UserInputHandler.getUserInput()?.let {
                         when (it) {
-                            1 -> {
-                                println(meal.toString())
+                            ONE -> {
+                                println(meal)
                                 return
                             }
 
-                            2 -> return@forEach
+                            TWO -> return@forEach
                             else -> println(CLIConstants.ENTER_VALID_OPTION_MESSAGE)
                         }
                     } ?: println(CLIConstants.ENTER_VALID_OPTION_MESSAGE)
@@ -214,10 +212,8 @@ class CLIDispatcher(
 
     private fun getHealthyFastFoods() {
         val meals = getHealthyFastFoodUseCase.getHealthyFastFood()
-        println(CLIConstants.LIST_CONTAINING_HEALTHY_FAST_FOOD)
-        meals.forEach {
-            println(it.toString())
-        }
+        println(CLIConstants.HEALTHY_FAST_FOOD_MEALS_MESSAGE)
+        meals.forEach(::println)
     }
 
     private fun launchEasyFoodSuggestionsGame() {
