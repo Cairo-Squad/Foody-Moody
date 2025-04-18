@@ -24,8 +24,7 @@ class DataHolder(
                 val parsedMeal = mealCsvParser.parseOneLine(cleanedLine)
                 list.add(parsedMeal)
             } catch (e: Exception) {
-//                println("Failed to parse line #$i")
-//                println("Reason: ${e.message}")
+                list.add(Meal(null, null))
             }
         }
 
