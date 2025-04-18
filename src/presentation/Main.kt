@@ -11,12 +11,18 @@ import logic.usecases.GetRandomMealUseCase
 import logic.usecases.ingredientGuess.IngredientsGameUseCase
 import logic.usecases.mealSearch.SearchMealByNameUseCase
 import logic.usecases.*
+import presentation.cliController.CLIConstants
 import java.io.File
 
 fun main() {
     val mealCsvReader = MealCsvReader(File(CSVConstants.CSV_FILE_PATH))
     val mealCsvParser = MealCsvParser()
-    val dataHolder = DataHolder(mealCsvParser = mealCsvParser, mealCsvReader = mealCsvReader)
+
+    println(CLIConstants.LOADING_MEALS_DATA_MESSAGE)
+    val dataHolder = DataHolder(
+        mealCsvParser = mealCsvParser,
+        mealCsvReader = mealCsvReader
+    )
     val mealRepository = MealRepositoryImpl(dataHolder)
 
     val cliDispatcher = CLIDispatcher(

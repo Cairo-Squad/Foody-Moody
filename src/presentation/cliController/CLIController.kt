@@ -3,6 +3,7 @@ package presentation.cliController
 class CLIController(private val cliDispatcher: CLIDispatcher) {
 
     fun start() {
+        println(CLIConstants.SEPARATOR)
         println(CLIConstants.WELCOME_MESSAGE)
         println(CLIConstants.SEPARATOR)
 
