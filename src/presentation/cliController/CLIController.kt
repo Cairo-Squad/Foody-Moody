@@ -3,6 +3,7 @@ package presentation.cliController
 class CLIController(private val cliDispatcher: CLIDispatcher) {
 
     fun start() {
+        println(CLIConstants.SEPARATOR)
         println(CLIConstants.WELCOME_MESSAGE)
         println(CLIConstants.SEPARATOR)
 
@@ -10,7 +11,7 @@ class CLIController(private val cliDispatcher: CLIDispatcher) {
             showMainMenu()
 
             val input = takeUserInput()
-            if (input == CLIConstants.EXIT_COMMAND_CODE) {
+            if (input == UserOptions.EXIT_COMMAND_CODE) {
                 break
             }
 
