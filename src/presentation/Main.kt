@@ -1,16 +1,16 @@
 package presentation
 
-import data.DataHolder
-import logic.usecases.GetIraqMealsUseCase
-import data.MealCsvParser
-import data.MealCsvReader
+import data.DataSourceImpl
+import logic.usecase.GetIraqMealsUseCase
+import data.csvUtil.MealCsvParser
+import data.csvUtil.MealCsvReader
 import data.MealRepositoryImpl
 import presentation.cliController.CLIController
 import presentation.cliController.CLIDispatcher
-import logic.usecases.GetRandomMealUseCase
-import logic.usecases.ingredientGuess.IngredientsGameUseCase
-import logic.usecases.mealSearch.SearchMealByNameUseCase
-import logic.usecases.*
+import logic.usecase.GetRandomMealUseCase
+import logic.usecase.IngredientsGameUseCase
+import logic.usecase.SearchMealByNameUseCase
+import logic.usecase.*
 import presentation.cliController.CLIConstants
 import java.io.File
 
@@ -19,11 +19,11 @@ fun main() {
     val mealCsvParser = MealCsvParser()
 
     println(CLIConstants.LOADING_MEALS_DATA_MESSAGE)
-    val dataHolder = DataHolder(
+    val dataSource = DataSourceImpl(
         mealCsvParser = mealCsvParser,
         mealCsvReader = mealCsvReader
     )
-    val mealRepository = MealRepositoryImpl(dataHolder)
+    val mealRepository = MealRepositoryImpl(dataSource)
 
     val cliDispatcher = CLIDispatcher(
         searchMealByName = SearchMealByNameUseCase(mealRepository),

@@ -1,13 +1,14 @@
 package data
 
+import logic.DataSource
 import logic.MealRepository
-import model.Meal
+import logic.model.Meal
 
 class MealRepositoryImpl(
-    private val dataHolder: DataHolder
+    private val dataSource: DataSource
 ) : MealRepository {
 
     override fun getAllMeals(): List<Meal> {
-        return dataHolder.getAllMeals()
+        return dataSource.getAllMeals()
     }
 }

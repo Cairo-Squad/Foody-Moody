@@ -1,4 +1,4 @@
-package model
+package logic.model
 
 data class ShowMeal(
     val rank: Int,

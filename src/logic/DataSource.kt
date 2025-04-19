@@ -2,6 +2,6 @@ package logic
 
 import logic.model.Meal
 
-interface MealRepository {
+interface DataSource {
     fun getAllMeals(): List<Meal>
 }

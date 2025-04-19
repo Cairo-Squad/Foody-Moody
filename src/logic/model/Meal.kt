@@ -1,4 +1,4 @@
-package model
+package logic.model
 
 import java.time.LocalDate
 

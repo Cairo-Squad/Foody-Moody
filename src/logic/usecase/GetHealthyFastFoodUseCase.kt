@@ -1,7 +1,7 @@
-package logic.usecases
+package logic.usecase
 
 import logic.MealRepository
-import model.Meal
+import logic.model.Meal
 
 class GetHealthyFastFoodUseCase(
     private val repo: MealRepository

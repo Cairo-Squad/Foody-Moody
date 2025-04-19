@@ -1,7 +1,8 @@
-package logic.usecases.ingredientGuess
+package logic.usecase
 
 import logic.MealRepository
-import model.Meal
+import logic.model.IngredientsGameResult
+import logic.model.Meal
 
 class IngredientsGameUseCase(private val mealRepository: MealRepository) {
 

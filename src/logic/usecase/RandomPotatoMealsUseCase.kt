@@ -1,8 +1,8 @@
-package logic.usecases
+package logic.usecase
 
 import logic.LogicConstants
 import logic.MealRepository
-import model.Meal
+import logic.model.Meal
 
 class RandomPotatoMealsUseCase(
     private val mealRepository: MealRepository

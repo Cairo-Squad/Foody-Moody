@@ -11,7 +11,7 @@ class CLIController(private val cliDispatcher: CLIDispatcher) {
             showMainMenu()
 
             val input = takeUserInput()
-            if (input == CLIConstants.EXIT_COMMAND_CODE) {
+            if (input == UserOptions.EXIT_COMMAND_CODE) {
                 break
             }
 

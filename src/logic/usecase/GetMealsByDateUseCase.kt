@@ -1,9 +1,9 @@
-package logic.usecases
+package logic.usecase
 
 import data.errors.NoResultException
 import data.errors.ValidationException
 import logic.MealRepository
-import model.Meal
+import logic.model.Meal
 import presentation.cliController.CLIConstants
 import java.time.LocalDate
 import java.time.format.DateTimeParseException

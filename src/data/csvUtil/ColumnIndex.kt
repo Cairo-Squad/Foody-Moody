@@ -1,4 +1,4 @@
-package data
+package data.csvUtil
 
 object ColumnIndex {
     const val NAME = 0

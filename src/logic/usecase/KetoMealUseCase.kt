@@ -1,8 +1,8 @@
-package logic.usecases
+package logic.usecase
 
 import logic.MealRepository
-import model.Meal
-import model.Nutrition
+import logic.model.Meal
+import logic.model.Nutrition
 
 class KetoMealUseCase (private val mealRepository: MealRepository){
     private val suggestedIds = mutableSetOf<Int>()

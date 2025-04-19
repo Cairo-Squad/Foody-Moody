@@ -1,9 +1,9 @@
-package logic.usecases
+package logic.usecase
 
 import logic.LogicConstants.FOR_LARGE_GROUP
 import logic.LogicConstants.ITALIAN
 import logic.MealRepository
-import model.Meal
+import logic.model.Meal
 
 class GetMealsForLargeGroupUseCase(
     private val mealRepository: MealRepository,

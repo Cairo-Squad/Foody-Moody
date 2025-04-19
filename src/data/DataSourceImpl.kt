@@ -1,18 +1,21 @@
 package data
 
-import model.Meal
+import data.csvUtil.MealCsvParser
+import data.csvUtil.MealCsvReader
+import logic.DataSource
+import logic.model.Meal
 
-class DataHolder(
+class DataSourceImpl(
     private val mealCsvParser: MealCsvParser,
     private val mealCsvReader: MealCsvReader
-) {
+) : DataSource {
     private var listOfMeals: List<Meal> = emptyList()
 
     init {
         getAllMeals()
     }
 
-    fun getAllMeals(): List<Meal> {
+    override fun getAllMeals(): List<Meal> {
         if (listOfMeals.isNotEmpty()) {
             return listOfMeals
         }

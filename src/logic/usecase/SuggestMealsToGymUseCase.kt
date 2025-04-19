@@ -1,7 +1,7 @@
-package logic.usecases
+package logic.usecase
 
 import data.MealRepositoryImpl
-import model.Meal
+import logic.model.Meal
 
 class SuggestMealsToGymUseCase(private val mealRepository: MealRepositoryImpl) {
 

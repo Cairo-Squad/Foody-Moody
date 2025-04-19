@@ -1,4 +1,4 @@
-package model
+package logic.model
 
 data class Nutrition(
     val calories: Float? = null,

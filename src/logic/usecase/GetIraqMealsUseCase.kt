@@ -1,9 +1,9 @@
-package logic.usecases
+package logic.usecase
 
 import logic.LogicConstants.IRAQ
 import logic.LogicConstants.IRAQI
 import logic.MealRepository
-import model.Meal
+import logic.model.Meal
 
 class GetIraqMealsUseCase(private val meals: MealRepository) {
     fun getIraqMeals(): List<Meal> {

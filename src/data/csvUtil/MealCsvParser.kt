@@ -1,7 +1,7 @@
-package data
+package data.csvUtil
 
-import model.Meal
-import model.Nutrition
+import logic.model.Meal
+import logic.model.Nutrition
 import java.time.LocalDate
 
 

@@ -1,8 +1,8 @@
-package logic.usecases
+package logic.usecase
 
 import logic.MealRepository
-import model.Meal
-import model.ShowMeal
+import logic.model.Meal
+import logic.model.ShowMeal
 
 class GetSeafoodMealsSortedByProteinUseCase(
     private val mealRepository: MealRepository

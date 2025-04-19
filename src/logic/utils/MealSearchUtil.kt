@@ -1,6 +1,6 @@
-package logic.usecases.mealSearch
+package logic.utils
 
-import model.Meal
+import logic.model.Meal
 
 object MealSearchUtil {
 

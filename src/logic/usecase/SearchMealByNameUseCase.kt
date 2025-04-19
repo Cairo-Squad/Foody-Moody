@@ -1,7 +1,8 @@
-package logic.usecases.mealSearch
+package logic.usecase
 
 import logic.MealRepository
-import model.Meal
+import logic.model.Meal
+import logic.utils.MealSearchUtil
 
 class SearchMealByNameUseCase(
     private val mealsRepository: MealRepository

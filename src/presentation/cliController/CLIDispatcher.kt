@@ -1,6 +1,6 @@
 package presentation.cliController
 
-import logic.usecases.GetRandomMealUseCase
+import logic.usecase.GetRandomMealUseCase
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_ERROR_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
@@ -9,10 +9,10 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TWO
-import logic.usecases.ingredientGuess.IngredientsGameUseCase
-import logic.usecases.mealSearch.SearchMealByNameUseCase
-import logic.usecases.*
-import model.ShowMeal
+import logic.usecase.IngredientsGameUseCase
+import logic.usecase.SearchMealByNameUseCase
+import logic.usecase.*
+import logic.model.ShowMeal
 
 class CLIDispatcher(
     private val searchMealByName: SearchMealByNameUseCase,
@@ -32,21 +32,21 @@ class CLIDispatcher(
     private val ketoMealUseCase: KetoMealUseCase
 ) {
     private val commands = mapOf<Int, () -> Unit>(
-        CLIConstants.GET_HEALTHY_FAST_FOOD to ::getHealthyFastFoods,
-        CLIConstants.SEARCH_MEAL_BY_NAME to ::searchMealByName,
-        CLIConstants.GET_IRAQI_MEALS_COMMAND_CODE to ::displayIraqMeals,
-        CLIConstants.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame,
-        CLIConstants.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
-        CLIConstants.GET_SWEETS_WITH_NO_EGGS_COMMAND_CODE to ::getSweetsWithNoEggs,
-        CLIConstants.GET_KETO_FRIENDLY_MEALS_COMMAND_CODE to ::getKetoMeals,
-        CLIConstants.GET_MEALS_BY_DATE to ::launchGetMealsByDate,
-        CLIConstants.SUGGEST_MEALS_TO_GYM to ::gymHelper,
-        CLIConstants.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
-        CLIConstants.INGREDIENTS_GUESS_GAME to ::ingredientsGameGuess,
-        CLIConstants.RANDOM_10_POTATO_MEALS_COMMAND_CODE to ::get10RandomPotatoMeals,
-        CLIConstants.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
-        CLIConstants.GET_SEAFOOD_MEALS_CODE to ::getSeafoodMealsSortedByProtein,
-        CLIConstants.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup
+        UserOptions.GET_HEALTHY_FAST_FOOD to ::getHealthyFastFoods,
+        UserOptions.SEARCH_MEAL_BY_NAME to ::searchMealByName,
+        UserOptions.GET_IRAQI_MEALS_COMMAND_CODE to ::displayIraqMeals,
+        UserOptions.SUGGEST_TEN_EASY_FOOD_MEALS to ::launchEasyFoodSuggestionsGame,
+        UserOptions.GUESS_PREPARATION_TIME_GAME_COMMAND_CODE to ::guessPreparationTime,
+        UserOptions.GET_SWEETS_WITH_NO_EGGS_COMMAND_CODE to ::getSweetsWithNoEggs,
+        UserOptions.GET_KETO_FRIENDLY_MEALS_COMMAND_CODE to ::getKetoMeals,
+        UserOptions.GET_MEALS_BY_DATE to ::launchGetMealsByDate,
+        UserOptions.SUGGEST_MEALS_TO_GYM to ::gymHelper,
+        UserOptions.GET_MEALS_BY_COUNTRY to ::getTwentyRandomMealByCountry,
+        UserOptions.INGREDIENTS_GUESS_GAME to ::ingredientsGameGuess,
+        UserOptions.RANDOM_10_POTATO_MEALS_COMMAND_CODE to ::get10RandomPotatoMeals,
+        UserOptions.SUGGEST_MEAL_MORE_THAN_700_CALORIES to ::launchMealsMoreThan700Calories,
+        UserOptions.GET_SEAFOOD_MEALS_CODE to ::getSeafoodMealsSortedByProtein,
+        UserOptions.ITALIAN_MEALS_FOR_LARGE_GROUPS_COMMAND_CODE to ::getMealsForLargeGroup
     )
 
     fun dispatch(userInput: Int) {
@@ -59,7 +59,7 @@ class CLIDispatcher(
     }
 
     fun validateOption(option: Int): Boolean {
-        return option == CLIConstants.EXIT_COMMAND_CODE || option in commands.keys
+        return option == UserOptions.EXIT_COMMAND_CODE || option in commands.keys
     }
 
     private fun displayIraqMeals() {
@@ -163,7 +163,7 @@ class CLIDispatcher(
 
                 while (true) {
                     print("here: ")
-                    UserInputHandler.getUserInput()?.let {
+                    readlnOrNull()?.toIntOrNull()?.let {
                         when (it) {
                             ONE -> {
                                 println(meal)
@@ -181,9 +181,9 @@ class CLIDispatcher(
     }
 
     private fun launchGetMealsByDate() {
-        println(CLIConstants.ENTER_VALID_DATE)
+        println(CLIConstants.ENTER_DATE_MESSAGE)
         while (true) {
-            val userInput = UserInputHandler.getStringUserInput()
+            val userInput = readlnOrNull()
             if (userInput?.toIntOrNull() == 16) {
                 break
             }
@@ -198,7 +198,7 @@ class CLIDispatcher(
                     }
                     while (true) {
                         println(CLIConstants.ENTER_MEAL_ID)
-                        val mealIdInput = UserInputHandler.getUserInput()
+                        val mealIdInput = readlnOrNull()?.toIntOrNull()
                         val selectedMeal = meals.firstOrNull { it.mealId == mealIdInput }
                         if (selectedMeal == null) {
                             println(CLIConstants.ID_NOT_IN_LIST)
@@ -246,10 +246,15 @@ class CLIDispatcher(
             println("Note that there is Only one correct ingredient of list below.")
             println("Press 1,2 or 3 to choose ingredient: ${ingredientsGameResult.allIngredients.shuffled()}")
 
-            val userChoice = UserInputHandler.getUserInput()?.minus(1) ?: -1
+            var userChoice = readlnOrNull()?.toIntOrNull()?.minus(1) ?: -1
+            while (userChoice !in ingredientsGameResult.allIngredients.indices) {
+                println("Please enter 1, 2, or 3:")
+                userChoice = readlnOrNull()?.toIntOrNull()?.minus(1) ?: -1
+            }
 
             if (ingredientsGameResult.allIngredients.elementAt(index = userChoice) == ingredientsGameResult.correctIngredient) {
-                println("Great , +1000 point");bonus += 1000
+                println("Great , +1000 point")
+                bonus += 1000
             } else {
                 println("Sorry, correct ingredient is ${ingredientsGameResult.correctIngredient}")
                 break
@@ -272,14 +277,14 @@ class CLIDispatcher(
             println("Top Matched Meals are : \n $fiveMeals ")
             println("Press 1 to get another matches or 0 to exist:")
 
-            if ((UserInputHandler.getUserInput() ?: 0) == 1) continue; else break
+            if ((readlnOrNull()?.toIntOrNull() ?: 0) == 1) continue; else break
         }
 
     }
 
     private fun searchMealByName() {
         println("Enter Meal Name: ")
-        val mealName = UserInputHandler.getStringUserInput() ?: ""
+        val mealName = readlnOrNull() ?: ""
 
         val matchedMeals = searchMealByName.searchMealByName(mealName).chunked(5)
 
@@ -287,7 +292,7 @@ class CLIDispatcher(
             println("Top Matched Meals are : \n $fiveMeals ")
             println("Press 1 to get another matches or 0 to exist:")
 
-            if ((UserInputHandler.getUserInput() ?: 0) == 1) continue; else break
+            if ((readlnOrNull()?.toIntOrNull() ?: 0) == 1) continue; else break
         }
     }
 
