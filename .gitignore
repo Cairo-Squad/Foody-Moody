@@ -25,10 +25,10 @@ bin/
 ### VS Code ###
 .vscode/
 
-food.csv
-
 ### Mac OS ###
 .DS_Store
 
 food.csv
-/.idea/discord.xml
+/.gradle/
+/build/
+/.idea/
