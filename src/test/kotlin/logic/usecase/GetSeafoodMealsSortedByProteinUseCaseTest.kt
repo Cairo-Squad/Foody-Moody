@@ -41,7 +41,7 @@ class GetSeafoodMealsSortedByProteinUseCaseTest {
                 protein = 20f
             ),
             createMealOfSeafood(
-                mealName = "Lamb",
+                mealName = "egg",
                 mealId = 5,
                 tags = listOf("Meat"),
                 protein = 35f
@@ -101,7 +101,7 @@ class GetSeafoodMealsSortedByProteinUseCaseTest {
                 protein = 65f
             ),
             createMealOfSeafood(
-                mealName = "Tuna",
+                mealName = "carb",
                 mealId = 7,
                 tags = listOf("Seafood"),
                 protein = 40f
@@ -114,7 +114,7 @@ class GetSeafoodMealsSortedByProteinUseCaseTest {
 
         // Then
         assertThat(result.map { it.mealName })
-            .containsExactly("Tuna")
+            .containsExactly("carb")
     }
 
     @Test
@@ -122,7 +122,7 @@ class GetSeafoodMealsSortedByProteinUseCaseTest {
         // Given
         val meals = listOf(
             createMealOfSeafood(
-                mealName = "Fishred",
+                mealName = "FishRed",
                 mealId = 1,
                 tags = listOf("Seafood"),
                 protein = 50f
