@@ -31,7 +31,10 @@ object MealSearchUtil {
         if (exactMatches.isNotEmpty()) return exactMatches
 
         return meals.filter { meal ->
-            levenshtein(meal.mealName ?: "", normalizedQuery) <= TOLERANCE_ALLOWED
+            val mealWords = (meal.mealName ?: "").lowercase().split(" ")
+            mealWords.any { word ->
+                levenshtein(word, normalizedQuery) <= TOLERANCE_ALLOWED
+            }
 
         }
     }
