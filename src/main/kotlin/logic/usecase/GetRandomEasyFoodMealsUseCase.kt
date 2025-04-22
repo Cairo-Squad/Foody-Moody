@@ -1,6 +1,6 @@
 package logic.usecase
 
-import data.errors.EasyFoodMealsNotFoundException
+import data.errors.NoSuchElementException
 import logic.LogicConstants
 import logic.MealRepository
 import logic.model.Meal
@@ -14,7 +14,7 @@ class GetRandomEasyFoodMealsUseCase(
             .takeIf { it.isNotEmpty() }
             ?.shuffled()
             ?.take(10)
-            ?: throw EasyFoodMealsNotFoundException("No easy food meal found")
+            ?: throw NoSuchElementException("No easy food meal found")
     }
 
     private fun isEasyFoodMeal(meal: Meal): Boolean {

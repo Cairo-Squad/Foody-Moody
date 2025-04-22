@@ -1,7 +1,7 @@
 package logic.usecase
 
 import com.google.common.truth.Truth.assertThat
-import data.errors.EasyFoodMealsNotFoundException
+import data.errors.NoSuchElementException
 import io.mockk.every
 import io.mockk.mockk
 import logic.MealRepository
@@ -26,7 +26,7 @@ class GetRandomEasyFoodMealsUseCaseTest {
         // Given
         every { mealRepository.getAllMeals() } returns emptyList()
 
-        assertThrows<EasyFoodMealsNotFoundException> {
+        assertThrows<NoSuchElementException> {
             getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
         }
     }
@@ -118,7 +118,7 @@ class GetRandomEasyFoodMealsUseCaseTest {
         )
 
         // When & Then
-        assertThrows<EasyFoodMealsNotFoundException> {
+        assertThrows<NoSuchElementException> {
             getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
         }
     }
