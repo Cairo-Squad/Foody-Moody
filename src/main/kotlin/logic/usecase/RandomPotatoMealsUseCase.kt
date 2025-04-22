@@ -16,6 +16,7 @@ class RandomPotatoMealsUseCase(
     }
 
     private fun containsPotatoes(meal: Meal): Boolean {
-        return meal.ingredients != null && meal.ingredients.contains(LogicConstants.POTATOES_INGREDIENT)
+        return meal.ingredients != null &&
+                meal.ingredients.any { it.contains(LogicConstants.POTATOES_INGREDIENT, ignoreCase = true) }
     }
 }
