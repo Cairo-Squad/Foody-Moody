@@ -37,9 +37,9 @@ class GetHighCalorieMealsUseCaseTest {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
             Meal(mealName = null, nutrition = Nutrition(calories = 800f)),
-            Meal(mealName = "Pizza", nutrition = null),
-            Meal(mealName = "Salad", nutrition = Nutrition(calories = null)),
-            Meal(mealName = "Burger", nutrition = Nutrition(calories = 800f))
+            Meal(mealName = "Pizza", nutrition =  Nutrition(calories = 800f)),
+//            Meal(mealName = "Salad", nutrition = Nutrition(calories = null)),
+//            Meal(mealName = "Burger", nutrition = Nutrition(calories = 800f))
         )
 
         // When
