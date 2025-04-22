@@ -5,7 +5,7 @@ import data.errors.EasyFoodMealsNotFoundException
 import io.mockk.every
 import io.mockk.mockk
 import logic.MealRepository
-import logic.util.createMeal
+import logic.model.Meal
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -22,7 +22,7 @@ class GetRandomEasyFoodMealsUseCaseTest {
     }
 
     @Test
-    fun `getRandomEasyFoodMeals should throw EasyFoodMealsNotFoundException when mealRepository returns empty list`() {
+    fun `should throw EasyFoodMealsNotFoundException when mealRepository returns empty list`() {
         // Given
         every { mealRepository.getAllMeals() } returns emptyList()
 
@@ -32,85 +32,90 @@ class GetRandomEasyFoodMealsUseCaseTest {
     }
 
     @Test
-    fun `getRandomEasyFoodMeals should ignore low quality meals`() {
+    fun `should ignore low quality meals when one of requirements is null`() {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
-            createMeal(null, 20, 5, 5),
-            createMeal("pizza", null, 5, 5),
-            createMeal("pizza", 20, null, 5),
-            createMeal("pizza", 20, 5, null),
-            createMeal("pizza", 20, 5, 5),
+            Meal(mealName = null, minutes = 20, numberOfIngredients = 5, numberOfSteps = 5),
+            Meal(mealName = "pizza", minutes = null, numberOfIngredients = 5, numberOfSteps = 5),
+            Meal(mealName = "pizza", minutes = 20, numberOfIngredients = null, numberOfSteps = 5),
+            Meal(mealName = "pizza", minutes = 20, numberOfIngredients = 5, numberOfSteps = null),
+            Meal(mealName = "pizza", minutes = 20, numberOfIngredients = 5, numberOfSteps = 5),
         )
 
         // When
         val result = getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
 
         // Then
-        assertThat(result.size).isEqualTo(1)
+        assertThat(result).hasSize(1)
     }
 
     @Test
-    fun `getRandomEasyFoodMeals should ignore not easy food meals`() {
+    fun `should retrieve only easy food meals when filtering meals`() {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
-            createMeal("pizza", 35, 5, 5),
-            createMeal("pizza", 20, 7, 5),
-            createMeal("pizza", 20, 5, 7),
-            createMeal("pizza", 20, 5, 5),
+            Meal(mealName = "Pasta", minutes = 40, numberOfIngredients = 3, numberOfSteps = 3),
+            Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 8, numberOfSteps = 2),
+            Meal(mealName = "Sandwich", minutes = 5, numberOfIngredients = 2, numberOfSteps = 8),
+            Meal(mealName = "Scrambled Eggs", minutes = 25, numberOfIngredients = 4, numberOfSteps = 3)
         )
 
         // When
         val result = getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
 
         // Then
-        assertThat(result.size).isEqualTo(1)
+        assertThat(result).hasSize(1)
     }
 
     @Test
     fun `getRandomEasyFoodMeals should return exactly 10 meals when more than 10 matching meals exist`() {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
-            createMeal("Pasta", 15, 3, 3),
-            createMeal("Salad", 10, 2, 2),
-            createMeal("Sandwich", 5, 2, 1),
-            createMeal("Scrambled Eggs", 7, 3, 2),
-            createMeal("Instant Noodles", 3, 2, 2),
-            createMeal("Toast", 5, 2, 1),
-            createMeal("Fruit Salad", 5, 3, 2),
-            createMeal("Grilled Cheese", 10, 3, 2),
-            createMeal("Smoothie", 5, 4, 1),
-            createMeal("Egg Salad", 10, 3, 2),
-            createMeal("Yogurt Parfait", 5, 3, 2),
-            createMeal("Rice and Beans", 15, 3, 3),
+            Meal(mealName = "Pasta", minutes = 15, numberOfIngredients = 3, numberOfSteps = 3),
+            Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 2, numberOfSteps = 2),
+            Meal(mealName = "Sandwich", minutes = 5, numberOfIngredients = 2, numberOfSteps = 1),
+            Meal(mealName = "Scrambled Eggs", minutes = 7, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Instant Noodles", minutes = 3, numberOfIngredients = 2, numberOfSteps = 2),
+            Meal(mealName = "Toast", minutes = 5, numberOfIngredients = 2, numberOfSteps = 1),
+            Meal(mealName = "Fruit Salad", minutes = 5, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Grilled Cheese", minutes = 10, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Smoothie", minutes = 5, numberOfIngredients = 4, numberOfSteps = 1),
+            Meal(mealName = "Egg Salad", minutes = 10, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Yogurt Parfait", minutes = 5, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Rice and Beans", minutes = 15, numberOfIngredients = 3, numberOfSteps = 3)
         )
 
         // When
         val result = getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
 
         // Then
-        assertThat(result.size).isEqualTo(10)
+        assertThat(result).hasSize(10)
     }
 
     @Test
     fun `getRandomEasyFoodMeals should return all matching meals when less than 10 matching meals exist`() {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
-            createMeal("pizza", 20, 4, 4),
-            createMeal("Pasta", 15, 3, 3),
-            createMeal("Salad", 10, 2, 2)
+            Meal(mealName = "pizza", minutes = 20, numberOfIngredients = 4, numberOfSteps = 4),
+            Meal(mealName = "Pasta", minutes = 15, numberOfIngredients = 3, numberOfSteps = 3),
+            Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 2, numberOfSteps = 2)
         )
 
         // When
         val result = getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
 
         // Then
-        assertThat(result.size).isEqualTo(3)
+        assertThat(result).hasSize(3)
     }
 
     @Test
     fun `getRandomEasyFoodMeals should throw EasyFoodMealsNotFoundException when no easy food meals exist`() {
         // Given
-        every { mealRepository.getAllMeals() } returns listOf( createMeal("pizza", 40, 4, 4) )
+        every { mealRepository.getAllMeals() } returns listOf(
+            Meal(mealName = "Pizza", minutes = 40, numberOfIngredients = 7, numberOfSteps = 8),
+            Meal(mealName = "Pasta", minutes = 45, numberOfIngredients = 3, numberOfSteps = 3),
+            Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 10, numberOfSteps = 2),
+            Meal(mealName = "Sandwich", minutes = 35, numberOfIngredients = 7, numberOfSteps = 6),
+        )
 
         // When & Then
         assertThrows<EasyFoodMealsNotFoundException> {
@@ -122,20 +127,18 @@ class GetRandomEasyFoodMealsUseCaseTest {
     fun `getRandomEasyFoodMeals should return shuffled meals every time when called`() {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
-            createMeal("Pasta", 15, 3, 3),
-            createMeal("Salad", 10, 2, 2),
-            createMeal("Sandwich", 5, 2, 1),
-            createMeal("Scrambled Eggs", 7, 3, 2),
-            createMeal("Instant Noodles", 3, 2, 2),
-            createMeal("Toast", 5, 2, 1),
-            createMeal("Fruit Salad", 5, 3, 2),
-            createMeal("Grilled Cheese", 10, 3, 2),
-            createMeal("Smoothie", 5, 4, 1),
-            createMeal("Egg Salad", 10, 3, 2),
-            createMeal("Yogurt Parfait", 5, 3, 2),
-            createMeal("Rice and Beans", 15, 3, 3),
-            createMeal("Omelette", 10, 4, 2),
-            createMeal("Avocado Toast", 5, 2, 2)
+            Meal(mealName = "Pasta", minutes = 15, numberOfIngredients = 3, numberOfSteps = 3),
+            Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 2, numberOfSteps = 2),
+            Meal(mealName = "Sandwich", minutes = 5, numberOfIngredients = 2, numberOfSteps = 1),
+            Meal(mealName = "Scrambled Eggs", minutes = 7, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Instant Noodles", minutes = 3, numberOfIngredients = 2, numberOfSteps = 2),
+            Meal(mealName = "Toast", minutes = 5, numberOfIngredients = 2, numberOfSteps = 1),
+            Meal(mealName = "Fruit Salad", minutes = 5, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Grilled Cheese", minutes = 10, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Smoothie", minutes = 5, numberOfIngredients = 4, numberOfSteps = 1),
+            Meal(mealName = "Egg Salad", minutes = 10, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Yogurt Parfait", minutes = 5, numberOfIngredients = 3, numberOfSteps = 2),
+            Meal(mealName = "Rice and Beans", minutes = 15, numberOfIngredients = 3, numberOfSteps = 3)
         )
 
         // When
