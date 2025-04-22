@@ -5,24 +5,26 @@ import logic.model.Meal
 
 class SuggestMealsToGymUseCase(private val mealRepository: MealRepository) {
 
-    fun getMealsBasedOnCaloriesAndProtein(calories: Float, protein: Float): List<Meal> {
-        val allMeals = mealRepository.getAllMeals()
+    private val allMeals: List<Meal> by lazy { mealRepository.getAllMeals() }
 
+    fun getMealsBasedOnCaloriesAndProtein(calories: Float, protein: Float): List<Meal> {
+        require(calories >= 0) { "Calories must be >= 0" }
+        require(protein >= 0) { "Protein must be >= 0" }
         return allMeals.filter { meal ->
-            validateMealMatchingToGivenProteinAndCalories(meal, calories, protein)
+            doesMealMatches(meal, calories, protein)
         }
     }
 
 
-    private fun validateMealMatchingToGivenProteinAndCalories(
+    private fun doesMealMatches(
         meal: Meal,
         calories: Float,
         protein: Float
     ): Boolean {
-        return meal.nutrition?.calories != null && meal.nutrition.protein != null &&
-                meal.nutrition.calories in
-                (calories.minus(CALORIES_APPROXIMATION)..(calories.plus(CALORIES_APPROXIMATION))) &&
-                meal.nutrition.protein in
+        return meal.nutrition?.calories != null && meal.nutrition.protein != null
+                && meal.nutrition.calories in
+                (calories.minus(CALORIES_APPROXIMATION)..(calories.plus(CALORIES_APPROXIMATION)))
+                && meal.nutrition.protein in
                 (protein.minus(PROTEIN_APPROXIMATION)..(protein.plus(PROTEIN_APPROXIMATION)))
     }
 
