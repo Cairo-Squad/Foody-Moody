@@ -4,13 +4,13 @@ import logic.LogicConstants
 import logic.MealRepository
 import logic.model.Meal
 
-class GetMealsMoreThan700CaloriesUseCase(
+class GetHighCalorieMealsUseCase(
     private val mealRepository: MealRepository
 ) {
-    fun getMealMoreThan700Calories(): List<Meal> {
+    fun getHighCalorieMeals(): List<Meal> {
         return mealRepository.getAllMeals()
             .filter { meal ->
-                mealWithNameAndCalories(meal) && meal.nutrition!!.calories!! > LogicConstants.MINIMUM_CALORIES
+                mealWithNameAndCalories(meal) && highCalorieMeal(meal)
             }
             .shuffled()
     }
@@ -19,5 +19,9 @@ class GetMealsMoreThan700CaloriesUseCase(
         return meal.mealName != null
                 && meal.nutrition != null
                 && meal.nutrition.calories != null
+    }
+
+    private fun highCalorieMeal(meal: Meal): Boolean {
+        return meal.nutrition!!.calories!! > LogicConstants.MINIMUM_CALORIES
     }
 }
