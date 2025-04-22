@@ -33,7 +33,7 @@ class GetHighCalorieMealsUseCaseTest {
     }
 
     @Test
-    fun `should ignore low quality meals when list has no high quality meals`() {
+    fun `should ignore low quality meals when list has meals missing name or calorie info`() {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
             Meal(mealName = null, nutrition = Nutrition(calories = 800f)),
