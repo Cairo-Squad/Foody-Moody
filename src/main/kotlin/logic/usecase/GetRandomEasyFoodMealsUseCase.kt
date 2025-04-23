@@ -1,5 +1,6 @@
 package logic.usecase
 
+import data.errors.NoSuchElementException
 import logic.LogicConstants
 import logic.MealRepository
 import logic.model.Meal
@@ -9,9 +10,11 @@ class GetRandomEasyFoodMealsUseCase(
 ) {
     fun getRandomEasyFoodMeals(): List<Meal> {
         return mealRepository.getAllMeals()
-            .filter { isHighQualityMeal(it) && isEasyFoodMeal(it) }
-            .shuffled()
-            .take(10)
+            .filter { meal -> isHighQualityMeal(meal) && isEasyFoodMeal(meal) }
+            .takeIf { it.isNotEmpty() }
+            ?.shuffled()
+            ?.take(10)
+            ?: throw NoSuchElementException("No easy food meal found")
     }
 
     private fun isEasyFoodMeal(meal: Meal): Boolean {

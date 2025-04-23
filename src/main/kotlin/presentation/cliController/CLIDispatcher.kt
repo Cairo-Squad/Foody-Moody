@@ -1,6 +1,7 @@
 package presentation.cliController
 
-import logic.usecase.GetRandomMealUseCase
+import logic.model.ShowMeal
+import logic.usecase.*
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_ERROR_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
@@ -219,9 +220,13 @@ class CLIDispatcher(
     }
 
     private fun launchEasyFoodSuggestionsGame() {
-        println(CLIConstants.TEN_RANDOM_EASY_FOOD_MEALS_MSG)
-        getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
-            .forEach(::println)
+        try {
+            println(CLIConstants.TEN_RANDOM_EASY_FOOD_MEALS_MSG)
+            getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
+                .forEach(::println)
+        } catch (exception: Exception) {
+            println(exception.message)
+        }
     }
 
     private fun getSeafoodMealsSortedByProtein() {
