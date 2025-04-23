@@ -63,8 +63,9 @@ class KetoMealUseCaseTest {
         // Then
         assertThat(first).isEqualTo(second)
     }
+
     @Test
-    fun `should not return meal if protein or fat in meal  does not  minimum keto rules`() {
+    fun `should  return meal if protein or fat in meal  does not  minimum keto rules`() {
         val testMeals = FakeData.testMealsOfMinProteinAndTotalFat
 
         every { repository.getAllMeals() } returns testMeals
@@ -73,5 +74,4 @@ class KetoMealUseCaseTest {
 
         assertThat(result).isEqualTo(testMeals[2])
     }
-
 }
