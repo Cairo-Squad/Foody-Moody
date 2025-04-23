@@ -22,9 +22,7 @@ class GetRandomMealUseCaseTest {
     fun `should return a meal when there is a meal valid`() {
         //Given
         every { repository.getAllMeals() } returns listOf(
-            Meal(mealName = "Burger", minutes = 10),
-            Meal(mealName = "Pizza", minutes = 20),
-            Meal(mealName = "Pasta", minutes = 15)
+
         )
         //When
         val actualResult = getRandomMealUseCase.getRandomMeal()
@@ -45,13 +43,9 @@ class GetRandomMealUseCaseTest {
     @Test
     fun `should return null when all meals have null names `() {
         // Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(mealName =null , minutes = 30),
-            Meal(mealName =null , minutes = 20),
-            Meal(mealName =null , minutes = 30)
-        )
-        // When
+        every { repository.getAllMeals() } returns ValidListOfMeal()
 
+        // When
         val actualResult = getRandomMealUseCase.getRandomMeal()
 
         // Then
@@ -60,13 +54,9 @@ class GetRandomMealUseCaseTest {
     @Test
     fun `should return null when all meals have null minutes `() {
         // Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(mealName ="meat" , minutes = null),
-            Meal(mealName ="koko" , minutes = null),
-            Meal(mealName ="bata" , minutes = null)
-        )
-        // When
+        every { repository.getAllMeals() } returns ListOfMealWithNullMinutes()
 
+        // When
         val actualResult = getRandomMealUseCase.getRandomMeal()
 
         // Then
@@ -75,29 +65,40 @@ class GetRandomMealUseCaseTest {
     @Test
     fun `should return a meal when there is a null unimportant attribute`() {
         //Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(mealName = "Burger", minutes = 10 , numberOfSteps = null),
-            Meal(mealName = "Pizza", minutes = 20, numberOfSteps = null),
-            Meal(mealName = "Pasta", minutes = 15, numberOfSteps = null)
-        )
+        every { repository.getAllMeals() } returns ListOfMealWithUnImportantAttribute()
+
         //When
         val actualResult = getRandomMealUseCase.getRandomMeal()
+
         //Then
         assertThat(actualResult).isNotNull()
     }
     @Test
     fun `should call getAllMeals exactly once`() {
         // Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(mealName = "Burger", minutes = 10)
-        )
+        every { repository.getAllMeals() } returns ValidListOfMeal()
+
         // When
-
         getRandomMealUseCase.getRandomMeal()
-        // Then
 
+        // Then
         io.mockk.verify(exactly = 1) { repository.getAllMeals() }
     }
+    private fun ValidListOfMeal() = listOf(
+        Meal(mealName = "Burger", minutes = 10),
+        Meal(mealName = "Pizza", minutes = 20),
+        Meal(mealName = "Pasta", minutes = 15)
+    )
+    private fun ListOfMealWithNullMinutes() = listOf(
+    Meal(mealName ="meat" , minutes = null),
+    Meal(mealName ="koko" , minutes = null),
+    Meal(mealName ="bata" , minutes = null)
+    )
+    private fun ListOfMealWithUnImportantAttribute() = listOf(
+    Meal(mealName = "Burger", minutes = 10 , numberOfSteps = null),
+    Meal(mealName = "Pizza", minutes = 20, numberOfSteps = null),
+    Meal(mealName = "Pasta", minutes = 15, numberOfSteps = null)
+    )
 
 
 

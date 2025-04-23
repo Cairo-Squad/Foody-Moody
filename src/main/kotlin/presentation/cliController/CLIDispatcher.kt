@@ -121,17 +121,16 @@ class CLIDispatcher(
                 }
                 attempts--
                 when {
-                    actualTime == guessedPreparationTime -> when (ONE) {
-                        ONE -> {
+                    actualTime == guessedPreparationTime -> {
+
                             println(CORRECT_GUESSING_MESSAGE)
                             return
                         }
+                    guessedPreparationTime < actualTime -> {
+                        println(TOO_LOW_GUESSING_MESSAGE)
                     }
-                    guessedPreparationTime < actualTime -> when (TWO) {
-                        TWO -> println(TOO_LOW_GUESSING_MESSAGE)
-                    }
-                    else -> when (THREE) {
-                        THREE -> println(TOO_HIGH_GUESSING_MESSAGE)
+                    else -> {
+                        println(TOO_HIGH_GUESSING_MESSAGE)
                     }
                 }
             }
