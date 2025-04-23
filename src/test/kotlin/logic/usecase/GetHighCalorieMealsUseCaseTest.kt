@@ -33,13 +33,27 @@ class GetHighCalorieMealsUseCaseTest {
     }
 
     @Test
-    fun `should ignore low quality meals when list has meals missing name or calorie info`() {
+    fun `should ignore low quality meals when meals missing name`() {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
             Meal(mealName = null, nutrition = Nutrition(calories = 800f)),
+            Meal(mealName = "Burger", nutrition = Nutrition(calories = 800f))
+        )
+
+        // When
+        val result = getHighCalorieMealsUseCase.getHighCalorieMeals()
+
+        // Then
+        assertThat(result).hasSize(1)
+    }
+
+    @Test
+    fun `should ignore not high calorie meals when meals missing nutrition and calorie info`() {
+        // Given
+        every { mealRepository.getAllMeals() } returns listOf(
             Meal(mealName = "Pizza", nutrition =  null),
             Meal(mealName = "Salad", nutrition = Nutrition(calories = null)),
-            Meal(mealName = "Burger", nutrition = Nutrition(calories = 800f))
+            Meal(mealName = "Burger", nutrition = Nutrition(calories = 800f)),
         )
 
         // When
