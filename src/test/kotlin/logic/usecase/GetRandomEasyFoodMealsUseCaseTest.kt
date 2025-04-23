@@ -115,39 +115,6 @@ class GetRandomEasyFoodMealsUseCaseTest {
         // Then
         assertThat(firstResult).isNotEqualTo(secondResult)
     }
-/*
-    private fun mealsWithMissingName() = listOf(
-        Meal(mealName = null, minutes = 20, numberOfIngredients = 5, numberOfSteps = 5),
-        Meal(mealName = "pizza", minutes = 20, numberOfIngredients = 5, numberOfSteps = 5),
-    )
-
-    private fun mealsWithMissingRequirements() = listOf(
-        Meal(mealName = "pizza", minutes = null, numberOfIngredients = 5, numberOfSteps = 5),
-        Meal(mealName = "pizza", minutes = 20, numberOfIngredients = null, numberOfSteps = 5),
-        Meal(mealName = "pizza", minutes = 20, numberOfIngredients = 5, numberOfSteps = null),
-        Meal(mealName = "pizza", minutes = 20, numberOfIngredients = 5, numberOfSteps = 5)
-    )
-
-    private fun mixedMeals() = listOf(
-        Meal(mealName = "Pasta", minutes = 40, numberOfIngredients = 3, numberOfSteps = 3),
-        Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 8, numberOfSteps = 2),
-        Meal(mealName = "Sandwich", minutes = 5, numberOfIngredients = 2, numberOfSteps = 8),
-        Meal(mealName = "Scrambled Eggs", minutes = 25, numberOfIngredients = 4, numberOfSteps = 3)
-    )
-
-    private fun noEasyFoodMeals(): List<Meal> = listOf(
-        Meal(mealName = "Pizza", minutes = 40, numberOfIngredients = 7, numberOfSteps = 8),
-        Meal(mealName = "Pasta", minutes = 45, numberOfIngredients = 3, numberOfSteps = 3),
-        Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 10, numberOfSteps = 2),
-        Meal(mealName = "Sandwich", minutes = 35, numberOfIngredients = 7, numberOfSteps = 6)
-    )
-
-    private fun lessThan10EasyFoodMeals() = listOf(
-        Meal(mealName = "Pizza", minutes = 20, numberOfIngredients = 4, numberOfSteps = 4),
-        Meal(mealName = "Pasta", minutes = 15, numberOfIngredients = 3, numberOfSteps = 3),
-        Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 2, numberOfSteps = 2)
-    )
-    */
 
     private fun easyFoodMeals(): List<Meal> = listOf(
         Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 2, numberOfSteps = 2),
