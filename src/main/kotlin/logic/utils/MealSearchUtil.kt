@@ -23,6 +23,7 @@ object MealSearchUtil {
      */
     fun searchMeals(meals: List<Meal>, query: String): List<Meal> {
         val normalizedQuery = query.lowercase().trim()
+        if(normalizedQuery.isBlank()) return emptyList()
 
         val exactMatches = meals.filter { meal ->
             kmpSearch(text = meal.mealName ?: "", pattern = normalizedQuery)
@@ -31,7 +32,10 @@ object MealSearchUtil {
         if (exactMatches.isNotEmpty()) return exactMatches
 
         return meals.filter { meal ->
-            levenshtein(meal.mealName ?: "", normalizedQuery) <= TOLERANCE_ALLOWED
+            val mealWords = (meal.mealName ?: "").lowercase().split(" ")
+            mealWords.any { word ->
+                levenshtein(word, normalizedQuery) <= TOLERANCE_ALLOWED
+            }
 
         }
     }
