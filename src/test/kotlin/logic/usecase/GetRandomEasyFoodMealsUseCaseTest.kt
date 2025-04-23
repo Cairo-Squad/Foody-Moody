@@ -32,10 +32,24 @@ class GetRandomEasyFoodMealsUseCaseTest {
     }
 
     @Test
-    fun `should ignore low quality meals when one of requirements is null`() {
+    fun `should ignore low quality meals when name is missing`() {
         // Given
         every { mealRepository.getAllMeals() } returns listOf(
             Meal(mealName = null, minutes = 20, numberOfIngredients = 5, numberOfSteps = 5),
+            Meal(mealName = "pizza", minutes = 20, numberOfIngredients = 5, numberOfSteps = 5),
+        )
+
+        // When
+        val result = getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
+
+        // Then
+        assertThat(result).hasSize(1)
+    }
+
+    @Test
+    fun `should ignore not easy food meals when missing one requirement`() {
+        // Given
+        every { mealRepository.getAllMeals() } returns listOf(
             Meal(mealName = "pizza", minutes = null, numberOfIngredients = 5, numberOfSteps = 5),
             Meal(mealName = "pizza", minutes = 20, numberOfIngredients = null, numberOfSteps = 5),
             Meal(mealName = "pizza", minutes = 20, numberOfIngredients = 5, numberOfSteps = null),
