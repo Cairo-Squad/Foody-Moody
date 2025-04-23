@@ -21,18 +21,8 @@ class GetIraqMealsUseCaseTest {
     @Test
     fun `should return valid list when GetIraqMeals function is called`() {
         //Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(
-                mealName = "Masgouf",
-                mealDescription = "A traditional Iraqi grilled.",
-                tags = listOf("Iraq", "Grilled", "Seafood")
-            ),
-            Meal(
-                mealName = "Kubba",
-                mealDescription = "Popular Iraqi dumplings made",
-                tags = listOf("Iraq", "Dumplings", "Comfort Food")
-            ),
-        )
+        every { repository.getAllMeals() } returns ValidListOfMeal()
+
         //When
         val actualResult = getIraqMealsUseCase.getIraqMeals()
 
@@ -43,18 +33,8 @@ class GetIraqMealsUseCaseTest {
     @Test
     fun `should return null when no iraq meals found`() {
         //Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(
-                mealName = "Masgouf",
-                mealDescription = "A traditional bsbs grilled.",
-                tags = listOf("bsbs", "Grilled", "Seafood")
-            ),
-            Meal(
-                mealName = "Kubba",
-                mealDescription = "Popular bsbs dumplings made",
-                tags = listOf("bsbs", "Dumplings", "Comfort Food")
-            ),
-        )
+        every { repository.getAllMeals() } returns ListOfNoIraqMeals()
+
         //When
         val actualResult = getIraqMealsUseCase.getIraqMeals()
 
@@ -76,20 +56,9 @@ class GetIraqMealsUseCaseTest {
     }
 
     @Test
-    fun `should return valid list when only the description has iragi word`() {
+    fun `should return valid list when only the description is valid`() {
         //Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(
-                mealName = "Masgouf",
-                mealDescription = "A traditional Iraqi grilled.",
-                tags = listOf("bsbs", "Grilled", "Seafood")
-            ),
-            Meal(
-                mealName = "Kubba",
-                mealDescription = "Popular Iraqi dumplings made",
-                tags = listOf("bsbs", "Dumplings", "Comfort Food")
-            ),
-        )
+        every { repository.getAllMeals() } returns ListOfIraqMealsWithOnlyValidDescription()
         //When
         val actualResult = getIraqMealsUseCase.getIraqMeals()
 
@@ -98,25 +67,66 @@ class GetIraqMealsUseCaseTest {
     }
 
     @Test
-    fun `should return valid list when only the tags contain iraq`() {
+    fun `should return valid list when only the tags is valid`() {
         //Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(
-                mealName = "Masgouf",
-                mealDescription = "A traditional bsbs grilled.",
-                tags = listOf("iraq", "Grilled", "Seafood")
-            ),
-            Meal(
-                mealName = "Kubba",
-                mealDescription = "Popular bsbs dumplings made",
-                tags = listOf("bsbs", "Dumplings", "Comfort Food")
-            ),
-        )
+        every { repository.getAllMeals() } returns ListOfIraqMealsWithOnlyValidTags()
         //When
         val actualResult = getIraqMealsUseCase.getIraqMeals()
 
         //Then
         assertThat(actualResult).isNotNull()
     }
+
+    private fun ValidListOfMeal() = listOf(
+        Meal(
+            mealName = "Masgouf",
+            mealDescription = "A traditional Iraqi grilled.",
+            tags = listOf("Iraq", "Grilled", "Seafood")
+        ),
+        Meal(
+            mealName = "Kubba",
+            mealDescription = "Popular Iraqi dumplings made",
+            tags = listOf("Iraq", "Dumplings", "Comfort Food")
+        ),
+    )
+
+    private fun ListOfNoIraqMeals() = listOf(
+        Meal(
+            mealName = "Masgouf",
+            mealDescription = "A traditional bsbs grilled.",
+            tags = listOf("bsbs", "Grilled", "Seafood")
+        ),
+        Meal(
+            mealName = "Kubba",
+            mealDescription = "Popular bsbs dumplings made",
+            tags = listOf("bsbs", "Dumplings", "Comfort Food")
+        ),
+    )
+
+    private fun ListOfIraqMealsWithOnlyValidDescription() = listOf(
+        Meal(
+            mealName = "Masgouf",
+            mealDescription = "A traditional Iraqi grilled.",
+            tags = listOf("bsbs", "Grilled", "Seafood")
+        ),
+        Meal(
+            mealName = "Kubba",
+            mealDescription = "Popular Iraqi dumplings made",
+            tags = listOf("bsbs", "Dumplings", "Comfort Food")
+        ),
+    )
+
+    private fun ListOfIraqMealsWithOnlyValidTags() = listOf(
+        Meal(
+            mealName = "Masgouf",
+            mealDescription = "A traditional bsbs grilled.",
+            tags = listOf("iraq", "Grilled", "Seafood")
+        ),
+        Meal(
+            mealName = "Kubba",
+            mealDescription = "Popular bsbs dumplings made",
+            tags = listOf("bsbs", "Dumplings", "Comfort Food")
+        ),
+    )
 
 }

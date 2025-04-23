@@ -64,13 +64,13 @@ class CLIDispatcher(
 
     private fun displayIraqMeals() {
         val iraqiMeals = getIraqMealsUseCase.getIraqMeals()
-        if (iraqiMeals.isEmpty()) {
+        if (iraqiMeals?.isEmpty()==true) {
             println("No Iraqi meals found.")
             return
         }
 
         println("🍽️ Iraqi Meals List:")
-        iraqiMeals.forEach { meal ->
+        iraqiMeals?.forEach { meal ->
             println("- ${meal.mealName}")
         }
     }
