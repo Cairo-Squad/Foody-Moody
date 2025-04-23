@@ -35,60 +35,43 @@ class GetHighCalorieMealsUseCaseTest {
     @Test
     fun `should ignore low quality meals when meals missing name`() {
         // Given
-        every { mealRepository.getAllMeals() } returns listOf(
-            Meal(mealName = null, nutrition = Nutrition(calories = 800f)),
-            Meal(mealName = "Burger", nutrition = Nutrition(calories = 800f))
-        )
+        every { mealRepository.getAllMeals() } returns nonValidHighCalorieMeals() + highCalorieMeals()
 
         // When
         val result = getHighCalorieMealsUseCase.getHighCalorieMeals()
 
         // Then
-        assertThat(result).hasSize(1)
+        assertThat(result).hasSize(highCalorieMeals().size)
     }
 
     @Test
     fun `should ignore not high calorie meals when meals missing nutrition and calorie info`() {
         // Given
-        every { mealRepository.getAllMeals() } returns listOf(
-            Meal(mealName = "Pizza", nutrition =  null),
-            Meal(mealName = "Salad", nutrition = Nutrition(calories = null)),
-            Meal(mealName = "Burger", nutrition = Nutrition(calories = 800f)),
-        )
+        every { mealRepository.getAllMeals() } returns nonValidHighCalorieMeals() + highCalorieMeals()
 
         // When
         val result = getHighCalorieMealsUseCase.getHighCalorieMeals()
 
         // Then
-        assertThat(result).hasSize(1)
+        assertThat(result).hasSize(highCalorieMeals().size)
     }
 
     @Test
     fun `should ignore low calories meals when list contains mixed calorie meals`() {
         // Given
-        every { mealRepository.getAllMeals() } returns listOf(
-            Meal(mealName = "Pizza", nutrition = Nutrition(calories = 500f)),
-            Meal(mealName = "Burger", nutrition = Nutrition(calories = 600f)),
-            Meal(mealName = "Salad", nutrition = Nutrition(calories = 800f)),
-            Meal(mealName = "Sandwich", nutrition = Nutrition(calories = 900f))
-        )
+        every { mealRepository.getAllMeals() } returns nonValidHighCalorieMeals() + highCalorieMeals()
 
         // When
         val result = getHighCalorieMealsUseCase.getHighCalorieMeals()
 
         // Then
-        assertThat(result).hasSize(2)
+        assertThat(result).hasSize(highCalorieMeals().size)
     }
 
     @Test
     fun `should return empty list when no high calorie meals are found`() {
         // Given
-        every { mealRepository.getAllMeals() } returns listOf(
-            Meal(mealName = "Pizza", nutrition = Nutrition(calories = 400f)),
-            Meal(mealName = "Burger", nutrition = Nutrition(calories = 300f)),
-            Meal(mealName = "Salad", nutrition = Nutrition(calories = 500f)),
-            Meal(mealName = "Sandwich", nutrition = Nutrition(calories = 600f))
-        )
+        every { mealRepository.getAllMeals() } returns nonValidHighCalorieMeals()
 
         // When
         val result = getHighCalorieMealsUseCase.getHighCalorieMeals()
@@ -100,17 +83,7 @@ class GetHighCalorieMealsUseCaseTest {
     @Test
     fun `should return different list when called more than once`() {
         // Given
-        every { mealRepository.getAllMeals() } returns listOf(
-            Meal(mealName = "Pizza", nutrition = Nutrition(calories = 800f)),
-            Meal(mealName = "Burger", nutrition = Nutrition(calories = 900f)),
-            Meal(mealName = "Salad", nutrition = Nutrition(calories = 850f)),
-            Meal(mealName = "Sandwich", nutrition = Nutrition(calories = 780f)),
-            Meal(mealName = "Noodles", nutrition = Nutrition(calories = 850f)),
-            Meal(mealName = "Toast", nutrition = Nutrition(calories = 850f)),
-            Meal(mealName = "Fruit Salad", nutrition = Nutrition(calories = 850f)),
-            Meal(mealName = "Grilled Cheese", nutrition = Nutrition(calories = 850f)),
-            Meal(mealName = "Smoothie", nutrition = Nutrition(calories = 850f)),
-        )
+        every { mealRepository.getAllMeals() } returns highCalorieMeals()
 
         // When
         val firstCallResult = getHighCalorieMealsUseCase.getHighCalorieMeals()
@@ -120,4 +93,18 @@ class GetHighCalorieMealsUseCaseTest {
         assertThat(firstCallResult).isNotEqualTo(secondCallResult)
     }
 
+    private fun nonValidHighCalorieMeals() = listOf(
+        Meal(mealName = null, nutrition = Nutrition(calories = 800f)),
+        Meal(mealName = "Salad", nutrition = Nutrition(calories = null)),
+        Meal(mealName = "Pizza", nutrition = Nutrition(calories = 400f))
+    )
+
+    private fun highCalorieMeals() = listOf(
+        Meal(mealName = "Pizza", nutrition = Nutrition(calories = 800f)),
+        Meal(mealName = "Burger", nutrition = Nutrition(calories = 900f)),
+        Meal(mealName = "Salad", nutrition = Nutrition(calories = 850f)),
+        Meal(mealName = "Sandwich", nutrition = Nutrition(calories = 780f)),
+        Meal(mealName = "Noodles", nutrition = Nutrition(calories = 850f)),
+        Meal(mealName = "Toast", nutrition = Nutrition(calories = 850f))
+    )
 }
