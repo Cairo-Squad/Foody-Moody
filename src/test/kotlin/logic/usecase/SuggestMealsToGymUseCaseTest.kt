@@ -30,7 +30,7 @@ class SuggestMealsToGymUseCaseTest {
 
         //Then
         val illegalArgumentException = assertThrows<IllegalArgumentException> {
-            suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(
+            suggestMealsToGymUseCase.getMatchedMeals(
                 calories = calories, protein = protein
             )
         }
@@ -47,7 +47,7 @@ class SuggestMealsToGymUseCaseTest {
 
         //Then
         val illegalArgumentException = assertThrows<IllegalArgumentException> {
-            suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(
+            suggestMealsToGymUseCase.getMatchedMeals(
                 calories = calories, protein = protein
             )
         }
@@ -57,12 +57,14 @@ class SuggestMealsToGymUseCaseTest {
     @Test
     fun `Given a valid calories and protein values,When filtering meals with null values of calories,Then returns an empty list`() {
         //Given
-        every { mealsRepository.getAllMeals() } returns listOf(Meal(nutrition = Nutrition(protein = 10f)), Meal())
+        every { mealsRepository.getAllMeals() } returns listOf(
+            Meal(nutrition = Nutrition(protein = 10f, calories = null))
+        )
         val calories = 400f
         val protein = 10f
 
         //When
-        val result = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(calories, protein)
+        val result = suggestMealsToGymUseCase.getMatchedMeals(calories, protein)
         //Then
         assertThat(result).isEmpty()
 
@@ -71,44 +73,44 @@ class SuggestMealsToGymUseCaseTest {
     @Test
     fun `Given a valid calories and protein values, When filtering meals with null values of protein,Then returns an empty list`() {
         //Given
-        every { mealsRepository.getAllMeals() } returns listOf(Meal(nutrition = Nutrition(calories = 400f)), Meal())
+        every { mealsRepository.getAllMeals() } returns listOf(
+            Meal(nutrition = Nutrition(calories = 400f, protein = null)),
+        )
         val calories = 400f
         val protein = 10f
 
         //When
-        val result = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(calories, protein)
+        val result = suggestMealsToGymUseCase.getMatchedMeals(calories, protein)
         //Then
         assertThat(result).isEmpty()
 
     }
 
     @Test
-    fun `Given matched calories and unMatched protein values, When filtering meals and no meals were matched,Then returns emptyList`() {
+    fun `Given valid calories and protein values, When the given protein value doesn't match with any meal's protein value,Then returns emptyList`() {
         //Given
-        every { mealsRepository.getAllMeals() } returns listOf(
-            Meal(nutrition = Nutrition(calories = 350f, protein = 4f)),
-        )
         val calories = 400f
         val protein = 10f
+        every { mealsRepository.getAllMeals() } returns listOf(
+            Meal(nutrition = Nutrition(calories = 350f, protein = 4f)), //unMatched protein value
+        )
         //When
-        val result = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(calories, protein)
+        val result = suggestMealsToGymUseCase.getMatchedMeals(calories, protein)
         //Then
         assertThat(result).isEmpty()
     }
 
     @Test
-    fun `Given unMatched calories and matched protein values, When filtering meals and no meals were matched,Then returns emptyList`() {
+    fun `Given valid calories and protein values, When the given calories value doesn't match with any meal's calories value,Then returns emptyList`() {
         //Given
-        every { mealsRepository.getAllMeals() } returns listOf(
-            Meal(nutrition = Nutrition(calories = 300f, protein = 5f)),
-        )
         val calories = 400f
         val protein = 10f
+        every { mealsRepository.getAllMeals() } returns listOf(
+            Meal(nutrition = Nutrition(calories = 300f, protein = 5f)), // unMatched calories value
+        )
         //When
-        val result = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(calories, protein)
-        //Thena
+        val result = suggestMealsToGymUseCase.getMatchedMeals(calories, protein)
+        //Then
         assertThat(result).isEmpty()
     }
-
-
 }

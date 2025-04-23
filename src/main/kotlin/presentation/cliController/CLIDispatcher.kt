@@ -268,7 +268,7 @@ class CLIDispatcher(
         val calories = readlnOrNull() ?: 0.0f
         println("Enter required Meals Protein")
         val protein = readlnOrNull() ?: 0.0f
-        val matchedMeals = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(
+        val matchedMeals = suggestMealsToGymUseCase.getMatchedMeals(
             calories.toString().toFloat(),
             protein.toString().toFloat()
         ).chunked(5)
