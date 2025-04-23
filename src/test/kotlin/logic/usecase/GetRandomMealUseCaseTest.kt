@@ -21,14 +21,15 @@ class GetRandomMealUseCaseTest {
     @Test
     fun `should return a meal when there is a meal valid`() {
         //Given
-        every { repository.getAllMeals() } returns listOf(
+        every { repository.getAllMeals() } returns ValidListOfMeal()
 
-        )
         //When
         val actualResult = getRandomMealUseCase.getRandomMeal()
+
         //Then
         assertThat(actualResult).isNotNull()
     }
+
     @Test
     fun `should return null when meal list is empty`() {
         // Given
@@ -40,10 +41,11 @@ class GetRandomMealUseCaseTest {
         // Then
         assertThat(actualResult).isNull()
     }
+
     @Test
     fun `should return null when all meals have null names `() {
         // Given
-        every { repository.getAllMeals() } returns ValidListOfMeal()
+        every { repository.getAllMeals() } returns ListOfMealWithNullNames()
 
         // When
         val actualResult = getRandomMealUseCase.getRandomMeal()
@@ -51,6 +53,7 @@ class GetRandomMealUseCaseTest {
         // Then
         assertThat(actualResult).isNull()
     }
+
     @Test
     fun `should return null when all meals have null minutes `() {
         // Given
@@ -62,6 +65,7 @@ class GetRandomMealUseCaseTest {
         // Then
         assertThat(actualResult).isNull()
     }
+
     @Test
     fun `should return a meal when there is a null unimportant attribute`() {
         //Given
@@ -73,6 +77,7 @@ class GetRandomMealUseCaseTest {
         //Then
         assertThat(actualResult).isNotNull()
     }
+
     @Test
     fun `should call getAllMeals exactly once`() {
         // Given
@@ -84,23 +89,30 @@ class GetRandomMealUseCaseTest {
         // Then
         io.mockk.verify(exactly = 1) { repository.getAllMeals() }
     }
+
     private fun ValidListOfMeal() = listOf(
         Meal(mealName = "Burger", minutes = 10),
         Meal(mealName = "Pizza", minutes = 20),
         Meal(mealName = "Pasta", minutes = 15)
     )
+
     private fun ListOfMealWithNullMinutes() = listOf(
-    Meal(mealName ="meat" , minutes = null),
-    Meal(mealName ="koko" , minutes = null),
-    Meal(mealName ="bata" , minutes = null)
+        Meal(mealName = "meat", minutes = null),
+        Meal(mealName = "koko", minutes = null),
+        Meal(mealName = "bata", minutes = null)
     )
+
+    private fun ListOfMealWithNullNames() = listOf(
+        Meal(mealName = null, minutes = 44),
+        Meal(mealName = null, minutes = 44),
+        Meal(mealName = null, minutes = 34)
+    )
+
     private fun ListOfMealWithUnImportantAttribute() = listOf(
-    Meal(mealName = "Burger", minutes = 10 , numberOfSteps = null),
-    Meal(mealName = "Pizza", minutes = 20, numberOfSteps = null),
-    Meal(mealName = "Pasta", minutes = 15, numberOfSteps = null)
+        Meal(mealName = "Burger", minutes = 10, numberOfSteps = null),
+        Meal(mealName = "Pizza", minutes = 20, numberOfSteps = null),
+        Meal(mealName = "Pasta", minutes = 15, numberOfSteps = null)
     )
-
-
 
 
 }
