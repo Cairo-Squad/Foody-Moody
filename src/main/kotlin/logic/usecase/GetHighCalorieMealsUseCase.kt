@@ -9,19 +9,15 @@ class GetHighCalorieMealsUseCase(
 ) {
     fun getHighCalorieMeals(): List<Meal> {
         return mealRepository.getAllMeals()
-            .filter { meal ->
-                mealWithNameAndCalories(meal) && highCalorieMeal(meal)
-            }
+            .filter { meal -> validHighCalorieMeal(meal) }
             .shuffled()
     }
 
-    private fun mealWithNameAndCalories(meal: Meal): Boolean {
+    private fun validHighCalorieMeal(meal: Meal): Boolean {
+        val calories = meal.nutrition?.calories
         return meal.mealName != null
-                && meal.nutrition != null
-                && meal.nutrition.calories != null
-    }
+                && calories != null
+                && calories > LogicConstants.MINIMUM_CALORIES
 
-    private fun highCalorieMeal(meal: Meal): Boolean {
-        return meal.nutrition!!.calories!! > LogicConstants.MINIMUM_CALORIES
     }
 }
