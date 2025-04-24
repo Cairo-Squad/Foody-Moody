@@ -1,6 +1,6 @@
 package logic.model
 
-data class ShowMeal(
+data class MealOfRankAndProtein(
     val rank: Int,
     val mealName: String?,
     val protein: Double

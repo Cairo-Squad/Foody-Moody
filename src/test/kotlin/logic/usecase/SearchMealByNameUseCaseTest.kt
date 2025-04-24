@@ -93,19 +93,35 @@ class SearchMealByNameUseCaseTest {
     }
 
     @Test
-    fun `should return empty list, when typo exceeds tolerance`() {
+    fun `should return empty list, when input is empty`() {
         // Given
         every { repository.getAllMeals() } returns listOf(
             Meal(mealName = "Italian Pizza"),
             Meal(mealName = "Greek Salad")
         )
-        val searchInput = "Italiano"
+        val searchInput = ""
 
         // When
         val result = searchMealByNameUseCase.searchMealByName(searchInput)
 
         // Then
-        assertThat(result).hasSize(1)
+        assertThat(result).isEmpty()
+    }
+
+    @Test
+    fun `should return empty list,  when typo exceeds tolerance`() {
+        // Given
+        every { repository.getAllMeals() } returns listOf(
+            Meal(mealName = "Italian Pizza"),
+            Meal(mealName = "Greek Salad")
+        )
+        val searchInput = "itealynoas"
+
+        // When
+        val result = searchMealByNameUseCase.searchMealByName(searchInput)
+
+        // Then
+        assertThat(result).isEmpty()
     }
 
     @Test

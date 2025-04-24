@@ -10,7 +10,7 @@ object CLIConstants {
 
     const val OPTION_INPUT_MESSAGE = "Please enter the number of the option you need >>> "
     const val ENTER_MEAL_ID = "Enter meal id to show full details"
-    const val GUESS_GAME_MESSAGE = "Guess the preparation time for this meal in minutes: "
+    const val GUESS_GAME_MESSAGE = "Guess the preparation time by minutes for this meal in minutes: "
 
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
     const val ENTER_VALID_OPTION_MESSAGE = "Please enter a valid option number >>> "

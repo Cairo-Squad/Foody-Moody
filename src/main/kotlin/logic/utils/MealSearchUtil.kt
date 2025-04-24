@@ -23,6 +23,7 @@ object MealSearchUtil {
      */
     fun searchMeals(meals: List<Meal>, query: String): List<Meal> {
         val normalizedQuery = query.lowercase().trim()
+        if(normalizedQuery.isBlank()) return emptyList()
 
         val exactMatches = meals.filter { meal ->
             kmpSearch(text = meal.mealName ?: "", pattern = normalizedQuery)
