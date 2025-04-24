@@ -15,7 +15,7 @@ class CLIDispatcher(
     private val searchMealByName: SearchMealByNameUseCase,
     private val getIraqMealsUseCase: GetIraqMealsUseCase,
     private val randomMealUseCase: GetRandomMealUseCase,
-    private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase,
+    private val getHighCalorieMealsUseCase: GetHighCalorieMealsUseCase,
     private val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase,
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase,
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
@@ -152,7 +152,7 @@ class CLIDispatcher(
 
     private fun launchMealsMoreThan700Calories() {
         println(CLIConstants.MEALS_MORE_THAN_700_CALORIES_WELCOME_MSG)
-        getMealsMoreThan700CaloriesUseCase.getMealMoreThan700Calories()
+        getHighCalorieMealsUseCase.getHighCalorieMeals()
             .forEach { meal ->
                 println("Name: ${meal.mealName}")
                 println(meal.mealDescription ?: CLIConstants.NO_DESCRIPTION_AVAILABLE)
