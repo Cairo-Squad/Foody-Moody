@@ -19,7 +19,7 @@ class CLIDispatcher(
     private val searchMealByName: SearchMealByNameUseCase,
     private val getIraqMealsUseCase: GetIraqMealsUseCase,
     private val randomMealUseCase: GetRandomMealUseCase,
-    private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase,
+    private val getHighCalorieMealsUseCase: GetHighCalorieMealsUseCase,
     private val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase,
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase,
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
@@ -65,13 +65,13 @@ class CLIDispatcher(
 
     private fun displayIraqMeals() {
         val iraqiMeals = getIraqMealsUseCase.getIraqMeals()
-        if (iraqiMeals.isEmpty()) {
+        if (iraqiMeals?.isEmpty()==true) {
             println("No Iraqi meals found.")
             return
         }
 
         println("🍽️ Iraqi Meals List:")
-        iraqiMeals.forEach { meal ->
+        iraqiMeals?.forEach { meal ->
             println("- ${meal.mealName}")
         }
     }
@@ -156,7 +156,7 @@ class CLIDispatcher(
 
     private fun launchMealsMoreThan700Calories() {
         println(CLIConstants.MEALS_MORE_THAN_700_CALORIES_WELCOME_MSG)
-        getMealsMoreThan700CaloriesUseCase.getMealMoreThan700Calories()
+        getHighCalorieMealsUseCase.getHighCalorieMeals()
             .forEach { meal ->
                 println("Name: ${meal.mealName}")
                 println(meal.mealDescription ?: CLIConstants.NO_DESCRIPTION_AVAILABLE)
@@ -273,7 +273,7 @@ class CLIDispatcher(
         val calories = readlnOrNull() ?: 0.0f
         println("Enter required Meals Protein")
         val protein = readlnOrNull() ?: 0.0f
-        val matchedMeals = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(
+        val matchedMeals = suggestMealsToGymUseCase.getMatchedMeals(
             calories.toString().toFloat(),
             protein.toString().toFloat()
         ).chunked(5)
