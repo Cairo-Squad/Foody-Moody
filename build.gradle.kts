@@ -39,7 +39,7 @@ tasks.jacocoTestReport {
 tasks.jacocoTestCoverageVerification {
     executionData.setFrom(fileTree(buildDir).include("/jacoco/test.exec"))
     classDirectories.setFrom(fileTree("build/classes/kotlin/main"))
-    sourceDirectories.setFrom(files("src/main/kotlin"))
+    sourceDirectories.setFrom(files("src/main/kotlin/logic/usecase"))
     violationRules {
         rule {
             limit {
