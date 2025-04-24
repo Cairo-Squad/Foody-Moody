@@ -34,9 +34,6 @@ tasks.jacocoTestReport {
     dependsOn(tasks.test)
 }
 
-jacoco {
-    toolVersion = "0.8.10"
-}
 
 
 tasks.jacocoTestCoverageVerification {
