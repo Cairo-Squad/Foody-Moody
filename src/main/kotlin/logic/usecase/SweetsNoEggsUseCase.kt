@@ -14,12 +14,9 @@ class SweetsNoEggsUseCase(private val mealRepository: MealRepository) {
             ?.also { it.mealId?.let { it1 -> suggestedSweetsIds.add(it1) } }
     }
 
-    fun resetAllSuggestedSweets() {
-        suggestedSweetsIds.clear()
-    }
 
     private fun isSweetWithoutEggs(meal: Meal): Boolean {
         return meal.tags?.any { it.contains("sweet", ignoreCase = true) } == true &&
-                !meal.ingredients?.any { it.contains("egg", ignoreCase = true) }!!
+                meal.ingredients?.any { it.contains("egg", ignoreCase = true) } != true
     }
 }

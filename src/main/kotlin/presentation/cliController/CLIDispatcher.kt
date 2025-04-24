@@ -1,6 +1,7 @@
 package presentation.cliController
 
-import logic.usecase.GetRandomMealUseCase
+import logic.model.ShowMeal
+import logic.usecase.*
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_ERROR_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
@@ -9,10 +10,6 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TWO
-import logic.usecase.IngredientsGameUseCase
-import logic.usecase.SearchMealByNameUseCase
-import logic.usecase.*
-import logic.model.ShowMeal
 
 class CLIDispatcher(
     private val searchMealByName: SearchMealByNameUseCase,
@@ -219,9 +216,13 @@ class CLIDispatcher(
     }
 
     private fun launchEasyFoodSuggestionsGame() {
-        println(CLIConstants.TEN_RANDOM_EASY_FOOD_MEALS_MSG)
-        getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
-            .forEach(::println)
+        try {
+            println(CLIConstants.TEN_RANDOM_EASY_FOOD_MEALS_MSG)
+            getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
+                .forEach(::println)
+        } catch (exception: Exception) {
+            println(exception.message)
+        }
     }
 
     private fun getSeafoodMealsSortedByProtein() {
@@ -268,7 +269,7 @@ class CLIDispatcher(
         val calories = readlnOrNull() ?: 0.0f
         println("Enter required Meals Protein")
         val protein = readlnOrNull() ?: 0.0f
-        val matchedMeals = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(
+        val matchedMeals = suggestMealsToGymUseCase.getMatchedMeals(
             calories.toString().toFloat(),
             protein.toString().toFloat()
         ).chunked(5)
