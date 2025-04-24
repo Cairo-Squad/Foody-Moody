@@ -107,8 +107,8 @@ class CLIDispatcher(
     private fun guessPreparationTime() {
         randomMealUseCase.getRandomMeal().also { meal ->
             print(GUESS_GAME_MESSAGE)
-            println(meal.mealName)
-            val actualTime = meal.minutes!!
+            println(meal?.mealName)
+            val actualTime = meal?.minutes!!
             var attempts = 3
             while (attempts > 0) {
                 val guessedPreparationTime = readlnOrNull()?.toIntOrNull()
@@ -119,19 +119,16 @@ class CLIDispatcher(
                 attempts--
 
                 when {
-                    actualTime == guessedPreparationTime -> when (ONE) {
-                        ONE -> {
+                    actualTime == guessedPreparationTime -> {
+
                             println(CORRECT_GUESSING_MESSAGE)
                             return
                         }
+                    guessedPreparationTime < actualTime -> {
+                        println(TOO_LOW_GUESSING_MESSAGE)
                     }
-
-                    guessedPreparationTime < actualTime -> when (TWO) {
-                        TWO -> println(TOO_LOW_GUESSING_MESSAGE)
-                    }
-
-                    else -> when (THREE) {
-                        THREE -> println(TOO_HIGH_GUESSING_MESSAGE)
+                    else -> {
+                        println(TOO_HIGH_GUESSING_MESSAGE)
                     }
                 }
             }
