@@ -1,6 +1,6 @@
 package presentation.cliController
 
-import logic.usecase.GetRandomMealUseCase
+import logic.usecase.*
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_ERROR_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_GAME_MESSAGE
@@ -9,16 +9,13 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TWO
-import logic.usecase.IngredientsGameUseCase
-import logic.usecase.SearchMealByNameUseCase
-import logic.usecase.*
-import logic.model.ShowMeal
+import logic.model.MealOfRankAndProtein
 
 class CLIDispatcher(
     private val searchMealByName: SearchMealByNameUseCase,
     private val getIraqMealsUseCase: GetIraqMealsUseCase,
     private val randomMealUseCase: GetRandomMealUseCase,
-    private val getMealsMoreThan700CaloriesUseCase: GetMealsMoreThan700CaloriesUseCase,
+    private val getHighCalorieMealsUseCase: GetHighCalorieMealsUseCase,
     private val getMealsForLargeGroupUseCase: GetMealsForLargeGroupUseCase,
     private val randomPotatoMealsUseCase: RandomPotatoMealsUseCase,
     private val exploreOtherCountriesFoodCultureUseCase: ExploreOtherCountriesFoodCultureUseCase,
@@ -64,13 +61,13 @@ class CLIDispatcher(
 
     private fun displayIraqMeals() {
         val iraqiMeals = getIraqMealsUseCase.getIraqMeals()
-        if (iraqiMeals?.isEmpty()!!) {
+        if (iraqiMeals?.isEmpty()==true) {
             println("No Iraqi meals found.")
             return
         }
 
         println("🍽️ Iraqi Meals List:")
-        iraqiMeals.forEach { meal ->
+        iraqiMeals?.forEach { meal ->
             println("- ${meal.mealName}")
         }
     }
@@ -120,6 +117,7 @@ class CLIDispatcher(
                     continue
                 }
                 attempts--
+
                 when {
                     actualTime == guessedPreparationTime -> {
 
@@ -134,6 +132,7 @@ class CLIDispatcher(
                     }
                 }
             }
+
             println("❌ Out of attempts! The correct preparation time for ${meal.mealName} is $actualTime minutes.")
         }
     }
@@ -150,7 +149,7 @@ class CLIDispatcher(
 
     private fun launchMealsMoreThan700Calories() {
         println(CLIConstants.MEALS_MORE_THAN_700_CALORIES_WELCOME_MSG)
-        getMealsMoreThan700CaloriesUseCase.getMealMoreThan700Calories()
+        getHighCalorieMealsUseCase.getHighCalorieMeals()
             .forEach { meal ->
                 println("Name: ${meal.mealName}")
                 println(meal.mealDescription ?: CLIConstants.NO_DESCRIPTION_AVAILABLE)
@@ -214,15 +213,19 @@ class CLIDispatcher(
     }
 
     private fun launchEasyFoodSuggestionsGame() {
-        println(CLIConstants.TEN_RANDOM_EASY_FOOD_MEALS_MSG)
-        getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
-            .forEach(::println)
+        try {
+            println(CLIConstants.TEN_RANDOM_EASY_FOOD_MEALS_MSG)
+            getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
+                .forEach(::println)
+        } catch (exception: Exception) {
+            println(exception.message)
+        }
     }
 
     private fun getSeafoodMealsSortedByProtein() {
         try {
 
-            val sortedMeals: List<ShowMeal> = getSeafoodMealsSortedByProteinUseCase.getSeafoodMealsSortedByProtein()
+            val sortedMeals: List<MealOfRankAndProtein> = getSeafoodMealsSortedByProteinUseCase.getSeafoodMealsSortedByProtein()
 
             println("Seafood Meals Sorted by Protein:")
             sortedMeals.forEach { println(it.toString()) }
@@ -263,7 +266,7 @@ class CLIDispatcher(
         val calories = readlnOrNull() ?: 0.0f
         println("Enter required Meals Protein")
         val protein = readlnOrNull() ?: 0.0f
-        val matchedMeals = suggestMealsToGymUseCase.getMealsBasedOnCaloriesAndProtein(
+        val matchedMeals = suggestMealsToGymUseCase.getMatchedMeals(
             calories.toString().toFloat(),
             protein.toString().toFloat()
         ).chunked(5)

@@ -23,25 +23,12 @@ class GetMealsForLargeGroupUseCaseTest {
     @Test
     fun `getAllMealsForLargeGroup should return a list of Italian Meals for large groups, when called`() {
         // Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(
-                mealName = "egyptian fool",
-                tags = listOf(FOR_LARGE_GROUP),
-            ),
+        every { repository.getAllMeals() } returns listOfMeals(
             Meal(
                 mealName = "italian pasta",
                 tags = listOf(FOR_LARGE_GROUP),
-            ),
-            Meal(
-                mealName = "american pizza",
-                tags = listOf(FOR_LARGE_GROUP),
-            ),
-            Meal(
-                mealName = "italian pasta",
-                tags = listOf("for-single"),
-            ),
-
             )
+        )
 
         // When
         val result = getMealsForLargeGroupUseCase.getAllMealsForLargeGroup()
@@ -62,11 +49,7 @@ class GetMealsForLargeGroupUseCaseTest {
             Meal(
                 mealName = null,
                 tags = listOf(FOR_LARGE_GROUP),
-            ),
-            Meal(
-                mealName = "saudi pasta",
-                tags = listOf(FOR_LARGE_GROUP),
-            ),
+            )
         )
 
         // When
@@ -79,16 +62,7 @@ class GetMealsForLargeGroupUseCaseTest {
     @Test
     fun `getAllMealsForLargeGroup should return empty list, when tags is null`() {
         // Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(
-                mealName = "italian pasta",
-                tags = null,
-            ),
-            Meal(
-                mealName = "saudi pasta",
-                tags = listOf(FOR_LARGE_GROUP),
-            ),
-        )
+        every { repository.getAllMeals() } returns listOfMeals()
 
         // When
         val result = getMealsForLargeGroupUseCase.getAllMealsForLargeGroup()
@@ -101,25 +75,12 @@ class GetMealsForLargeGroupUseCaseTest {
     @Test
     fun `getAllMealsForLargeGroup should return empty list, when there are no Italian meals for large groups`() {
         // Given
-        every { repository.getAllMeals() } returns listOf(
-            Meal(
-                mealName = "egyptian fool",
-                tags = listOf(FOR_LARGE_GROUP),
-            ),
+        every { repository.getAllMeals() } returns listOfMeals(
             Meal(
                 mealName = "saudi pasta",
                 tags = listOf(FOR_LARGE_GROUP),
-            ),
-            Meal(
-                mealName = "american pizza",
-                tags = listOf(FOR_LARGE_GROUP),
-            ),
-            Meal(
-                mealName = "italian pasta",
-                tags = listOf("for-single"),
-            ),
-
             )
+        )
 
         // When
         val result = getMealsForLargeGroupUseCase.getAllMealsForLargeGroup()

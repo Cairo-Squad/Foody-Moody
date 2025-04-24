@@ -7,7 +7,7 @@ class SuggestMealsToGymUseCase(private val mealRepository: MealRepository) {
 
     private val allMeals: List<Meal> by lazy { mealRepository.getAllMeals() }
 
-    fun getMealsBasedOnCaloriesAndProtein(calories: Float, protein: Float): List<Meal> {
+    fun getMatchedMeals(calories: Float, protein: Float): List<Meal> {
         require(calories >= 0) { "Calories must be >= 0" }
         require(protein >= 0) { "Protein must be >= 0" }
         return allMeals.filter { meal ->
