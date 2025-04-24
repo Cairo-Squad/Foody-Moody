@@ -10,6 +10,10 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TWO
+import logic.usecase.IngredientsGameUseCase
+import logic.usecase.SearchMealByNameUseCase
+import logic.usecase.*
+import logic.model.MealOfRankAndProtein
 
 class CLIDispatcher(
     private val searchMealByName: SearchMealByNameUseCase,
@@ -228,7 +232,7 @@ class CLIDispatcher(
     private fun getSeafoodMealsSortedByProtein() {
         try {
 
-            val sortedMeals: List<ShowMeal> = getSeafoodMealsSortedByProteinUseCase.getSeafoodMealsSortedByProtein()
+            val sortedMeals: List<MealOfRankAndProtein> = getSeafoodMealsSortedByProteinUseCase.getSeafoodMealsSortedByProtein()
 
             println("Seafood Meals Sorted by Protein:")
             sortedMeals.forEach { println(it.toString()) }
