@@ -1,6 +1,5 @@
 package presentation.cliController
 
-import logic.model.ShowMeal
 import logic.usecase.*
 import presentation.cliController.CLIConstants.CORRECT_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.GUESS_ERROR_MESSAGE
@@ -10,9 +9,6 @@ import presentation.cliController.CLIConstants.THREE
 import presentation.cliController.CLIConstants.TOO_HIGH_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TOO_LOW_GUESSING_MESSAGE
 import presentation.cliController.CLIConstants.TWO
-import logic.usecase.IngredientsGameUseCase
-import logic.usecase.SearchMealByNameUseCase
-import logic.usecase.*
 import logic.model.MealOfRankAndProtein
 
 class CLIDispatcher(
