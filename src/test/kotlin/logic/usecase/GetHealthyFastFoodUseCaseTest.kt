@@ -20,7 +20,7 @@ class GetHealthyFastFoodUseCaseTest {
     }
 
     @Test
-    fun `Given list of meals with null value of required minutes to prepare the meal,When filtering,Then throws IllegalArgumentException`() {
+    fun `Given listOfMeals with null required minutes to prepare the meal,When filtering,Then throws IllegalArgumentException`() {
         //Given
         every { mealsRepository.getAllMeals() } returns createListOfMeals().filter {
             (((it.minutes ?: 1) > 15))
@@ -30,7 +30,7 @@ class GetHealthyFastFoodUseCaseTest {
     }
 
     @Test
-    fun `Given list of meals with null value of nutrition totalFats,When filtering,Then throws IllegalArgumentException`() {
+    fun `Given listOfMeals with null nutrition totalFats,When filtering,Then throws IllegalArgumentException`() {
         //Given
         every { mealsRepository.getAllMeals() } returns createListOfMeals().filter { it.nutrition?.totalFat == null }
         //Then
@@ -38,7 +38,7 @@ class GetHealthyFastFoodUseCaseTest {
     }
 
     @Test
-    fun `Given list of meals with null value of nutrition carbohydrates,When filtering,Then throws IllegalArgumentException`() {
+    fun `Given listOfMeals with null nutrition carbohydrates,When filtering,Then throws IllegalArgumentException`() {
         //Given
         every { mealsRepository.getAllMeals() } returns createListOfMeals().filter { it.nutrition?.carbohydrates == null }
         //Then
@@ -46,7 +46,7 @@ class GetHealthyFastFoodUseCaseTest {
     }
 
     @Test
-    fun `Given list of meals with null value of nutrition saturatedFat,When filtering,Then throws IllegalArgumentException`() {
+    fun `Given listOfMeals with null nutrition saturatedFat,When filtering,Then throws IllegalArgumentException`() {
         //Given
         every { mealsRepository.getAllMeals() } returns createListOfMeals().filter { it.nutrition?.saturatedFat == null }
         //Then
@@ -54,7 +54,7 @@ class GetHealthyFastFoodUseCaseTest {
     }
 
     @Test
-    fun `Given list of meals with a meal requires more than 15Min,When filtering,Then throws IllegalArgumentException`() {
+    fun `Given listOfMeals with a meal requires more than 15Min,When filtering,Then throws IllegalArgumentException`() {
         //Given
         every { mealsRepository.getAllMeals() } returns listOf(
             Meal(minutes = 20, nutrition = Nutrition(totalFat = 10f, carbohydrates = 11f, saturatedFat = 2f)),
@@ -64,7 +64,7 @@ class GetHealthyFastFoodUseCaseTest {
     }
 
     @Test
-    fun `Given list of meals ,When validating,Then returns a list of valid meals meals sorted`() {
+    fun `Given listOfMeals ,When validating,Then returns a list of valid meals meals sorted`() {
         //Given
         val meals = createListOfMeals()
         every { mealsRepository.getAllMeals() } returns meals

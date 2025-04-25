@@ -19,8 +19,11 @@ class GetHealthyFastFoodUseCase(
                     { it.nutrition?.saturatedFat },
                     { it.nutrition?.carbohydrates }
                 )
-            ).take(5)
+            ).take(NUMBER_OF_REQUIRED_FAST_FOOD_MEALS)
 
+    }
+    companion object {
+        private const val NUMBER_OF_REQUIRED_FAST_FOOD_MEALS = 5
     }
 
     private fun isValidMeal(meal: Meal): Boolean {
