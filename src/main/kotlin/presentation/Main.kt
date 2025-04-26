@@ -1,6 +1,7 @@
 package presentation
 
 import di.appModule
+import di.featuresUIModule
 import di.useCaseModule
 import presentation.cliController.CLIController
 import org.koin.core.context.startKoin
@@ -9,7 +10,7 @@ import presentation.cliController.CLIConstants
 
 fun main() {
     startKoin {
-        modules(appModule, useCaseModule)
+        modules(appModule, useCaseModule, featuresUIModule)
     }
 
     println(CLIConstants.LOADING_MEALS_DATA_MESSAGE)
