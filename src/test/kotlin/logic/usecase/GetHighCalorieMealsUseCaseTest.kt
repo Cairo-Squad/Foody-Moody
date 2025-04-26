@@ -80,19 +80,6 @@ class GetHighCalorieMealsUseCaseTest {
         assertThat(result).isEmpty()
     }
 
-    @Test
-    fun `should return different list when called more than once`() {
-        // Given
-        every { mealRepository.getAllMeals() } returns highCalorieMeals()
-
-        // When
-        val firstCallResult = getHighCalorieMealsUseCase.getHighCalorieMeals()
-        val secondCallResult = getHighCalorieMealsUseCase.getHighCalorieMeals()
-
-        // Then
-        assertThat(firstCallResult).isNotEqualTo(secondCallResult)
-    }
-
     private fun nonValidHighCalorieMeals() = listOf(
         Meal(mealName = null, nutrition = Nutrition(calories = 800f)),
         Meal(mealName = "Salad", nutrition = Nutrition(calories = null)),

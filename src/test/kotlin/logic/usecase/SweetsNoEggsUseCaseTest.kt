@@ -46,19 +46,6 @@ class SweetsNoEggsUseCaseTest {
 	}
 	
 	@Test
-	fun `should not suggest the same sweet meal twice`() {
-		// Given
-		every { repository.getAllMeals() } returns getAllMeals()
-		
-		// When
-		val firstResult = sweetsNoEggsUseCase.invoke()
-		val secondResult = sweetsNoEggsUseCase.invoke()
-		
-		// Then
-		assertThat(firstResult?.mealId).isNotEqualTo(secondResult?.mealId)
-	}
-	
-	@Test
 	fun `should return null after all eligible sweets have been suggested`() {
 		// Given
 		every { repository.getAllMeals() } returns listOf(

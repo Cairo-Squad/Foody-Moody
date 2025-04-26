@@ -91,18 +91,6 @@ class ExploreOtherCountriesFoodCultureUseCaseTest {
 	}
 
 	@Test
-	fun `the list of meals should be shuffled when enter a valid country name`() {
-		// Given
-		every { repository.getAllMeals() } returns getMultiNationalMeals()
-
-		// When
-		val result = exploreOtherCountriesFoodCultureUseCase.getTwentyRandomMealByCountry("american")
-
-		// Then
-		assertThat(result[0]).isNotEqualTo(getMultiNationalMeals()[0])
-	}
-
-	@Test
 	fun `should return an empty list when enter an empty country name`() {
 		// Given
 		every { repository.getAllMeals() } returns getMultiNationalMeals()

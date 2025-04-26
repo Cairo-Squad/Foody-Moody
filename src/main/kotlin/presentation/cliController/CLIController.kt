@@ -1,11 +1,18 @@
 package presentation.cliController
 
-class CLIController(private val cliDispatcher: CLIDispatcher) {
+import presentation.ioLogic.OutputHandler
+import presentation.ioLogic.UserInputProvider
+
+class CLIController(
+    private val cliDispatcher: CLIDispatcher,
+    private val outputHandler: OutputHandler,
+    private val userInputProvider: UserInputProvider
+) {
 
     fun start() {
-        println(CLIConstants.SEPARATOR)
-        println(CLIConstants.WELCOME_MESSAGE)
-        println(CLIConstants.SEPARATOR)
+        outputHandler.printlnMessage(CLIConstants.SEPARATOR)
+        outputHandler.printlnMessage(CLIConstants.WELCOME_MESSAGE)
+        outputHandler.printlnMessage(CLIConstants.SEPARATOR)
 
         while (true) {
             showMainMenu()
@@ -16,25 +23,25 @@ class CLIController(private val cliDispatcher: CLIDispatcher) {
             }
 
             cliDispatcher.dispatch(input)
-            println(CLIConstants.SEPARATOR)
+            outputHandler.printlnMessage(CLIConstants.SEPARATOR)
         }
 
-        println(CLIConstants.SEPARATOR)
-        println(CLIConstants.EXIT_MESSAGE)
+        outputHandler.printlnMessage(CLIConstants.SEPARATOR)
+        outputHandler.printlnMessage(CLIConstants.EXIT_MESSAGE)
     }
 
     private fun showMainMenu() {
-        println(CLIConstants.USER_MENU)
+        outputHandler.printlnMessage(CLIConstants.USER_MENU)
     }
 
     private fun takeUserInput(): Int {
-        print(CLIConstants.OPTION_INPUT_MESSAGE)
+        outputHandler.printMessage(CLIConstants.OPTION_INPUT_MESSAGE)
         while (true) {
-            val userInput = readlnOrNull()
+            val userInput = userInputProvider.getUserInput()
             val parsedNumber = userInput?.toIntOrNull()
 
             if (parsedNumber == null || !cliDispatcher.validateOption(parsedNumber)) {
-                print(CLIConstants.ENTER_VALID_OPTION_MESSAGE)
+                outputHandler.printMessage(CLIConstants.ENTER_VALID_OPTION_MESSAGE)
             } else {
                 return parsedNumber
             }

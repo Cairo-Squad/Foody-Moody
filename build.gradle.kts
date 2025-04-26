@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.1.10"
+    jacoco
 }
 
 group = "org.example"
@@ -21,7 +22,33 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
 }
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+    dependsOn(tasks.test)
+}
+
+tasks.jacocoTestCoverageVerification {
+    executionData.setFrom(fileTree(layout.buildDirectory).include("/jacoco/test.exec"))
+    classDirectories.setFrom(fileTree("build/classes/kotlin/main/logic/usecase"))
+    sourceDirectories.setFrom(files("src/main/kotlin/logic/usecase"))
+    violationRules {
+        rule {
+            limit {
+                counter = "CLASS"
+                value = "COVEREDRATIO"
+                minimum = "1.0".toBigDecimal()
+
+            }
+        }
+    }
+}
+
 kotlin {
     jvmToolchain(22)
 }
