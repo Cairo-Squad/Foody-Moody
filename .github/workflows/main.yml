@@ -3,6 +3,8 @@ name: Test Coverage Enforcement
 on:
   pull_request:
     branches: [ master, develop ]
+  push:
+    branches: [ master, develop ]
 
 jobs:
   coverage-check:
@@ -31,7 +33,7 @@ jobs:
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
-        if: always()  # Upload even if tests fail
+        if: always()
         with:
           name: jacoco-coverage-report
           path: |
