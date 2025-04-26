@@ -27,17 +27,14 @@ tasks.test {
 
 tasks.jacocoTestReport {
     reports {
-        csv.required.set(false)
         xml.required.set(true)
         html.required.set(true)
     }
     dependsOn(tasks.test)
 }
 
-
-
 tasks.jacocoTestCoverageVerification {
-    executionData.setFrom(fileTree(buildDir).include("/jacoco/test.exec"))
+    executionData.setFrom(fileTree(layout.buildDirectory).include("/jacoco/test.exec"))
     classDirectories.setFrom(fileTree("build/classes/kotlin/main/logic/usecase"))
     sourceDirectories.setFrom(files("src/main/kotlin/logic/usecase"))
     violationRules {
@@ -45,7 +42,7 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 counter = "CLASS"
                 value = "COVEREDRATIO"
-                minimum = "1.0".toBigDecimal() // 100% coverage
+                minimum = "1.0".toBigDecimal()
 
             }
         }
