@@ -9,16 +9,16 @@ object CLIConstants {
     const val SEPARATOR = "------------------------------------------------------------"
 
     const val OPTION_INPUT_MESSAGE = "Please enter the number of the option you need >>> "
-    const val ENTER_MEAL_ID = "Enter meal id to show full details"
+    const val ENTER_MEAL_ID = "Enter meal id to show full details >>> "
     const val GUESS_GAME_MESSAGE = "Guess the preparation time by minutes for this meal in minutes: "
 
     const val COMMON_ERROR_MESSAGE = "An error happened, please try again!"
     const val ENTER_VALID_OPTION_MESSAGE = "Please enter a valid option number >>> "
     const val ENTER_DATE_MESSAGE = "Enter the date in this format YYYY-MM-DD >>> "
-    const val ID_NOT_IN_LIST = "PLease enter id that was in the retrieved meals"
+    const val ENTER_VALID_ID_MESSAGE = "Please enter a valid ID >>> "
     const val NO_DESCRIPTION_AVAILABLE = "No description available!"
     const val NO_RESULTS_FOUND = "No result found in that date."
-    const val ENTER_VALID_DATE_HINT = "Please enter a valid date in this format YYYY-MM-DD"
+    const val ENTER_VALID_DATE_HINT = "Please enter a valid date in this format YYYY-MM-DD >>> "
     const val GUESS_ERROR_MESSAGE = "Invalid input please try again!"
     const val NO_POTATOES_MEALS_MESSAGE = "❌ There is no meal that contains potatoes in its ingredients!"
 
