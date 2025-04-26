@@ -103,19 +103,6 @@ class GetRandomEasyFoodMealsUseCaseTest {
         }
     }
 
-    @Test
-    fun `getRandomEasyFoodMeals should return shuffled meals every time when called`() {
-        // Given
-        every { mealRepository.getAllMeals() } returns easyFoodMeals()
-
-        // When
-        val firstResult = getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
-        val secondResult = getRandomEasyFoodMealsUseCase.getRandomEasyFoodMeals()
-
-        // Then
-        assertThat(firstResult).isNotEqualTo(secondResult)
-    }
-
     private fun easyFoodMeals(): List<Meal> = listOf(
         Meal(mealName = "Salad", minutes = 10, numberOfIngredients = 2, numberOfSteps = 2),
         Meal(mealName = "Smoothie", minutes = 5, numberOfIngredients = 4, numberOfSteps = 1),

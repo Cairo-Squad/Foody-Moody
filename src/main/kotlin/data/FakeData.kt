@@ -2,6 +2,7 @@ package data
 
 import logic.model.Meal
 import logic.model.Nutrition
+import java.time.LocalDate
 
 object FakeData {
 
@@ -67,12 +68,14 @@ object FakeData {
         Meal(
             mealId = 1,
             tags = listOf("lunch"),
-            nutrition = Nutrition(carbohydrates = 20.0f, protein = 10.0f, totalFat = 5.0f)
+            nutrition = Nutrition(carbohydrates = 20.0f, protein = 10.0f, totalFat = 5.0f),
+            submitted = LocalDate.of(2005, 9, 15)
         ),
         Meal(
             mealId = 2,
             tags = listOf("dinner"),
-            nutrition = Nutrition(carbohydrates = 30.0f, protein = 5.0f, totalFat = 10.0f)
+            nutrition = Nutrition(carbohydrates = 30.0f, protein = 5.0f, totalFat = 10.0f),
+            submitted = LocalDate.of(2005, 4, 12)
         )
     )
 }
