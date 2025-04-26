@@ -22,6 +22,7 @@ class GetHealthyFastFoodUseCase(
             ).take(NUMBER_OF_REQUIRED_FAST_FOOD_MEALS)
 
     }
+
     companion object {
         private const val NUMBER_OF_REQUIRED_FAST_FOOD_MEALS = 5
     }
@@ -33,6 +34,4 @@ class GetHealthyFastFoodUseCase(
                 && meal.minutes != null
                 && meal.minutes <= 15
     }
-
-
 }
